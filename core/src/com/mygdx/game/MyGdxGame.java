@@ -17,9 +17,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		floorimg = new Texture("truck_material-new-256.png");
+		floorimg = new Texture(Gdx.files.internal("data/truck_material-new-256.png"));
 		floorSprite = new Sprite(floorimg);
-		floorEntity = new Entity(floorSprite, new Vector2(100, 50), new Vector2(500, 100));
+		floorEntity = new Wall(floorSprite, new Vector2(100, 50), new Vector2(500, 100));
 	}
 
 

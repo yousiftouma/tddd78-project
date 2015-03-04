@@ -9,8 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 public class VelocityEntity extends Entity {
     private Vector2 velocity;
 
-    public VelocityEntity(Sprite sprite, Vector2 pos, Vector2 velocity) {
-	super(sprite, pos);
+
+    public VelocityEntity(Sprite sprite, Vector2 position, Vector2 velocity) {
+	super(sprite, position);
 	this.velocity = velocity;
     }
 
@@ -20,5 +21,10 @@ public class VelocityEntity extends Entity {
 
     public void setVelocity(final Vector2 velocity) {
 	this.velocity = velocity;
+    }
+
+    @Override public void update() {
+        super.update();
+        this.getPosition().add(velocity);
     }
 }

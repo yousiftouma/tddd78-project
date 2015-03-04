@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
-public class Entity extends Sprite{
+public class Entity extends Sprite {
     private Sprite sprite;
     private Vector2 position;
     private Vector2 size;
@@ -16,19 +16,6 @@ public class Entity extends Sprite{
         this.setPosition(position.x, position.y);
     }
 
-    /**
-     * Move to wallentity where it has its only use
-     * @return
-     */
-    /*public Entity(Sprite sprite, Vector2 position, Vector2 size) {
-        this.sprite = sprite;
-        this.position = position;
-        this.size = size;
-        this.set(sprite);
-        this.setSize(size.x, size.y);
-        this.setPosition(position.x, position.y);
-    }*/
-
     public Sprite getSprite() {
         return sprite;
     }
@@ -37,8 +24,15 @@ public class Entity extends Sprite{
         return position;
     }
 
+    public void setPosition(final Vector2 position) {
+        this.position = position;
+    }
+
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
+    }
+
+    public void update(){
     }
 }
