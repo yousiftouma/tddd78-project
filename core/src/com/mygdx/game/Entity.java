@@ -4,11 +4,18 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Class that represents all objects in the game
+ */
 public class Entity extends Sprite {
     private Sprite sprite;
     private Vector2 position;
-    private Vector2 size;
 
+    /**
+     *
+     * @param sprite Sprite that represents the entity
+     * @param position Vector2(x,y) bottomleft position of sprite in frame, 0,0 bottom left in frame
+     */
     public Entity(Sprite sprite, Vector2 position) {
         this.sprite = sprite;
         this.position = position;

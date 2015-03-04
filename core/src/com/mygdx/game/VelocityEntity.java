@@ -4,12 +4,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Created by Yousif Touma on 2015-03-04.
+ * Entity that handles movement with constant speed
  */
 public class VelocityEntity extends Entity {
+
     private Vector2 velocity;
 
-
+    /**
+     *
+     * @param sprite Sprite that represents the entity
+     * @param position Vector2(x,y) bottomleft position of entity, 0,0 bottom left in frame
+     * @param velocity Vector2(x velocity, y velocity) positive rightward and up
+     */
     public VelocityEntity(Sprite sprite, Vector2 position, Vector2 velocity) {
 	super(sprite, position);
 	this.velocity = velocity;
