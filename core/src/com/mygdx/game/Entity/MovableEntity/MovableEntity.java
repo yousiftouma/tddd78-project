@@ -1,17 +1,17 @@
-package com.mygdx.game.Entity.MovableEntity;
+package com.mygdx.game.entity.movableentity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Entity.Entity;
+import com.mygdx.game.entity.Entity;
 
 /**
  * Created by Yousif Touma on 2015-03-04.
  */
-public class MovableEntity extends Entity {
+public abstract class MovableEntity extends Entity {
     protected Vector2 velocity;
     protected Vector2 acceleration;
 
-    public MovableEntity(final Sprite sprite, final Vector2 position, final Vector2 velocity, final Vector2 acceleration) {
+    protected MovableEntity(final Sprite sprite, final Vector2 position, final Vector2 velocity, final Vector2 acceleration) {
 	super(sprite, position);
 	this.velocity = velocity;
 	this.acceleration = acceleration;
