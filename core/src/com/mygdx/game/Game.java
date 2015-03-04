@@ -11,10 +11,10 @@ import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.obstacle.Wall;
 
 public class Game extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture floorimg;
-	Sprite floorSprite;
-	Entity floorEntity;
+	private SpriteBatch batch;
+	private Texture floorimg;
+	private Sprite floorSprite;
+	private Entity floorEntity;
 	
 	@Override
 	public void create () {
