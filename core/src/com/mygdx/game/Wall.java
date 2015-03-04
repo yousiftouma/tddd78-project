@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  * Wall, floor and ceiling class used for platformfunctionality. Detects collision.
  */
 public class Wall extends Entity {
+
     private Vector2 size;
 
     /**
