@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class MyGdxGame extends ApplicationAdapter {
+public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture floorimg;
 	Sprite floorSprite;
