@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Entity;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Entity extends Sprite {
     private Sprite sprite;
-    private Vector2 position;
+    protected Vector2 position;
 
     /**
      *

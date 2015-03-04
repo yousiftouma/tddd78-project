@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Entity.MovableEntity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Entity that handles acceleration
  */
-public class AccelerationEntity extends VelocityEntity {
+public class AccelerationEntity extends VelocityEntity
+{
 
     private Vector2 acceleration;
 

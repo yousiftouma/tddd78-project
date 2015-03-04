@@ -1,12 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.Entity.MovableEntity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Entity.Entity;
 
 /**
  * Entity that handles movement with constant speed
  */
-public class VelocityEntity extends Entity {
+public class VelocityEntity extends Entity
+{
 
     private Vector2 velocity;
 
@@ -31,6 +33,6 @@ public class VelocityEntity extends Entity {
 
     @Override public void update() {
         super.update();
-        this.getPosition().add(velocity);
+        this.position.add(velocity);
     }
 }

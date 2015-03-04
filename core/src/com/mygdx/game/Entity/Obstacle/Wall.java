@@ -1,12 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.Entity.Obstacle;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Entity.Entity;
 
 /**
  * Wall, floor and ceiling class used for platformfunctionality. Detects collision.
  */
-public class Wall extends Entity {
+public class Wall extends Entity
+{
 
     private Vector2 size;
 

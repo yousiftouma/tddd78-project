@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Entity.Entity;
+import com.mygdx.game.Entity.Obstacle.Wall;
 
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
