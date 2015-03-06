@@ -10,12 +10,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.obstacle.Wall;
 
+
 public class Game extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture floorimg;
 	private Sprite floorSprite;
 	private Entity floorEntity;
-	
+
+    /**
+     * Runs upon starting game, like a main method, creates all content
+     */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -24,7 +28,17 @@ public class Game extends ApplicationAdapter {
 		floorEntity = new Wall(floorSprite, new Vector2(100, 50), new Vector2(500, 100));
 	}
 
+    /**
+     * Closes the program when window is closed
+     */
+    @Override
+    public void dispose() {
+	super.dispose();
+    }
 
+    /**
+     * Renders everything, like a component
+     */
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0.7F, 0.5F, 0.2F, 1);
@@ -32,5 +46,8 @@ public class Game extends ApplicationAdapter {
 		batch.begin();
 		floorEntity.draw(batch);
 		batch.end();
+
+	    // Updates here
+	    // Controls here
 	}
 }
