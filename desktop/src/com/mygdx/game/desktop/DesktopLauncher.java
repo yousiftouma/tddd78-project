@@ -9,11 +9,12 @@ import com.mygdx.game.Game;
  */
 public final class DesktopLauncher {
 
+
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 	    	config.title = "GameTitle";
-		config.width = 1080;
-		config.height = 720;
+		config.width = Game.FRAME_WIDTH;
+		config.height = Game.FRAME_HEIGHT;
 	    	// result ignored since frame is created upon creation
 		new LwjglApplication(new Game(), config);
 	}

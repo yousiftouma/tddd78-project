@@ -1,18 +1,26 @@
 package com.mygdx.game.entity.movableentity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
 
 /**
  * Created by Yousif Touma on 2015-03-04.
  */
-public abstract class MovableEntity extends Entity {
+public abstract class MovableEntity extends CollisionEntity
+{
     protected Vector2 velocity;
     protected Vector2 acceleration;
+    protected Vector2 position;
+    public abstract void moveLeft(float dt);
+    public abstract void moveRight(float dt);
+    public abstract void doAction(String type, float x, float y);
 
-    protected MovableEntity(final Sprite sprite, final Vector2 position, final Vector2 velocity, final Vector2 acceleration) {
-	super(sprite, position);
+
+    protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration) {
+	super(sprite, position, size);
 	this.velocity = velocity;
 	this.acceleration = acceleration;
     }
@@ -33,9 +41,11 @@ public abstract class MovableEntity extends Entity {
 	this.acceleration = acceleration;
     }
 
-    @Override public void update() {
-	super.update();
-	this.position.add(velocity);
-	this.velocity.add(acceleration);
+    public void update(float dt) {
+	velocity.y -= acceleration.y * dt;
+	getHitBox().y += velocity.y;
+	getSprite().setPosition(getHitBox().x, getHitBox().y);
+	//this.position.add(velocity);
+	//this.velocity.add(acceleration);
     }
 }
