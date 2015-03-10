@@ -99,7 +99,8 @@ public class Game extends ApplicationAdapter {
 	    player.update(Gdx.graphics.getDeltaTime());
 	    for (Wall wall : walls){
 		if (player.hasCollision(wall)){
-		    player.doAction("wall", wall.getHitBox().x, wall.getHitBox().y + wall.getHitBox().height); // not correct, need to put player correctly
+		    player.doAction("wall", wall.getHitBox().x, wall.getHitBox().y + wall.getHitBox().height);
+		    // need to check where on rectangle we collided
 		}
 	    }
 
