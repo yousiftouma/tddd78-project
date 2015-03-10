@@ -111,7 +111,7 @@ public class Game extends ApplicationAdapter {
 	    if (Gdx.input.isKeyPressed(Keys.RIGHT)){
 		player.moveRight(Gdx.graphics.getDeltaTime());
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.SPACE)){
+	    if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)){
 		player.jump();
 	    }
 	}
