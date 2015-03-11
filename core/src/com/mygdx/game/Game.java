@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.obstacle.Wall;
 
-public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture floorimg;
-	Sprite floorSprite;
-	Entity floorEntity;
+public class Game extends ApplicationAdapter {
+	private SpriteBatch batch;
+	private Texture floorimg;
+	private Sprite floorSprite;
+	private Entity floorEntity;
 	
 	@Override
 	public void create () {
