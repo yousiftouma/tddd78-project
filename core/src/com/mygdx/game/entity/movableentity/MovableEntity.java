@@ -13,7 +13,6 @@ public abstract class MovableEntity extends CollisionEntity
 {
     protected Vector2 velocity;
     protected Vector2 acceleration;
-    protected Vector2 position;
     public abstract void moveLeft(float dt);
     public abstract void moveRight(float dt);
     public abstract void doAction(String type, float x, float y);
@@ -42,7 +41,7 @@ public abstract class MovableEntity extends CollisionEntity
     }
 
     public void update(float dt) {
-	velocity.y -= acceleration.y * dt;
 	setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y*dt));
+	velocity.y -= acceleration.y * dt;
     }
 }
