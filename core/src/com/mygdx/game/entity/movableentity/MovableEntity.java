@@ -41,7 +41,7 @@ public abstract class MovableEntity extends CollisionEntity
     }
 
     public void update(float dt) {
-	    setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y*dt));
+	setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y*dt));
         velocity.y -= acceleration.y * dt;
     }
 }
