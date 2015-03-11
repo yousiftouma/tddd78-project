@@ -35,12 +35,8 @@ public abstract class CollisionEntity extends Entity {
 	this.hitBox = hitBox;
     }
 
-    public void setHitBoxX(float x){
-	this.hitBox.x = x;
-    }
+    public Side getCollisionSide(CollisionEntity object){
 
-    public void setHitBoxY(float y){
-	this.hitBox.y = y;
     }
 
 }
