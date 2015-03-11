@@ -15,7 +15,9 @@ import com.mygdx.game.entity.obstacle.Wall;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Handles the rendering of the game
+ */
 public class Game extends ApplicationAdapter
 {
     private SpriteBatch batch;
@@ -39,12 +41,12 @@ public class Game extends ApplicationAdapter
     public static final int PLATFORM_THICKNESS = 10;
 
     /**
-     * Simulates normal gravity
+     * Simulates normal gravity in gameworld
      */
-    public static final int NORMAL_GRAVITY = 982;
+    public static final float NORMAL_GRAVITY = 9.82f * 100;
 
     /**
-     * Default spped
+     * Default speed
      */
     public static final int DEFAULT_VELOCITY_X = 200;
 
@@ -52,7 +54,6 @@ public class Game extends ApplicationAdapter
      * Runs upon starting game, like a main method, creates all content
      */
     @Override public void create() {
-
 	createTextures();
 	batch = new SpriteBatch();
 	createGameObjects();
@@ -63,9 +64,9 @@ public class Game extends ApplicationAdapter
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0), new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS)));
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(2 * (FRAME_WIDTH / 3.0f), 0),
 			   new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS)));
-	walls.add(new Wall(new Sprite(wallTexture), new Vector2((FRAME_WIDTH / 5.0f), 2*FRAME_HEIGHT / 5.0f),
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2((FRAME_WIDTH / 5.0f), 2*FRAME_HEIGHT / 6.0f),
 			   new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
-	walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2*FRAME_HEIGHT / 5.0f),
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2*FRAME_HEIGHT / 6.0f),
 			   new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
 	player = new Player(new Sprite(playerTestTexture), new Vector2(100, 300), new Vector2(64, 64),
 			    new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY));
@@ -87,23 +88,23 @@ public class Game extends ApplicationAdapter
      * Renders everything, like a component
      */
     @Override public void render() {
+	//backgroundcolor, rgba
 	Gdx.gl.glClearColor(0.7F, 0.5F, 0.2F, 1);
 	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	// begin drawing
+	// begin drawing here
 	batch.begin();
 	for (Wall wall : walls) {
 	    wall.draw(batch);
 	}
 	player.draw(batch);
 	batch.end();
-	// stopped drawing
+	// stopped drawing here
 
 	// Updates here
 	player.update(Gdx.graphics.getDeltaTime());
 	for (Wall wall : walls) {
 	    if (player.hasCollision(wall)) {
 		player.doAction(GameObject.WALL, wall);
-		// need to check where on rectangle we collided
 	    }
 	}
 

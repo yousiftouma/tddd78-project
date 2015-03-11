@@ -28,10 +28,4 @@ public class Enemy extends MovableEntity
     @Override public void doAction(GameObject type, CollisionEntity object) {
 
     }
-
-    // want to check what we collide with and probably change direction or similar.
-    @Override
-    public Boolean hasCollision(final CollisionEntity object) {
-	return null;
-    }
 }

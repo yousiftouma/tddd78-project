@@ -46,22 +46,26 @@ public abstract class MovableEntity extends CollisionEntity
         velocity.y -= acceleration.y * dt;
     }
 
-    public void separateSide(Side side, Entity object){
+    /**
+     * Seperates our MovableEntity from the CollisionEntity we collided with, depending on
+     * what side we collided with
+     * @param side side we collided with
+     * @param object object we collided with
+     */
+    public void separateSide(Side side, CollisionEntity object){
         if (side == Side.TOP){
-            /**
-             * to avoid setting fallspeed to 0 if not actually on top
-             */
+             //to avoid setting fallspeed to 0 if not actually on top
             if (velocity.y < 0){
-                setVelocity(new Vector2(getVelocity().x, 0));
+		velocity.y = 0;
+                //setVelocity(new Vector2(getVelocity().x, 0)); simple setter within class
             }
             setPosition(new Vector2(getPosition().x, object.getPosition().y+object.getSize().y));
         }
         else if (side == Side.BOTTOM){
-            /**
-             * to start falling upon collision set velocity.y to 0
-             */
+            //to start falling upon collision with bottom
             if (velocity.y > 0){
-                setVelocity(new Vector2(getVelocity().x, 0));
+		velocity.y = 0;
+                //setVelocity(new Vector2(getVelocity().x, 0)); simple setter within class
             }
             setPosition(new Vector2(getPosition().x, object.getPosition().y-getSize().y));
         }

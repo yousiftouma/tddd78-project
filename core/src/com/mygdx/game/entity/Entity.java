@@ -7,18 +7,21 @@ import com.badlogic.gdx.math.Vector2;
 
 
 /**
- * Class that represents all objects in the game
- * Does not have abstract methods on purpose as they are not needed.
+ * Represents all drawable objects in the game.
+ * Does not have abstract methods on purpose as they are not needed,
+ * but is abstract as we want to create its subclasses
  */
 public abstract class Entity  {
 
-    /**
-     * Sprite takes as parameters (Texture, x pos, y pos, width, height) upon creation
-     */
     private Sprite sprite;
     private Vector2 position;
     private Vector2 size;
 
+    /**
+     * @param sprite holds texture
+     * @param position Vector2(x,y) which points to bottomleft of entity
+     * @param size Vector2(x,y) where x = width, y = height
+     */
     protected Entity(Sprite sprite, Vector2 position, Vector2 size) {
 	this.sprite = sprite;
 	this.position = position;

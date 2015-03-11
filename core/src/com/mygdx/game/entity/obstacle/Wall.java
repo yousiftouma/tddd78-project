@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 
 
 /**
@@ -20,11 +19,6 @@ public class Wall extends CollisionEntity
      */
     public Wall(final Sprite sprite, final Vector2 position, final Vector2 size) {
 	super(sprite, position, size);
-    }
-
-    @Override
-    public Boolean hasCollision(final CollisionEntity object) {
-	return null;
     }
 
     @Override
