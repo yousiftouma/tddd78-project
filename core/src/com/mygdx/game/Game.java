@@ -41,7 +41,7 @@ public class Game extends ApplicationAdapter
     /**
      * Simulates normal gravity
      */
-    public static final int NORMAL_GRAVITY = 10;
+    public static final int NORMAL_GRAVITY = 982;
 
     /**
      * Default spped
