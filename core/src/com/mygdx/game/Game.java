@@ -111,6 +111,7 @@ public class Game extends ApplicationAdapter {
 	    if (Gdx.input.isKeyPressed(Keys.RIGHT)){
 		player.moveRight(Gdx.graphics.getDeltaTime());
 	    }
+	    //isKeyJustPressed means when button i pressed, not while button is pressed
 	    if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)){
 		player.jump();
 	    }
