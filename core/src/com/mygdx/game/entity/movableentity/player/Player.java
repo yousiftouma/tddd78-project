@@ -18,7 +18,7 @@ public class Player extends MovableEntity
     }
 
     public void jump(){
-	velocity.y = 5;
+	velocity.y = 500;
     }
 
     @Override public void moveLeft(float dt) {

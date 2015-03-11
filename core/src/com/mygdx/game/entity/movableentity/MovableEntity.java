@@ -43,7 +43,6 @@ public abstract class MovableEntity extends CollisionEntity
 
     public void update(float dt) {
 	velocity.y -= acceleration.y * dt;
-	getHitBox().y += velocity.y * dt;
-	getSprite().setPosition(getHitBox().x, getHitBox().y);
+	setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y*dt));
     }
 }
