@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Game extends ApplicationAdapter {
-	private SpriteBatch batch;
-	private Wall floorLeft, floorRight;
-    	private Player player;
-    	private Texture wallTexture;
-    	private Texture staticPlayerTexture;
-    	private List<Wall> walls;
+public class Game extends ApplicationAdapter
+{
+    private SpriteBatch batch;
+    private Player player;
+    private Texture wallTexture;
+    private Sprite wallSprite;
+    private Texture playerTestTexture;
+    private List<Wall> walls;
 
     /**
      * height of game window
@@ -50,70 +51,72 @@ public class Game extends ApplicationAdapter {
     /**
      * Runs upon starting game, like a main method, creates all content
      */
-	@Override
-	public void create () {
+    @Override public void create() {
 
-	    createTextures();
-	    batch = new SpriteBatch();
-	    createGameObjects();
-	}
+	createTextures();
+	batch = new SpriteBatch();
+	createGameObjects();
+    }
 
     private void createGameObjects() {
 	walls = new ArrayList<Wall>();
-	floorLeft = new Wall(new Sprite(wallTexture), new Vector2(0,0), new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS));
-	walls.add(floorLeft);
-	floorRight = new Wall(new Sprite(wallTexture), new Vector2(2*(FRAME_WIDTH / 3.0f), 0), new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS));
-	walls.add(floorRight);
-	player = new Player(new Sprite(staticPlayerTexture), new Vector2(100,300), new Vector2(64,64), new Vector2(DEFAULT_VELOCITY_X,0), new Vector2(0, NORMAL_GRAVITY));
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0), new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS)));
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2(2 * (FRAME_WIDTH / 3.0f), 0),
+			   new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS)));
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2((FRAME_WIDTH / 5.0f), 2*FRAME_HEIGHT / 5.0f),
+			   new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2*FRAME_HEIGHT / 5.0f),
+			   new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
+	player = new Player(new Sprite(playerTestTexture), new Vector2(100, 300), new Vector2(64, 64),
+			    new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY));
     }
 
     private void createTextures() {
 	wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
-	staticPlayerTexture = new Texture(Gdx.files.internal("static1.png"));
+	playerTestTexture = new Texture(Gdx.files.internal("playertestbox.png"));
     }
 
     /**
      * Closes the program when window is closed
      */
-    @Override
-    public void dispose() {
+    @Override public void dispose() {
 	super.dispose();
     }
 
     /**
      * Renders everything, like a component
      */
-	@Override
-	public void render () {
-	    Gdx.gl.glClearColor(0.7F, 0.5F, 0.2F, 1);
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    // begin drawing
-	    batch.begin();
-	    floorLeft.draw(batch);
-	    floorRight.draw(batch);
-	    player.draw(batch);
-	    batch.end();
-	    // stopped drawing
+    @Override public void render() {
+	Gdx.gl.glClearColor(0.7F, 0.5F, 0.2F, 1);
+	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	// begin drawing
+	batch.begin();
+	for (Wall wall : walls) {
+	    wall.draw(batch);
+	}
+	player.draw(batch);
+	batch.end();
+	// stopped drawing
 
-	    // Updates here
-	    player.update(Gdx.graphics.getDeltaTime());
-	    for (Wall wall : walls){
-			if (player.hasCollision(wall)){
-		    	player.doAction("wall", wall.getHitBox().x, wall.getHitBox().y + wall.getHitBox().height);
-		   	 // need to check where on rectangle we collided
-			}
-	    }
-
-	    // Controls here
-	    if (Gdx.input.isKeyPressed(Keys.LEFT)){
-		player.moveLeft(Gdx.graphics.getDeltaTime());
-	    }
-	    if (Gdx.input.isKeyPressed(Keys.RIGHT)){
-		player.moveRight(Gdx.graphics.getDeltaTime());
-	    }
-	    //isKeyJustPressed means when button i pressed, not while button is pressed
-	    if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)){
-		player.jump();
+	// Updates here
+	player.update(Gdx.graphics.getDeltaTime());
+	for (Wall wall : walls) {
+	    if (player.hasCollision(wall)) {
+		player.doAction("wall", wall.getHitBox().x, wall.getHitBox().y + wall.getHitBox().height);
+		// need to check where on rectangle we collided
 	    }
 	}
+
+	// Controls here
+	if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+	    player.moveLeft(Gdx.graphics.getDeltaTime());
+	}
+	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+	    player.moveRight(Gdx.graphics.getDeltaTime());
+	}
+	//isKeyJustPressed means when button i pressed, not while button is pressed
+	if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+	    player.jump();
+	}
+    }
 }
