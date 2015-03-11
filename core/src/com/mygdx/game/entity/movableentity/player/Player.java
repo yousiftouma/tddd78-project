@@ -22,21 +22,19 @@ public class Player extends MovableEntity
     }
 
     @Override public void moveLeft(float dt) {
-	setHitBoxX(getHitBox().x - (velocity.x * dt));
-	getSprite().setPosition(getHitBox().x, getHitBox().y);
+		setPosition(new Vector2(getPosition().x - velocity.x*dt, getPosition().y));
 
     }
 
     @Override public void moveRight(float dt) {
-	setHitBoxX(getHitBox().x + (velocity.x * dt));
-	getSprite().setPosition(getHitBox().x, getHitBox().y);
+		setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y));
     }
 
     @Override public void doAction(String type, float x, float y) {
 	if (type.equals("wall")){
 	    setVelocity(new Vector2(getVelocity().x, 0));
 	    setPosition(new Vector2(getHitBox().x, y));
-	}
+		}
     }
 
     @Override

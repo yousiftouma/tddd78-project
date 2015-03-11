@@ -22,8 +22,7 @@ public abstract class CollisionEntity extends Entity {
     @Override
     public void setPosition(final Vector2 position) {
 	//this.position = position;
-	setHitBoxX(position.x);
-	setHitBoxY(position.y);
+        hitBox.setPosition(position);
 	super.setPosition(position);
 	//getSprite().setPosition(position.x, position.y);
     }
