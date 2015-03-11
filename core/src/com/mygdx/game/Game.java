@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.obstacle.Wall;
 
@@ -102,7 +102,7 @@ public class Game extends ApplicationAdapter
 	player.update(Gdx.graphics.getDeltaTime());
 	for (Wall wall : walls) {
 	    if (player.hasCollision(wall)) {
-		player.doAction("wall", wall.getHitBox().x, wall.getHitBox().y + wall.getHitBox().height);
+		player.doAction(GameObject.WALL, wall);
 		// need to check where on rectangle we collided
 	    }
 	}

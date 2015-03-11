@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class CollisionEntity extends Entity {
 
     private Rectangle hitBox;
-    public abstract Boolean hasCollision(Entity entity);
+    public abstract Boolean hasCollision(CollisionEntity object);
 
     public CollisionEntity(Sprite sprite, Vector2 position, Vector2 size) {
 	super(sprite, position, size);

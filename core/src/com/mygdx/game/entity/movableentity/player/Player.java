@@ -3,7 +3,9 @@ package com.mygdx.game.entity.movableentity.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
@@ -30,18 +32,17 @@ public class Player extends MovableEntity
 		setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y));
     }
 
-    @Override public void doAction(String type, float x, float y) {
-	if (type.equals("wall")){
-	    setVelocity(new Vector2(getVelocity().x, 0));
-	    setPosition(new Vector2(getHitBox().x, y));
+    @Override public void doAction(GameObject type, Entity object) {
+	if (type == GameObject.WALL){
+
+	    /*setVelocity(new Vector2(getVelocity().x, 0));
+	    setPosition(new Vector2(getHitBox().x, y));*/
 		}
     }
 
     @Override
-    public Boolean hasCollision(Entity entity) {
-	Rectangle checkRectangle = new Rectangle(entity.getSprite().getX(), entity.getSprite().getY(), entity.getSprite().getWidth(), entity.getSprite().getHeight());
-	if (getHitBox().overlaps(checkRectangle)){
-	    //setCollided(rectangle);
+    public Boolean hasCollision(CollisionEntity object) {
+	if (getHitBox().overlaps(object.getHitBox())){
 	    return true;
 	}
 	return false;
