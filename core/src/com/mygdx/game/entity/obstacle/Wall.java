@@ -23,7 +23,7 @@ public class Wall extends CollisionEntity
     }
 
     @Override
-    public Boolean hasCollision(final Entity entity) {
+    public Boolean hasCollision(final CollisionEntity object) {
 	return null;
     }
 

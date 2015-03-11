@@ -1,11 +1,10 @@
 package com.mygdx.game.entity.movableentity.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
@@ -32,9 +31,10 @@ public class Player extends MovableEntity
 		setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y));
     }
 
-    @Override public void doAction(GameObject type, Entity object) {
+    @Override public void doAction(GameObject type, CollisionEntity object) {
 	if (type == GameObject.WALL){
-
+        Side side = getCollisionSide(object);
+        separateSide(side, object);
 	    /*setVelocity(new Vector2(getVelocity().x, 0));
 	    setPosition(new Vector2(getHitBox().x, y));*/
 		}

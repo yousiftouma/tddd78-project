@@ -36,7 +36,28 @@ public abstract class CollisionEntity extends Entity {
     }
 
     public Side getCollisionSide(CollisionEntity object){
+        double topDif = Math.abs(getPosition().y - (object.getPosition().y+object.getSize().y));
 
+        double bottomDif = Math.abs( getPosition().y+getSize().y - object.getPosition().y );
+
+        double leftDif = Math.abs( getPosition().x+getSize().x - object.getPosition().x );
+
+        double rightDif = Math.abs( getPosition().x - (object.getPosition().x+object.getSize().x) );
+
+        double minDif = Math.min(Math.min(topDif, bottomDif), Math.min(leftDif, rightDif));
+
+        if (minDif == topDif){
+            return Side.TOP;
+        }
+        else if (minDif == bottomDif){
+            return Side.BOTTOM;
+        }
+        else if (minDif == leftDif){
+            return Side.LEFT;
+        }
+        else{
+            return Side.RIGHT;
+        }
     }
 
 }

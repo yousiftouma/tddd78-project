@@ -3,7 +3,6 @@ package com.mygdx.game.entity.movableentity.enemy;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
@@ -26,7 +25,7 @@ public class Enemy extends MovableEntity
 
     }
 
-    @Override public void doAction(GameObject type, Entity object) {
+    @Override public void doAction(GameObject type, CollisionEntity object) {
 
     }
 
