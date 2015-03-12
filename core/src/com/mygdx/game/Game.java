@@ -132,7 +132,6 @@ public class Game extends ApplicationAdapter {
             wall.draw(batch);
         }
         player.draw(batch);
-        enemy.draw(batch);
         batch.end();
         // stopped drawing here
 
@@ -143,7 +142,6 @@ public class Game extends ApplicationAdapter {
                 player.doAction(GameObject.WALL, wall);
             }
         }
-        player.teleportIfOutsideFrame();
 
         // Controls here
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {

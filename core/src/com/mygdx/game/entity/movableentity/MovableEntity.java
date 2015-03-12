@@ -14,6 +14,9 @@ public abstract class MovableEntity extends CollisionEntity {
     protected Vector2 velocity;
     protected Vector2 acceleration;
     protected Vector2 spawnPosition;
+    protected int hitPointsMax;
+    protected int hitPointsLeft;
+    protected int damage;
 
     public abstract void moveLeft(float dt);
 
@@ -24,11 +27,13 @@ public abstract class MovableEntity extends CollisionEntity {
     private final static int MAX_FREE_FALL_VELOCITY = 2000;
 
 
-    protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration) {
-        super(sprite, position, size);
+    protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
+        super(sprite, position, size, damage);
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.spawnPosition = position;
+        this.hitPointsMax = hitPointsMax;
+        this.hitPointsLeft = hitPointsMax;
     }
 
     public Vector2 getVelocity() {
@@ -52,6 +57,7 @@ public abstract class MovableEntity extends CollisionEntity {
         if (Math.abs(velocity.y) < MAX_FREE_FALL_VELOCITY) {
             velocity.y -= acceleration.y * dt;
         }
+        teleportIfOutsideFrame();
     }
 
     /**
@@ -83,7 +89,7 @@ public abstract class MovableEntity extends CollisionEntity {
         }
     }
 
-    public void teleportIfOutsideFrame() {
+    private void teleportIfOutsideFrame() {
         // entity has its full size outside the frame to the left
         if (getPosition().x < -getSize().x) {
             setPosition(new Vector2(Game.FRAME_WIDTH, getPosition().y));
@@ -99,4 +105,18 @@ public abstract class MovableEntity extends CollisionEntity {
             setPosition(new Vector2(getPosition().x, Game.FRAME_HEIGHT));
         }
     }
+
+    public int getHitPointsLeft() {
+        return hitPointsLeft;
+    }
+
+    public int getHitPointsMax() {
+        return hitPointsMax;
+    }
+
+    public boolean isAlive() {
+        return hitPointsLeft <= 0;
+    }
+
+    public abstract void onDeath();
 }

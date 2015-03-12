@@ -10,12 +10,14 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class CollisionEntity extends Entity {
 
-    private Rectangle hitBox;
     private final static float ACCEPTABLE_ERROR = 0.001f;
+    protected Rectangle hitBox;
+    protected int damage;
 
-    protected CollisionEntity(Sprite sprite, Vector2 position, Vector2 size) {
-	super(sprite, position, size);
-	this.hitBox = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+    protected CollisionEntity(Sprite sprite, Vector2 position, Vector2 size, int damage) {
+	    super(sprite, position, size);
+	    this.hitBox = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        this.damage = damage;
     }
 
     @Override
@@ -70,5 +72,8 @@ public abstract class CollisionEntity extends Entity {
         }
     }
 
+    public int getDamage(){
+        return damage;
+    }
 }
 

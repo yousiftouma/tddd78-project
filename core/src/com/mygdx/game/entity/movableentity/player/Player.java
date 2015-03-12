@@ -14,8 +14,8 @@ public class Player extends MovableEntity {
 
     private static final float JUMP_SPEED = 500;
 
-    public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration) {
-        super(sprite, position, size, velocity, acceleration);
+    public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
+        super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
     }
 
     public void jump() {
@@ -40,7 +40,12 @@ public class Player extends MovableEntity {
             separateSide(side, object);
 
         } else if (type == GameObject.ENEMY) {
-            setPosition(spawnPosition);
+            hitPointsLeft -= object.getDamage();
         }
+    }
+
+    @Override
+    public void onDeath() {
+        return;
     }
 }
