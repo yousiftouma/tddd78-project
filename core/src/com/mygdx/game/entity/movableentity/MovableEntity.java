@@ -2,6 +2,7 @@ package com.mygdx.game.entity.movableentity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Game;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
@@ -74,6 +75,20 @@ public abstract class MovableEntity extends CollisionEntity
         }
         else if(side == Side.RIGHT){
             setPosition(new Vector2(object.getPosition().x+object.getSize().x, getPosition().y));
+        }
+    }
+
+    public void teleportIfOutsideFrame(){
+        if (getPosition().x < -getSize().x){
+            setPosition(new Vector2(Game.FRAME_WIDTH, getPosition().y));
+        }
+
+        else if (getPosition().x > Game.FRAME_WIDTH){
+            setPosition(new Vector2(-getSize().x, getPosition().y));
+        }
+
+        else if (getPosition().y < -getSize().y){
+            setPosition(new Vector2(getPosition().x, Game.FRAME_HEIGHT));
         }
     }
 }
