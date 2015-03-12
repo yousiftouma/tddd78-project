@@ -8,15 +8,18 @@ import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
- * Created by Yousif Touma on 2015-03-04.
+ * Playerclass, can jump, move and collide with objects
  */
 public class Player extends MovableEntity {
 
-    private static final float JUMP_SPEED = 500;
+    private int score;
+    private static final int JUMP_SPEED = 500;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
-        super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
+	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
+	score = 0;
     }
+
 
     public void jump() {
         setVelocity(new Vector2(getVelocity().x, JUMP_SPEED));
@@ -24,8 +27,7 @@ public class Player extends MovableEntity {
 
     @Override
     public void moveLeft(float dt) {
-        setPosition(new Vector2(getPosition().x - velocity.x * dt, getPosition().y));
-
+	setPosition(new Vector2(getPosition().x - velocity.x * dt, getPosition().y));
     }
 
     @Override
@@ -46,6 +48,17 @@ public class Player extends MovableEntity {
 
     @Override
     public void onDeath() {
-        return;
+    }
+
+    public int getScore() {
+	return score;
+    }
+
+    public void setScore(final int score) {
+	this.score = score;
+    }
+
+    public void addScore(final int points){
+	this.score += points;
     }
 }

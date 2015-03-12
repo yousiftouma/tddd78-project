@@ -16,13 +16,14 @@ public abstract class MovableEntity extends CollisionEntity {
     protected Vector2 spawnPosition;
     protected int hitPointsMax;
     protected int hitPointsLeft;
-    protected int damage;
 
     public abstract void moveLeft(float dt);
 
     public abstract void moveRight(float dt);
 
     public abstract void doAction(GameObject type, CollisionEntity object);
+
+    public abstract void onDeath();
 
     private final static int MAX_FREE_FALL_VELOCITY = 2000;
 
@@ -117,6 +118,4 @@ public abstract class MovableEntity extends CollisionEntity {
     public boolean isAlive() {
         return hitPointsLeft <= 0;
     }
-
-    public abstract void onDeath();
 }

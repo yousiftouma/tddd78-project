@@ -8,19 +8,16 @@ import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
- * Created by Yousif Touma on 2015-03-04.
+ * Abstract enemy class with abstract methods with different implementation for different types of enemies
  */
 public class Enemy extends MovableEntity
 {
     private boolean movingLeft;
-    private int damage;
 
     public Enemy(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, boolean movingLeft, int damage, int hitPointsMax)
     {
 	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
         this.movingLeft = movingLeft;
-        this.damage = damage;
-
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
@@ -46,15 +43,11 @@ public class Enemy extends MovableEntity
     }
 
     @Override public void moveRight(final float dt) {
-        setPosition(new Vector2(getPosition().x+velocity.x*dt, getPosition().y));
-    }
-
-    public int getDamage() {
-        return damage;
+        setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y));
     }
 
     @Override
     public void onDeath() {
-        return;
     }
+
 }
