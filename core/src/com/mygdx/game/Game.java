@@ -8,9 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
-import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.obstacle.Wall;
 
@@ -52,6 +50,16 @@ public class Game extends ApplicationAdapter {
     public static final int DEFAULT_VELOCITY_X = 200;
 
     /**
+     * Size of player, (width, height)
+     */
+    public static final Vector2 PLAYER_SIZE = new Vector2(64,64);
+
+    /**
+     * Initial player position, (x,y)
+     */
+    public static final Vector2 PLAYER_SPAWN_POINT = new Vector2(100, 300);
+
+    /**
      * Runs upon starting launcher, creates all content
      */
     @Override
@@ -70,7 +78,7 @@ public class Game extends ApplicationAdapter {
                 new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
         walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2 * FRAME_HEIGHT / 6.0f),
                 new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
-        player = new Player(new Sprite(playerTestTexture), new Vector2(100, 300), new Vector2(64, 64),
+        player = new Player(new Sprite(playerTestTexture), PLAYER_SPAWN_POINT, PLAYER_SIZE,
                 new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY));
     }
 

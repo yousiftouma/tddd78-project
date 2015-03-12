@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 
@@ -83,14 +82,17 @@ public abstract class MovableEntity extends CollisionEntity
     }
 
     public void teleportIfOutsideFrame(){
+	// entity has its full size outside the frame to the left
         if (getPosition().x < -getSize().x){
             setPosition(new Vector2(Game.FRAME_WIDTH, getPosition().y));
         }
 
+	// entity has its full size outside the frame to the right
         else if (getPosition().x > Game.FRAME_WIDTH){
             setPosition(new Vector2(-getSize().x, getPosition().y));
         }
 
+	// entity has its full size outside the bottom of the frame
         else if (getPosition().y < -getSize().y){
             setPosition(new Vector2(getPosition().x, Game.FRAME_HEIGHT));
         }
