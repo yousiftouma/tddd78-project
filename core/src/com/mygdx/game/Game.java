@@ -43,7 +43,7 @@ public class Game extends ApplicationAdapter
     /**
      * Simulates normal gravity in gameworld
      */
-    public static final float NORMAL_GRAVITY = 9.82f * 100;
+    public static final int NORMAL_GRAVITY = 982;
 
     /**
      * Default speed
@@ -51,7 +51,7 @@ public class Game extends ApplicationAdapter
     public static final int DEFAULT_VELOCITY_X = 200;
 
     /**
-     * Runs upon starting game, like a main method, creates all content
+     * Runs upon starting launcher, creates all content
      */
     @Override public void create() {
 	createTextures();

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class CollisionEntity extends Entity {
 
     private Rectangle hitBox;
+    private final static float ACCEPTABLE_ERROR = 0.001f;
 
     protected CollisionEntity(Sprite sprite, Vector2 position, Vector2 size) {
 	super(sprite, position, size);
@@ -40,6 +41,7 @@ public abstract class CollisionEntity extends Entity {
 
     /**
      * Checks where the overlap is smallest, thus determining which side we have collided with
+     * comparisons are equalitychecks that are acceptable for double datatype
      * @param object object that we check collision with
      * @return returns which side we've collided with
      */
@@ -54,16 +56,16 @@ public abstract class CollisionEntity extends Entity {
 
         double minDif = Math.min(Math.min(topDif, bottomDif), Math.min(leftDif, rightDif));
 
-        if (minDif == topDif){
-            return Side.TOP;
-        }
-        else if (minDif == bottomDif){
+	if (Math.abs(minDif - topDif) < ACCEPTABLE_ERROR){
+	    return Side.TOP;
+	}
+        else if (Math.abs(minDif - bottomDif) < ACCEPTABLE_ERROR){
             return Side.BOTTOM;
         }
-        else if (minDif == leftDif){
+        else if (Math.abs(minDif - leftDif) < ACCEPTABLE_ERROR){
             return Side.LEFT;
         }
-        else{
+        else {
             return Side.RIGHT;
         }
     }
