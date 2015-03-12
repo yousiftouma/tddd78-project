@@ -11,21 +11,34 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
  */
 public class Enemy extends MovableEntity
 {
+    private boolean movingLeft;
 
-    public Enemy(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration)
+    public Enemy(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, boolean movingLeft)
     {
 	super(sprite, position, size, velocity, acceleration);
-    }
-
-    @Override public void moveLeft(final float dt) {
-
-    }
-
-    @Override public void moveRight(final float dt) {
-
+        this.movingLeft = movingLeft;
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
 
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        if (movingLeft){
+            moveLeft(dt);
+        }
+        else{
+            moveRight(dt);
+        }
+    }
+
+    @Override public void moveLeft(final float dt) {
+        setPosition(new Vector2(getPosition().x+velocity.y*dt, getPosition().y));
+    }
+
+    @Override public void moveRight(final float dt) {
+        setPosition(new Vector2(getPosition().x-velocity.y*dt, getPosition().y));
     }
 }
