@@ -19,6 +19,8 @@ public abstract class MovableEntity extends CollisionEntity
     public abstract void moveRight(float dt);
     public abstract void doAction(GameObject type, CollisionEntity object);
 
+    private final static int MAX_FREE_FALL_VELOCITY = 2000;
+
 
     protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration) {
 	super(sprite, position, size);
@@ -44,7 +46,9 @@ public abstract class MovableEntity extends CollisionEntity
 
     public void update(float dt) {
 	setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y*dt));
-        velocity.y -= acceleration.y * dt;
+	if (Math.abs(velocity.y) < MAX_FREE_FALL_VELOCITY) {
+	    velocity.y -= acceleration.y * dt;
+	}
     }
 
     /**
