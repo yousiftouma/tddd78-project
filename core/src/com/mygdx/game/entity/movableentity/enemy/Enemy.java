@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
@@ -20,7 +21,10 @@ public class Enemy extends MovableEntity
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
-
+        if (type == GameObject.WALL) {
+            Side side = getCollisionSide(object);
+            separateSide(side, object);
+        }
     }
 
     @Override
@@ -35,10 +39,10 @@ public class Enemy extends MovableEntity
     }
 
     @Override public void moveLeft(final float dt) {
-        setPosition(new Vector2(getPosition().x+velocity.y*dt, getPosition().y));
+        setPosition(new Vector2(getPosition().x-velocity.x*dt, getPosition().y));
     }
 
     @Override public void moveRight(final float dt) {
-        setPosition(new Vector2(getPosition().x-velocity.y*dt, getPosition().y));
+        setPosition(new Vector2(getPosition().x+velocity.x*dt, getPosition().y));
     }
 }

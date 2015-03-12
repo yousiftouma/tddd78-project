@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.entity.movableentity.enemy.Enemy;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.obstacle.Wall;
 
@@ -20,11 +21,16 @@ import java.util.List;
  */
 public class Game extends ApplicationAdapter {
     private SpriteBatch batch;
+
     private Player player;
+    private Texture playerTestTexture;
+
     private Texture wallTexture;
     private Sprite wallSprite;
-    private Texture playerTestTexture;
     private List<Wall> walls;
+
+    private Texture enemyTestTexture;
+    private Enemy enemy;
 
     /**
      * height of game window
@@ -59,6 +65,18 @@ public class Game extends ApplicationAdapter {
      */
     public static final Vector2 PLAYER_SPAWN_POINT = new Vector2(100, 300);
 
+
+    /**
+     * size of enemy, (width, height)
+     */
+    public static final Vector2 ENEMY_SIZE = new Vector2(64,64);
+
+    /**
+     * Initial enemy position, (x,y)
+     */
+    public static final Vector2 ENEMY_SPAWN_POINT = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT * (3/4));
+
+
     /**
      * Runs upon starting launcher, creates all content
      */
@@ -79,12 +97,17 @@ public class Game extends ApplicationAdapter {
         walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2 * FRAME_HEIGHT / 6.0f),
                 new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
         player = new Player(new Sprite(playerTestTexture), PLAYER_SPAWN_POINT, PLAYER_SIZE,
-                new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY));
+                new Vector2(DEFAULT_VELOCITY_X*1.5F, 0), new Vector2(0, NORMAL_GRAVITY));
+        /*
+        enemy = new Enemy(new Sprite(enemyTestTexture), ENEMY_SPAWN_POINT, ENEMY_SIZE,
+                new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY), false);*/
+
     }
 
     private void createTextures() {
         wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
         playerTestTexture = new Texture(Gdx.files.internal("playertestbox.png"));
+        //enemyTestTexture = new Texture(Gdx.files.internal("enemy.png"));
     }
 
     /**
@@ -109,6 +132,7 @@ public class Game extends ApplicationAdapter {
             wall.draw(batch);
         }
         player.draw(batch);
+        enemy.draw(batch);
         batch.end();
         // stopped drawing here
 
@@ -120,7 +144,6 @@ public class Game extends ApplicationAdapter {
             }
         }
         player.teleportIfOutsideFrame();
-
 
         // Controls here
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
