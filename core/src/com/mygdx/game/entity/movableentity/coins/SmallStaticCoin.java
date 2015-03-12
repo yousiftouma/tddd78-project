@@ -12,6 +12,8 @@ public class SmallStaticCoin extends AbstractCoin
 {
 
     private final static int VALUE = 10;
+    private final static int COIN_WIDTH = 16;
+    private final static int COIN_HEIGHT = 16;
 
     protected SmallStaticCoin(final Sprite sprite, final Vector2 position, final Vector2 size, final Vector2 velocity,
 			      final Vector2 acceleration)
@@ -28,6 +30,10 @@ public class SmallStaticCoin extends AbstractCoin
     }
 
     @Override public void doAction(final GameObject type, final CollisionEntity object) {
+    }
+
+    public static Vector2 getCoinSize() {
+	return new Vector2(COIN_WIDTH, COIN_HEIGHT);
     }
 
 }

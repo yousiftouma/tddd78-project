@@ -12,6 +12,8 @@ public class SmallMovingCoin extends AbstractCoin
 {
 
     private final static int VALUE = 20;
+    private final static int COIN_WIDTH = 16;
+    private final static int COIN_HEIGHT = 16;
 
     protected SmallMovingCoin(final Sprite sprite, final Vector2 position, final Vector2 size, final Vector2 velocity,
 			      final Vector2 acceleration)
@@ -32,4 +34,7 @@ public class SmallMovingCoin extends AbstractCoin
 
      }
 
+    public static Vector2 getCoinSize() {
+	return new Vector2(COIN_WIDTH, COIN_HEIGHT);
+    }
 }
