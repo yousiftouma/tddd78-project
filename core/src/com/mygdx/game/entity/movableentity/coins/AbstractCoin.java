@@ -9,7 +9,8 @@ import java.util.Collection;
 
 
 /**
- * Created by Yousif Touma on 2015-03-12.
+ * Abstract class that is never created and has no abstract methods but is necessary since we
+ * inherit methods and create subclasses
  */
 public abstract class AbstractCoin extends MovableEntity
 {

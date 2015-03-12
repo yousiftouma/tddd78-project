@@ -6,7 +6,7 @@ import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.GameObject;
 
 /**
- * Created by Yousif Touma on 2015-03-12.
+ * A small moving coin that will have a velocity
  */
 public class SmallMovingCoin extends AbstractCoin
 {

@@ -6,7 +6,7 @@ import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.GameObject;
 
 /**
- * Coin that has a static position
+ * Coin that has a static position.
  */
 public class SmallStaticCoin extends AbstractCoin
 {
