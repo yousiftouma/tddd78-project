@@ -7,7 +7,7 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
- * Created by Yousif Touma on 2015-03-04.
+ * Abstract enemy class with abstract methods with different implementation for different types of enemies
  */
 public class Enemy extends MovableEntity
 {
