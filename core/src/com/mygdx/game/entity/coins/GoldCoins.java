@@ -10,8 +10,8 @@ import com.mygdx.game.entity.CollisionEntity;
 public class GoldCoins extends CollisionEntity
 {
 
-    public GoldCoins(final Sprite sprite, final Vector2 position, final Vector2 size)
-    {
-	super(sprite, position, size);
+
+    protected GoldCoins(Sprite sprite, Vector2 position, Vector2 size, int damage) {
+        super(sprite, position, size, damage);
     }
 }

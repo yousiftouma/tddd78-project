@@ -29,9 +29,6 @@ public class Game extends ApplicationAdapter {
     private Sprite wallSprite;
     private List<Wall> walls;
 
-    private Texture enemyTestTexture;
-    private Enemy enemy;
-
     /**
      * height of game window
      */
@@ -89,15 +86,15 @@ public class Game extends ApplicationAdapter {
 
     private void createGameObjects() {
         walls = new ArrayList<Wall>();
-        walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0), new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS)));
+        walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0), new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS), 0));
         walls.add(new Wall(new Sprite(wallTexture), new Vector2(2 * (FRAME_WIDTH / 3.0f), 0),
-                new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS)));
+                new Vector2(FRAME_WIDTH / 3.0f, PLATFORM_THICKNESS), 0));
         walls.add(new Wall(new Sprite(wallTexture), new Vector2((FRAME_WIDTH / 5.0f), 2 * FRAME_HEIGHT / 6.0f),
-                new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
+                new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS), 0));
         walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2 * FRAME_HEIGHT / 6.0f),
-                new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS)));
+                new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS), 0));
         player = new Player(new Sprite(playerTestTexture), PLAYER_SPAWN_POINT, PLAYER_SIZE,
-                new Vector2(DEFAULT_VELOCITY_X*1.5F, 0), new Vector2(0, NORMAL_GRAVITY));
+                new Vector2(DEFAULT_VELOCITY_X*1.5F, 0), new Vector2(0, NORMAL_GRAVITY), 5, 5);
         /*
         enemy = new Enemy(new Sprite(enemyTestTexture), ENEMY_SPAWN_POINT, ENEMY_SIZE,
                 new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY), false);*/
