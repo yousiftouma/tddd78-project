@@ -20,17 +20,6 @@ public class GameRenderer extends ApplicationAdapter {
     private SpriteBatch batch;
 
     /**
-     * Size of player, (width, height)
-     */
-    public static final Vector2 PLAYER_SIZE = new Vector2(64,64);
-
-    /**
-     * Initial player position, (x,y)
-     */
-    public static final Vector2 PLAYER_SPAWN_POINT = new Vector2(100, 300);
-
-
-    /**
      * Runs upon starting launcher, creates all content
      */
     @Override
