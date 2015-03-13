@@ -14,12 +14,12 @@ public class NormalState implements PowerupState{
 
     @Override
     public void moveLeft(Player p, float dt) {
-        p.setPosition(new Vector2(p.getPosition().x - RUNNING_SPEED * dt, p.getPosition().y));
+        p.setPositionX(p.getPosition().x - RUNNING_SPEED * dt);
     }
 
     @Override
     public void moveRight(Player p, float dt) {
-        p.setPosition(new Vector2(p.getPosition().x + RUNNING_SPEED * dt, p.getPosition().y));
+        p.setPositionX(p.getPosition().x + RUNNING_SPEED * dt);
     }
 
     @Override
