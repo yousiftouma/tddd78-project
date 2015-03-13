@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameRenderer;
+import com.mygdx.game.Game;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +31,7 @@ public class SmallStaticCoinFactory implements CoinFactory
 	this.spawnPoints = spawnPoints;
 	this.size = SmallStaticCoin.getCoinSize();
 	this.velocity = new Vector2(0, 0);
-	this.acceleration = new Vector2(0, GameRenderer.NORMAL_GRAVITY);
+	this.acceleration = new Vector2(0, Game.getGravity());
 	this.damage = 0;
 	this.hitPointsMax = 1;
 	this.movingLeft = false;

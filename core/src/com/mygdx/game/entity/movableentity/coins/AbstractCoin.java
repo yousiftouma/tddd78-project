@@ -12,7 +12,7 @@ import java.util.Collection;
 
 
 /**
- * Abstract class that is never instanciated and has no abstract methods but is necessary since we
+ * Abstract class that is never instantiated and has no abstract methods but is necessary since we
  * inherit methods and create subclasses
  */
 public abstract class AbstractCoin extends MovableEntity
@@ -34,6 +34,7 @@ public abstract class AbstractCoin extends MovableEntity
     public int getValue() {
 	return value;
     }
+
     @Override public void moveLeft(final float dt) {
         setPositionX(getPosition().x - velocity.x * dt);
     }

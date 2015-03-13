@@ -3,6 +3,7 @@ package com.mygdx.game.entity.obstacle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
+import com.mygdx.game.entity.GameObject;
 
 
 /**
@@ -20,4 +21,7 @@ public class Wall extends CollisionEntity
 	super(sprite, position, size, damage);
     }
 
+    @Override public GameObject getGameObjectType() {
+	return GameObject.WALL;
+    }
 }

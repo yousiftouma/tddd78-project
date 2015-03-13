@@ -13,7 +13,7 @@ import java.util.Collection;
 /**
  * Abstract enemy class with abstract methods with different implementation for different types of enemies
  */
-public class AbstractEnemy extends MovableEntity
+public abstract class AbstractEnemy extends MovableEntity
 {
     protected boolean movingLeft;
 

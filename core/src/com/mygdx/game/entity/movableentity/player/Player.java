@@ -69,4 +69,8 @@ public class Player extends MovableEntity {
     public void addScore(final int points){
 	this.score += points;
     }
+
+    @Override public GameObject getGameObjectType() {
+	return GameObject.PLAYER;
+    }
 }

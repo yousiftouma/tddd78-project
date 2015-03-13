@@ -1,21 +1,21 @@
 package com.mygdx.game.entity;
 
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 
 /**
  * Represents all drawable objects in the game.
- * Does not have abstract methods on purpose as they are not needed,
- * but is abstract as we want to create its subclasses
+ * Is abstract as diffrent Entities will have different types for example
  */
 public abstract class Entity  {
 
     private Sprite sprite;
     private Vector2 position;
     private Vector2 size;
+    public abstract GameObject getGameObjectType();
 
     /**
      * @param sprite holds texture
@@ -80,7 +80,7 @@ public abstract class Entity  {
         size = new Vector2(size.x, height);
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(Batch batch){
 	sprite.draw(batch);
     }
 

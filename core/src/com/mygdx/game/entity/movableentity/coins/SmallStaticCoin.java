@@ -2,6 +2,7 @@ package com.mygdx.game.entity.movableentity.coins;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.GameObject;
 
 /**
  * Coin that has a static position.
@@ -24,4 +25,7 @@ public class SmallStaticCoin extends AbstractCoin
 	return new Vector2(COIN_WIDTH, COIN_HEIGHT);
     }
 
+    @Override public GameObject getGameObjectType() {
+	return GameObject.SMALL_STATIC_COIN;
+    }
 }

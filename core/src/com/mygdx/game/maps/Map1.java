@@ -9,12 +9,14 @@ import com.mygdx.game.entity.obstacle.Wall;
 
 /**
  * Represents the first map
+ * Singleton
  */
-final class Map1 extends MapSkeleton
+public final class Map1 extends MapSkeleton implements GameMap
 {
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
     private final static int PLAYER_SPAWN_X = 100;
     private final static int PLAYER_SPAWN_Y = 300;
+    static final Map1 INSTANCE = new Map1();
 
     private Map1()
     {
@@ -24,8 +26,11 @@ final class Map1 extends MapSkeleton
 	setPlayerSpawnPoint(new Vector2(PLAYER_SPAWN_X, PLAYER_SPAWN_Y));
     }
 
+    public static Map1 getInstance() {
+	return INSTANCE;
+    }
+
     @Override public void addWalls() {
-	super.addWalls();
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0),
 			   new Vector2(Game.FRAME_WIDTH / 3.0f, NORMAL_WALL_THICKNESS), 0));
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(2 * (Game.FRAME_WIDTH / 3.0f), 0),
@@ -37,12 +42,10 @@ final class Map1 extends MapSkeleton
     }
 
     @Override public void addEnemySpawnPoints() {
-	super.addEnemySpawnPoints();
 	enemySpawnPoints.add(new Vector2(Game.FRAME_WIDTH / 2.0f, Game.FRAME_HEIGHT * 0.75f));
     }
 
     @Override public void addCoinSpawnPoints() {
-	super.addCoinSpawnPoints();
 	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH / 4.0f, Game.FRAME_HEIGHT * 0.75f));
     }
 }

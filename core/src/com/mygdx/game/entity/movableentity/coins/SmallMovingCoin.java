@@ -2,6 +2,7 @@ package com.mygdx.game.entity.movableentity.coins;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.GameObject;
 
 /**
  * A small moving coin that will have a velocity when created in factory, but with same
@@ -14,5 +15,13 @@ public class SmallMovingCoin extends SmallStaticCoin
 			      int damage, int hitPointsMax, boolean movingLeft)
     {
 	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
+    }
+
+    /**
+     * Ignores superclass method on purpose as they should return different GameObject enums
+     * @return actual GameObject type
+     */
+    @Override public GameObject getGameObjectType() {
+	return GameObject.SMALL_MOVING_COIN;
     }
 }
