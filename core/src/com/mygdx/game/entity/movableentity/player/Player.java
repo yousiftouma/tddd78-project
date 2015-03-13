@@ -8,7 +8,10 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
-import com.mygdx.game.entity.movableentity.player.powerup.PowerupState;
+import com.mygdx.game.entity.movableentity.player.powerup.PowerUpEnum;
+import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
+import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
+import com.mygdx.game.entity.powerups.NormalPowerUp;
 
 import java.util.Collection;
 
@@ -18,15 +21,17 @@ import java.util.Collection;
 public class Player extends MovableEntity {
 
     private int score;
-    private PowerupState pState;
+    private PowerUpState pState;
+    private float powerUpTimer;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
 	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
 	    score = 0;
         this.pState = new NormalState();
+        this.powerUpTimer = 0;
     }
 
-    public void setPState(PowerupState pState){
+    public void setPState(PowerUpState pState){
         this.pState = pState;
     }
 
@@ -55,10 +60,31 @@ public class Player extends MovableEntity {
                 hitPointsLeft -= object.getDamage();
             }
         }
+        else if (type == GameObject.POWER_UP) {
+            setPState(new PoweredUpState());
+            powerUpTimer = 10;
+            pState.setSize(this);
+        }
     }
 
     @Override
     public void onDeath(final Collection<Entity> objects) {
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        if (pState.getState() != PowerUpEnum.NORMAL_STATE){
+            powerUpTimer -= dt;
+            if (powerUpTimer <= 0){
+                setPState(new NormalState());
+                pState.setSize(this);
+            }
+        }
+    }
+
+    public void setPowerUpTimer(float time){
+        powerUpTimer = time;
     }
 
     public int getScore() {

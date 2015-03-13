@@ -6,9 +6,14 @@ import com.mygdx.game.entity.movableentity.player.Player;
 /**
  * Normalstate for player, with normal jump- and movementspeed, not invincible.
  */
-public class NormalState implements PowerupState{
+public class NormalState implements PowerUpState {
     private static final int JUMP_SPEED = 500;
     private static final int RUNNING_SPEED = 300;
+
+    @Override
+        public PowerUpEnum getState() {
+            return PowerUpEnum.NORMAL_STATE;
+        }
 
     @Override
     public void jump(Player p) {
@@ -23,6 +28,11 @@ public class NormalState implements PowerupState{
     @Override
     public void moveRight(Player p, float dt) {
         p.setPositionX(p.getPosition().x + RUNNING_SPEED * dt);
+    }
+
+    @Override
+    public void setSize(Player p) {
+        p.setSize(new Vector2(64, 64));
     }
 
     @Override

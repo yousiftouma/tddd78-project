@@ -3,9 +3,17 @@ package com.mygdx.game.entity.movableentity.player.powerup;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.player.Player;
 
-public class PoweredupState implements PowerupState{
-    private static final int JUMP_SPEED = 800;
+/**
+ * PoweredupState for player, with higher jump and movementspeed, player is also invincible.
+ */
+public class PoweredUpState implements PowerUpState {
+    private static final int JUMP_SPEED = 600;
     private static final int RUNNING_SPEED = 600;
+
+    @Override
+    public PowerUpEnum getState() {
+        return PowerUpEnum.POWERED_UP_STATE;
+    }
 
     @Override
     public void jump(Player p) {
@@ -21,6 +29,11 @@ public class PoweredupState implements PowerupState{
     public void moveRight(Player p, float dt) {
             p.setPositionX(p.getPosition().x + RUNNING_SPEED * dt);
         }
+
+    @Override
+    public void setSize(Player p) {
+        p.setSize(new Vector2(96, 96));
+    }
 
     @Override
     public boolean isInvincible() {

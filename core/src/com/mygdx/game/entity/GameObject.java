@@ -5,7 +5,7 @@ package com.mygdx.game.entity;
  */
 public enum GameObject {
     /**
-     * Walls, floors, ceilings, paltforms
+     * Walls, floors, ceilings, platforms
      */
     WALL,
     /**
@@ -17,13 +17,17 @@ public enum GameObject {
      */
     PLAYER,
     /**
-     * Small notmoving coin
+     * Small nonmoving coin
      */
     SMALL_STATIC_COIN,
     /**
      * Small moving coin
      */
-    SMALL_MOVING_COIN
+    SMALL_MOVING_COIN,
+    /**
+     * normal nonmoving powerUp
+     */
+    POWER_UP
 
 
 }

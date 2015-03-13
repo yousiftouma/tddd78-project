@@ -12,6 +12,7 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.obstacle.Wall;
+import com.mygdx.game.entity.powerups.NormalPowerUp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class Game extends ApplicationAdapter {
     private Texture wallTexture;
     private Sprite wallSprite;
     private List<Wall> walls;
+
+    NormalPowerUp pUp;
+    private Texture pUpTexture;
+    private Sprite pUpSprite;
 
     /**
      * height of game window
@@ -90,6 +95,8 @@ public class Game extends ApplicationAdapter {
                 new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS), 0));
         player = new Player(new Sprite(playerTestTexture), PLAYER_SPAWN_POINT, PLAYER_SIZE,
                 new Vector2(MovableEntity.getDefaultVelocityX()*1.5F, 0), new Vector2(0, NORMAL_GRAVITY), 5, 5);
+
+        pUp = new NormalPowerUp(new Sprite(playerTestTexture), new Vector2(400, 400), new Vector2(32, 32), 2, 15);
         /*enemy = new Enemy(new Sprite(enemyTestTexture), ENEMY_SPAWN_POINT, ENEMY_SIZE,
                 new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY), false);*/
 
@@ -98,6 +105,7 @@ public class Game extends ApplicationAdapter {
     private void createTextures() {
         wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
         playerTestTexture = new Texture(Gdx.files.internal("playertestbox.png"));
+        pUpTexture = new Texture(Gdx.files.internal("goldCoin5.png"));
         //enemyTestTexture = new Texture(Gdx.files.internal("enemy.png"));
     }
 
@@ -123,6 +131,7 @@ public class Game extends ApplicationAdapter {
             wall.draw(batch);
         }
         player.draw(batch);
+        pUp.draw(batch);
         batch.end();
         // stopped drawing here
 
@@ -132,6 +141,9 @@ public class Game extends ApplicationAdapter {
             if (player.hasCollision(wall)) {
                 player.doAction(GameObject.WALL, wall);
             }
+        }
+        if (player.hasCollision(pUp)) {
+            player.doAction(GameObject.POWER_UP, pUp);
         }
 
         // Controls here
