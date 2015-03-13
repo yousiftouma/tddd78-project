@@ -1,7 +1,7 @@
 package com.mygdx.game.entity;
 
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -80,7 +80,7 @@ public abstract class Entity  {
         size = new Vector2(size.x, height);
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(Batch batch){
 	sprite.draw(batch);
     }
 

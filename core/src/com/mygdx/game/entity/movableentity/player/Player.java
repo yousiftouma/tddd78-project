@@ -18,27 +18,30 @@ import java.util.Collection;
 public class Player extends MovableEntity {
 
     private int score;
-    private PowerupState pstate;
+    private PowerupState pState;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
 	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
 	    score = 0;
-        this.pstate = new NormalState();
+        this.pState = new NormalState();
     }
 
+    public void setPState(PowerupState pState){
+        this.pState = pState;
+    }
 
     public void jump() {
-        pstate.jump(this);
+        pState.jump(this);
     }
 
     @Override
     public void moveLeft(float dt) {
-        pstate.moveLeft(this, dt);
+        pState.moveLeft(this, dt);
     }
 
     @Override
     public void moveRight(float dt) {
-        pstate.moveRight(this, dt);
+        pState.moveRight(this, dt);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Player extends MovableEntity {
             separateSide(side, object);
 
         } else if (type == GameObject.ENEMY) {
-            if (!pstate.isInvincible()) {
+            if (!pState.isInvincible()) {
                 hitPointsLeft -= object.getDamage();
             }
         }
