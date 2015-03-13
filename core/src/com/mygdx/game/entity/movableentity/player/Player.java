@@ -6,6 +6,8 @@ import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
+import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
+import com.mygdx.game.entity.movableentity.player.powerup.PowerupState;
 
 /**
  * Playerclass, can jump, move and collide with objects
@@ -13,26 +15,27 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
 public class Player extends MovableEntity {
 
     private int score;
-    private static final int JUMP_SPEED = 500;
+    private PowerupState pstate;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
-	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
-	score = 0;
+	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
+	    score = 0;
+        this.pstate = new NormalState();
     }
 
 
     public void jump() {
-        setVelocity(new Vector2(getVelocity().x, JUMP_SPEED));
+        pstate.jump(this);
     }
 
     @Override
     public void moveLeft(float dt) {
-	setPosition(new Vector2(getPosition().x - velocity.x * dt, getPosition().y));
+        pstate.moveLeft(this, dt);
     }
 
     @Override
     public void moveRight(float dt) {
-        setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y));
+        pstate.moveRight(this, dt);
     }
 
     @Override
@@ -42,7 +45,9 @@ public class Player extends MovableEntity {
             separateSide(side, object);
 
         } else if (type == GameObject.ENEMY) {
-            hitPointsLeft -= object.getDamage();
+            if (!pstate.isInvincible()) {
+                hitPointsLeft -= object.getDamage();
+            }
         }
     }
 
