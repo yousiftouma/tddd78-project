@@ -1,4 +1,4 @@
-package com.mygdx.game.entity.movableentity.coins;
+package com.mygdx.game.entity.movableentity.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,14 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.movableentity.MovableEntity;
+import com.mygdx.game.entity.movableentity.coins.SmallMovingCoin;
+import com.mygdx.game.entity.movableentity.coins.SmallStaticCoin;
 
 import java.util.List;
 import java.util.Random;
 
 /**
- * Factory that creates moving coins, takes an ArrayList of possible spawn points
+ * Factory that creates NormalEnemy
  */
-public class SmallMovingCoinFactory implements CoinFactory
+public class NormalEnemyFactory implements EnemyFactory
 {
     private Sprite sprite;
     private Vector2 size;
@@ -25,25 +27,20 @@ public class SmallMovingCoinFactory implements CoinFactory
     private int hitPointsMax;
     private boolean movingLeft;
 
-    // If factory shouldnt know spawnpoints, spawn it outside the world first or make createCoin take
-    // a position
-    public SmallMovingCoinFactory(List<Vector2> spawnPoints, boolean movingLeft)
+    public NormalEnemyFactory(List<Vector2> spawnPoints, boolean movingLeft)
     {
-	this.sprite = new Sprite(new Texture(Gdx.files.internal("goldCoin5.png")));
+	this.sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
 	this.spawnPoints = spawnPoints;
-	this.size = SmallStaticCoin.getCoinSize();
+	this.size = NormalEnemy.getEnemySize();
 	this.velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
 	this.acceleration = new Vector2(0, Game.NORMAL_GRAVITY);
 	this.damage = 0;
-	this.hitPointsMax = 1;
+	this.hitPointsMax = 10;
 	this.movingLeft = movingLeft;
     }
 
-    /**
-     * @return returns a new small moving coin at a random spawnpoint
-     */
-    @Override public AbstractCoin createCoin() {
+    @Override public AbstractEnemy createEnemy() {
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
-	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
+	return new NormalEnemy(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
     }
 }

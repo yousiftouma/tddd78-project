@@ -3,6 +3,9 @@ package com.mygdx.game.entity.movableentity.player.powerup;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.player.Player;
 
+/**
+ * Normalstate for player, with normal jump- and movementspeed, not invincible.
+ */
 public class NormalState implements PowerupState{
     private static final int JUMP_SPEED = 500;
     private static final int RUNNING_SPEED = 300;

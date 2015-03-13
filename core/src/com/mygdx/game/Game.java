@@ -90,8 +90,7 @@ public class Game extends ApplicationAdapter {
                 new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS), 0));
         player = new Player(new Sprite(playerTestTexture), PLAYER_SPAWN_POINT, PLAYER_SIZE,
                 new Vector2(MovableEntity.getDefaultVelocityX()*1.5F, 0), new Vector2(0, NORMAL_GRAVITY), 5, 5);
-        /*
-        enemy = new Enemy(new Sprite(enemyTestTexture), ENEMY_SPAWN_POINT, ENEMY_SIZE,
+        /*enemy = new Enemy(new Sprite(enemyTestTexture), ENEMY_SPAWN_POINT, ENEMY_SIZE,
                 new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY), false);*/
 
     }

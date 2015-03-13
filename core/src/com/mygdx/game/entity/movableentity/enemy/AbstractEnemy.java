@@ -15,10 +15,10 @@ import java.util.Collection;
  */
 public class AbstractEnemy extends MovableEntity
 {
-    private boolean movingLeft;
+    protected boolean movingLeft;
 
     protected AbstractEnemy(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
-			 boolean movingLeft, int damage, int hitPointsMax)
+			    int damage, int hitPointsMax, boolean movingLeft)
     {
 	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
         this.movingLeft = movingLeft;
@@ -28,6 +28,9 @@ public class AbstractEnemy extends MovableEntity
         if (type == GameObject.WALL) {
             Side side = getCollisionSide(object);
             separateSide(side, object);
+	    if (side == Side.LEFT || side == Side.RIGHT) {
+		movingLeft = !movingLeft;
+	    }
         }
     }
 
@@ -43,11 +46,11 @@ public class AbstractEnemy extends MovableEntity
     }
 
     @Override public void moveLeft(final float dt) {
-        setPosition(new Vector2(getPosition().x-velocity.x*dt, getPosition().y));
+        setPositionX(getPosition().x - velocity.x * dt);
     }
 
     @Override public void moveRight(final float dt) {
-        setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y));
+	setPositionX(getPosition().x + velocity.x * dt);
     }
 
     @Override
