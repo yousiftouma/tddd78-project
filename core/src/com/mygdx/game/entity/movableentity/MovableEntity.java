@@ -8,7 +8,7 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 
 /**
- * Created by Yousif Touma on 2015-03-04.
+ * Entity that can move
  */
 public abstract class MovableEntity extends CollisionEntity {
     protected Vector2 velocity;
