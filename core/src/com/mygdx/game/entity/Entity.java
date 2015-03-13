@@ -42,18 +42,42 @@ public abstract class Entity  {
 	return position;
     }
 
-    public Vector2 getSize() {
-	return size;
-    }
-
     public void setPosition(final Vector2 position) {
 	this.position = position;
 	sprite.setPosition(position.x, position.y);
     }
 
+    public void setPositionX(float posX){
+        position = new Vector2(posX, position.y);
+    }
+
+    public void setPositionY(float posY){
+        position = new Vector2(position.x, posY);
+    }
+
+    public Vector2 getSize() {
+        return size;
+    }
+
+    public float getWidth(){
+        return size.x;
+    }
+
+    public float getHeight(){
+        return size.y;
+    }
+
     public void setSize(final Vector2 size) {
 	this.size = size;
 	sprite.setSize(size.x, size.y);
+    }
+
+    public void setWidth(float width) {
+        size = new Vector2(width, size.y);
+    }
+
+    public void setHeight(float height) {
+        size = new Vector2(size.x, height);
     }
 
     public void draw(SpriteBatch batch){
