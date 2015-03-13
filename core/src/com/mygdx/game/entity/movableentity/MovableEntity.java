@@ -3,6 +3,7 @@ package com.mygdx.game.entity.movableentity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
+import com.mygdx.game.GameRenderer;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;

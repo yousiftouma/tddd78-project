@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Game;
+import com.mygdx.game.GameRenderer;
 import com.mygdx.game.entity.movableentity.MovableEntity;
-import com.mygdx.game.entity.movableentity.coins.SmallMovingCoin;
-import com.mygdx.game.entity.movableentity.coins.SmallStaticCoin;
 
 import java.util.List;
 import java.util.Random;
@@ -33,7 +31,7 @@ public class NormalEnemyFactory implements EnemyFactory
 	this.spawnPoints = spawnPoints;
 	this.size = NormalEnemy.getEnemySize();
 	this.velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
-	this.acceleration = new Vector2(0, Game.NORMAL_GRAVITY);
+	this.acceleration = new Vector2(0, GameRenderer.NORMAL_GRAVITY);
 	this.damage = 0;
 	this.hitPointsMax = 10;
 	this.movingLeft = movingLeft;

@@ -3,6 +3,7 @@ package com.mygdx.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.Game;
+import com.mygdx.game.GameRenderer;
 
 /**
  * launches game on desktop
@@ -16,7 +17,7 @@ public final class DesktopLauncher {
 		config.width = Game.FRAME_WIDTH;
 		config.height = Game.FRAME_HEIGHT;
 	    	// result ignored since frame is created upon creation
-		new LwjglApplication(new Game(), config);
+		new LwjglApplication(new GameRenderer(), config);
 	}
 
     /**
