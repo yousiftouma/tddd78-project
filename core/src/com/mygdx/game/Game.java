@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.obstacle.Wall;
 
@@ -88,7 +89,7 @@ public class Game extends ApplicationAdapter {
         walls.add(new Wall(new Sprite(wallTexture), new Vector2((3 * FRAME_WIDTH / 5.0f), 2 * FRAME_HEIGHT / 6.0f),
                 new Vector2(FRAME_WIDTH / 5.0f, PLATFORM_THICKNESS), 0));
         player = new Player(new Sprite(playerTestTexture), PLAYER_SPAWN_POINT, PLAYER_SIZE,
-                new Vector2(DEFAULT_VELOCITY_X*1.5F, 0), new Vector2(0, NORMAL_GRAVITY), 5, 5);
+                new Vector2(MovableEntity.getDefaultVelocityX(), 0), new Vector2(0, NORMAL_GRAVITY), 5, 5);
         /*
         enemy = new Enemy(new Sprite(enemyTestTexture), ENEMY_SPAWN_POINT, ENEMY_SIZE,
                 new Vector2(DEFAULT_VELOCITY_X, 0), new Vector2(0, NORMAL_GRAVITY), false);*/
