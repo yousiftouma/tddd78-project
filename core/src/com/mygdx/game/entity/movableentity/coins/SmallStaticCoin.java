@@ -3,7 +3,11 @@ package com.mygdx.game.entity.movableentity.coins;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
+import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.entity.movableentity.player.Player;
+
+import java.util.Collection;
 
 /**
  * Coin that has a static position.
@@ -16,12 +20,11 @@ public class SmallStaticCoin extends AbstractCoin
     private final static int COIN_HEIGHT = 16;
 
     protected SmallStaticCoin(final Sprite sprite, final Vector2 position, final Vector2 size, final Vector2 velocity,
-			      final Vector2 acceleration)
-    {
-	super(sprite, position, size, velocity, acceleration);
-	setValue(VALUE);
-
-    }
+ 			      final Vector2 acceleration, final int damage, final int hitPointsMax)
+     {
+ 	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
+ 	setValue(VALUE);
+     }
 
     @Override public void moveLeft(final float dt) {
     }
@@ -30,6 +33,10 @@ public class SmallStaticCoin extends AbstractCoin
     }
 
     @Override public void doAction(final GameObject type, final CollisionEntity object) {
+    }
+
+    @Override public void onDeath(final Collection<Entity> objects) {
+	remove(objects);
     }
 
     public static Vector2 getCoinSize() {

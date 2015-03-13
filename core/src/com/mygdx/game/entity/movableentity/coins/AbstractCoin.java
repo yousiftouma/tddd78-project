@@ -2,10 +2,8 @@ package com.mygdx.game.entity.movableentity.coins;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
-import java.util.Collection;
 
 
 /**
@@ -20,10 +18,6 @@ public abstract class AbstractCoin extends MovableEntity
 			   final Vector2 acceleration, final int damage, final int hitPointsMax)
     {
 	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
-    }
-
-    public void remove(Collection<Entity> objects){
-	objects.remove(this);
     }
 
     public void setValue(final int value) {

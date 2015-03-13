@@ -5,12 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
-
 import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Yousif Touma on 2015-03-12.
+ * Factory that produces small static coins, takes an ArrayList of possible spawnpoints
  */
 public class SmallStaticCoinFactory implements CoinFactory
 {
@@ -20,6 +19,8 @@ public class SmallStaticCoinFactory implements CoinFactory
     private Vector2 acceleration;
     private Random getRandomSpawnPoint = new Random();
     private List<Vector2> spawnPoints;
+    private int damage;
+    private int hitPointsMax;
 
     public SmallStaticCoinFactory(List<Vector2> spawnPoints)
     {
@@ -28,6 +29,8 @@ public class SmallStaticCoinFactory implements CoinFactory
 	this.size = SmallMovingCoin.getCoinSize();
 	this.velocity = new Vector2(0, 0);
 	this.acceleration = new Vector2(0, Game.NORMAL_GRAVITY);
+	this.damage = 0;
+	this.hitPointsMax = 1;
     }
 
     /**
@@ -35,7 +38,7 @@ public class SmallStaticCoinFactory implements CoinFactory
      */
     @Override public AbstractCoin createCoin() {
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
-	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration);
+	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax);
     }
 }
 

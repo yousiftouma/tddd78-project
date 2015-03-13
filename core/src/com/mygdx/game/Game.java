@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.GameObject;
-import com.mygdx.game.entity.movableentity.enemy.Enemy;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.obstacle.Wall;
 
@@ -48,11 +47,6 @@ public class Game extends ApplicationAdapter {
     public static final int NORMAL_GRAVITY = 982;
 
     /**
-     * Default speed
-     */
-    public static final int DEFAULT_VELOCITY_X = 200;
-
-    /**
      * Size of player, (width, height)
      */
     public static final Vector2 PLAYER_SIZE = new Vector2(64,64);
@@ -71,7 +65,7 @@ public class Game extends ApplicationAdapter {
     /**
      * Initial enemy position, (x,y)
      */
-    public static final Vector2 ENEMY_SPAWN_POINT = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT * (3/4));
+    public static final Vector2 ENEMY_SPAWN_POINT = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT * (0.75f));
 
 
     /**

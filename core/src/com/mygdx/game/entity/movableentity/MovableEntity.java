@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.CollisionEntity;
+import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
+
+import java.util.Collection;
 
 /**
  * Entity that can move
@@ -23,9 +26,11 @@ public abstract class MovableEntity extends CollisionEntity {
 
     public abstract void doAction(GameObject type, CollisionEntity object);
 
-    public abstract void onDeath();
+    public abstract void onDeath(final Collection<Entity> objects);
 
     private final static int MAX_FREE_FALL_VELOCITY = 2000;
+
+    private final static int DEFAULT_VELOCITY_X = 200;
 
 
     protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
@@ -53,6 +58,10 @@ public abstract class MovableEntity extends CollisionEntity {
         this.acceleration = acceleration;
     }
 
+    /**
+     * primarily updates fallspeed according to gravity
+     * @param dt delta time since last frame update
+     */
     public void update(float dt) {
         setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y * dt));
         if (Math.abs(velocity.y) < MAX_FREE_FALL_VELOCITY) {
@@ -60,6 +69,10 @@ public abstract class MovableEntity extends CollisionEntity {
         }
         teleportIfOutsideFrame();
     }
+
+    public void remove(Collection<Entity> objects){
+    	objects.remove(this);
+        }
 
     /**
      * Seperates our MovableEntity from the CollisionEntity we collided with, depending on
@@ -114,6 +127,15 @@ public abstract class MovableEntity extends CollisionEntity {
     public int getHitPointsMax() {
         return hitPointsMax;
     }
+
+    public static int getDefaultVelocityX() {
+	return DEFAULT_VELOCITY_X;
+    }
+
+    public static int getMaxFreeFallVelocity() {
+	return MAX_FREE_FALL_VELOCITY;
+    }
+
 
     public boolean isAlive() {
         return hitPointsLeft <= 0;

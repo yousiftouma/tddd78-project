@@ -3,18 +3,22 @@ package com.mygdx.game.entity.movableentity.enemy;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
+import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
+import java.util.Collection;
+
 /**
  * Abstract enemy class with abstract methods with different implementation for different types of enemies
  */
-public class Enemy extends MovableEntity
+public class AbstractEnemy extends MovableEntity
 {
     private boolean movingLeft;
 
-    public Enemy(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, boolean movingLeft, int damage, int hitPointsMax)
+    protected AbstractEnemy(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
+			 boolean movingLeft, int damage, int hitPointsMax)
     {
 	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
         this.movingLeft = movingLeft;
@@ -47,7 +51,8 @@ public class Enemy extends MovableEntity
     }
 
     @Override
-    public void onDeath() {
+    public void onDeath(final Collection<Entity> objects) {
+	remove(objects);
     }
 
 }

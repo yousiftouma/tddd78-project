@@ -1,7 +1,7 @@
 package com.mygdx.game.entity.movableentity.coins;
 
 /**
- * Created by Yousif Touma on 2015-03-12.
+ * Factory interface, all factories must be able to create a coin
  */
 public interface CoinFactory {
     AbstractCoin createCoin();

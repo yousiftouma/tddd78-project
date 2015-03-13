@@ -3,9 +3,12 @@ package com.mygdx.game.entity.movableentity.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
+import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
+
+import java.util.Collection;
 
 /**
  * Playerclass, can jump, move and collide with objects
@@ -47,7 +50,7 @@ public class Player extends MovableEntity {
     }
 
     @Override
-    public void onDeath() {
+    public void onDeath(final Collection<Entity> objects) {
     }
 
     public int getScore() {
