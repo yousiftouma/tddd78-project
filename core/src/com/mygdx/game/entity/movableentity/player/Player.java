@@ -8,7 +8,10 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
-import com.mygdx.game.entity.movableentity.player.powerup.PowerupState;
+import com.mygdx.game.entity.movableentity.player.powerup.States;
+import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
+import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
+import com.mygdx.game.entity.powerups.AbstractPowerUp;
 
 import java.util.Collection;
 
@@ -18,27 +21,32 @@ import java.util.Collection;
 public class Player extends MovableEntity {
 
     private int score;
-    private PowerupState pstate;
+    private PowerUpState pState;
+    private float powerUpTimer;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
 	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
 	    score = 0;
-        this.pstate = new NormalState();
+        this.pState = new NormalState();
+        this.powerUpTimer = 0;
     }
 
+    public void setPState(PowerUpState pState){
+        this.pState = pState;
+    }
 
     public void jump() {
-        pstate.jump(this);
+        pState.jump(this);
     }
 
     @Override
     public void moveLeft(float dt) {
-        pstate.moveLeft(this, dt);
+        pState.moveLeft(this, dt);
     }
 
     @Override
     public void moveRight(float dt) {
-        pstate.moveRight(this, dt);
+        pState.moveRight(this, dt);
     }
 
     @Override
@@ -48,14 +56,35 @@ public class Player extends MovableEntity {
             separateSide(side, object);
 
         } else if (type == GameObject.ENEMY) {
-            if (!pstate.isInvincible()) {
+            if (!pState.isInvincible()) {
                 hitPointsLeft -= object.getDamage();
             }
+        }
+        else if (type == GameObject.NORMAL_POWER_UP) {
+	    this.pState = new PoweredUpState();
+	    powerUpTimer = ((AbstractPowerUp) object).getPowerUpTime();
+            pState.setSize(this);
         }
     }
 
     @Override
     public void onDeath(final Collection<Entity> objects) {
+    }
+
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        if (pState.getState() != States.NORMAL_STATE){
+            powerUpTimer -= dt;
+            if (powerUpTimer <= 0){
+		this.pState = new NormalState();
+		pState.setSize(this);
+            }
+        }
+    }
+
+    public void setPowerUpTimer(float time){
+        powerUpTimer = time;
     }
 
     public int getScore() {

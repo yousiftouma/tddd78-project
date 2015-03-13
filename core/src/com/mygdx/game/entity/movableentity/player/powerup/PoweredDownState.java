@@ -4,17 +4,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.player.Player;
 
 /**
- * Normalstate for player, with normal jump- and movementspeed, not invincible.
+ * PowereddownState for player, with lower jump- and movementspeed, not invincible.
  */
-public class NormalState implements PowerUpState
+public class PoweredDownState implements PowerUpState
 {
-    private static final int JUMP_SPEED = 500;
-    private static final int RUNNING_SPEED = 300;
-    private static final int NORMAL_PLAYER_WIDTH = 64;
-    private static final int NORMAL_PLAYER_HEIGHT = 64;
+    private static final int JUMP_SPEED = 300;
+    private static final int RUNNING_SPEED = 200;
+    private static final int WEAK_PLAYER_WIDTH = 40;
+    private static final int WEAK_PLAYER_HEIGHT = 40;
 
     @Override public States getState() {
-	return States.NORMAL_STATE;
+	return States.POWERED_DOWN_STATE;
     }
 
     @Override public void jump(Player p) {
@@ -30,7 +30,7 @@ public class NormalState implements PowerUpState
     }
 
     @Override public void setSize(Player p) {
-	p.setSize(new Vector2(NORMAL_PLAYER_WIDTH, NORMAL_PLAYER_HEIGHT));
+	p.setSize(new Vector2(WEAK_PLAYER_WIDTH, WEAK_PLAYER_HEIGHT));
     }
 
     @Override public boolean isInvincible() {

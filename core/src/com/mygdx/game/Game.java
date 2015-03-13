@@ -37,6 +37,7 @@ public class Game
      */
     public static final int FRAME_WIDTH = 640;
 
+
     public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
 	this.map = map;
@@ -77,8 +78,8 @@ public class Game
 	return new PlayerMaker().createPlayer();
     }
 
-    public void fetchMap(){
-	for (Wall wall : map.getWalls()){
+    public void fetchMap() {
+	for (Wall wall : map.getWalls()) {
 	    gameObjects.add(wall);
 	}
     }
