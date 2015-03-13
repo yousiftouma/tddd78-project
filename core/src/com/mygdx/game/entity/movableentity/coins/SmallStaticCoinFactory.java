@@ -21,16 +21,20 @@ public class SmallStaticCoinFactory implements CoinFactory
     private List<Vector2> spawnPoints;
     private int damage;
     private int hitPointsMax;
+    private boolean movingLeft;
 
+    // If factory shouldnt know spawnpoints, spawn it outside the world first or make createCoin take
+    // a position
     public SmallStaticCoinFactory(List<Vector2> spawnPoints)
     {
 	this.sprite = new Sprite(new Texture(Gdx.files.internal("goldCoin5.png")));
 	this.spawnPoints = spawnPoints;
-	this.size = SmallMovingCoin.getCoinSize();
+	this.size = SmallStaticCoin.getCoinSize();
 	this.velocity = new Vector2(0, 0);
 	this.acceleration = new Vector2(0, Game.NORMAL_GRAVITY);
 	this.damage = 0;
 	this.hitPointsMax = 1;
+	this.movingLeft = false;
     }
 
     /**
@@ -38,7 +42,7 @@ public class SmallStaticCoinFactory implements CoinFactory
      */
     @Override public AbstractCoin createCoin() {
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
-	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax);
+	return new SmallStaticCoin(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
     }
 }
 

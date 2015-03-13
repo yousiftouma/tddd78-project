@@ -86,14 +86,12 @@ public abstract class MovableEntity extends CollisionEntity {
             //to avoid setting fallspeed to 0 if not actually on top
             if (velocity.y < 0) {
                 velocity.y = 0;
-                //setVelocity(new Vector2(getVelocity().x, 0)); simple setter within class
             }
             setPosition(new Vector2(getPosition().x, object.getPosition().y + object.getSize().y));
         } else if (side == Side.BOTTOM) {
             //to start falling upon collision with bottom
             if (velocity.y > 0) {
                 velocity.y = 0;
-                //setVelocity(new Vector2(getVelocity().x, 0)); simple setter within class
             }
             setPosition(new Vector2(getPosition().x, object.getPosition().y - getSize().y));
         } else if (side == Side.LEFT) {
