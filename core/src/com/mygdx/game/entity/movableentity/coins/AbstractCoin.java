@@ -17,9 +17,9 @@ public abstract class AbstractCoin extends MovableEntity
     protected int value;
 
     protected AbstractCoin(final Sprite sprite, final Vector2 position, final Vector2 size, final Vector2 velocity,
-			   final Vector2 acceleration)
+			   final Vector2 acceleration, final int damage, final int hitPointsMax)
     {
-	super(sprite, position, size, velocity, acceleration);
+	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
     }
 
     public void remove(Collection<Entity> objects){
