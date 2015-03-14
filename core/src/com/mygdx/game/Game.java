@@ -29,6 +29,11 @@ public class Game
     private final static int NORMAL_GRAVITY = 982;
 
     /**
+     * Title of the game
+     */
+    public static final String TITLE = "The Game Title";
+
+    /**
      * height of game window, should be accessible to anyone who wants it
      */
     public static final int FRAME_HEIGHT = 480;
