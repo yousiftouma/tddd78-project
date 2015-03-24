@@ -21,6 +21,8 @@ public class Wall extends CollisionEntity
 	super(sprite, position, size, damage);
     }
 
+
+
     @Override public GameObject getGameObjectType() {
 	return GameObject.WALL;
     }
