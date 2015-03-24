@@ -11,7 +11,7 @@ import com.mygdx.game.entity.obstacle.Wall;
  * Represents the first map
  * Singleton
  */
-public final class Map1 extends MapSkeleton implements GameMap
+public final class Map1 extends AbstractMap implements GameMap
 {
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
     private final static int PLAYER_SPAWN_X = 100;

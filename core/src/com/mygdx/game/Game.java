@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
-import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
 import com.mygdx.game.entity.obstacle.Wall;
@@ -24,7 +23,9 @@ public class Game
     private List<Vector2> enemySpawnPoints;
     private Vector2 playerSpawnPoint;
     private GameMap map;
+    // it is initialized but through a different method
     private Player player;
+    private PlayerMaker playerMaker;
 
     private final static int NORMAL_GRAVITY = 982;
 
@@ -49,19 +50,16 @@ public class Game
 	this.coinSpawnPoints = map.getCoinSpawnPoints();
 	this.enemySpawnPoints = map.getEnemySpawnPoints();
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();
-	fetchMap();
-	this.player = createPlayer();
-	gameObjects.add(player);
-	player.setPosition(playerSpawnPoint);
+	this.playerMaker = new PlayerMaker();
+	fetchMapObstacles();
+	createPlayer();
     }
 
     public void updateGame() {
 	player.update(Gdx.graphics.getDeltaTime());
 	for (Entity object : gameObjects) {
-	    if (object.getGameObjectType() == GameObject.WALL) {
-		if (player.hasCollision((CollisionEntity) object)) {
-		    player.doAction(GameObject.WALL, (CollisionEntity) object);
-		}
+	    if (player.hasCollision((CollisionEntity) object)) {
+		player.doAction(object.getGameObjectType(), (CollisionEntity) object);
 	    }
 	}
     }
@@ -73,17 +71,19 @@ public class Game
 	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 	    player.moveRight(Gdx.graphics.getDeltaTime());
 	}
-	//isKeyJustPressed means when button i pressed, not while button is pressed
+	//isKeyJustPressed means moment when button is pressed, not while button is pressed
 	if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 	    player.jump();
 	}
     }
 
-    public Player createPlayer() {
-	return new PlayerMaker().createPlayer();
+    public void createPlayer() {
+	this.player = playerMaker.createPlayer();
+	gameObjects.add(player);
+	player.setPosition(playerSpawnPoint);
     }
 
-    public void fetchMap() {
+    public void fetchMapObstacles() {
 	for (Wall wall : map.getWalls()) {
 	    gameObjects.add(wall);
 	}

@@ -23,6 +23,7 @@ public class Player extends MovableEntity {
     private int score;
     private PowerUpState pState;
     private float powerUpTimer;
+    private boolean jumping = false;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
 	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
@@ -36,8 +37,17 @@ public class Player extends MovableEntity {
     }
 
     public void jump() {
-        pState.jump(this);
+	if (velocity.y == 0) {
+	    pState.jump(this);
+	    jumping = true;
+	}
+	else if (jumping){
+	    pState.jump(this);
+	    jumping = false;
+	}
+
     }
+
 
     @Override
     public void moveLeft(float dt) {

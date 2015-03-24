@@ -1,8 +1,6 @@
 package com.mygdx.game;
 
 import com.mygdx.game.exceptions.WrongInputException;
-import com.mygdx.game.maps.GameMap;
-import com.mygdx.game.maps.Map1;
 import com.mygdx.game.screens.GameScreen;
 
 import javax.swing.*;
@@ -19,6 +17,7 @@ public class GameWindow extends com.badlogic.gdx.Game
     /**
      * Runs upon starting launcher, selects screen to show
      */
+    /*
     @Override public void create() {
 
 	final String wrongInputError = "Incorrect input! Needs to be wholenumber in range 1-10!";
@@ -33,9 +32,24 @@ public class GameWindow extends com.badlogic.gdx.Game
 		e.printStackTrace();
 		mapNumberString = null;
 		mapNumber = null;
-		//JOptionPane.showMessageDialog(null, wrongInputError);
 	    }
 	}
+    }
+    */
+
+    @Override public void create(){
+
+	final Object[] maps = {"1"};
+	mapNumberString = (String)JOptionPane.showInputDialog(
+	                    null, // no parent frame
+	                    "Chose a map to play!", // text
+	                    "Mapselector", // title of dialog
+	                    JOptionPane.PLAIN_MESSAGE,
+			    null, // no icon
+			    maps, // options
+	                    "1"); // default
+	mapNumber = Integer.parseInt(mapNumberString);
+	setScreen(new GameScreen(mapNumber));
     }
 
 }

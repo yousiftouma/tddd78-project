@@ -4,14 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Game;
-import com.mygdx.game.GameWindow;
 import com.mygdx.game.entity.Entity;
-import com.mygdx.game.exceptions.WrongInputException;
 import com.mygdx.game.maps.GameMap;
 import com.mygdx.game.maps.Map1;
-import com.mygdx.game.maps.MapSkeleton;
 
 /**
  * Renders everything
@@ -30,7 +26,7 @@ public class GameScreen implements Screen
      * @param mapNumber which map to render in screen, must be within range
      */
     public GameScreen(int mapNumber) {
-	assert (0 <= mapNumber && mapNumber <=10);
+	assert (0 <= mapNumber && mapNumber <=10); //necessary?
 	GameMap mapToPlay;
 	switch (mapNumber) {
 	    case 1:

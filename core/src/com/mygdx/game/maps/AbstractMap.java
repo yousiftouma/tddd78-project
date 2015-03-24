@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Superclass for maps that creates the arraylists of content but never fills them. Each map is a singleton with lazy
- * initialization, since we don't need to create a map unless the game wants to fetch it.
+ * Superclass for maps that creates the arraylists of content but never fills them. This class is never instantiated
+ * and therefore abstract but needed to reduce codeduplication.
  */
-public abstract class MapSkeleton
+
+public abstract class AbstractMap
 {
+    /**
+     * protected fields since the subclass wants to access their version of the lists directly to fill them
+     */
     protected List<Wall> walls;
     protected List<Vector2> enemySpawnPoints;
     protected List<Vector2> coinSpawnPoints;
@@ -20,7 +24,7 @@ public abstract class MapSkeleton
 
     protected static final int NORMAL_WALL_THICKNESS = 10;
 
-    protected MapSkeleton()
+    protected AbstractMap()
     {
 	this.walls = new ArrayList<>();
 	this.enemySpawnPoints = new ArrayList<>();
