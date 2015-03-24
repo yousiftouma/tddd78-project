@@ -12,8 +12,8 @@ public class NormalPowerUp extends AbstractPowerUp {
     private final static int POWER_UP_WIDTH = 16;
     private final static int POWER_UP_HEIGHT = 16;
 
-    public NormalPowerUp(Sprite sprite, Vector2 position, Vector2 size, int damage, float powerUpTime) {
-        super(sprite, position, size, damage, powerUpTime);
+    public NormalPowerUp(Sprite sprite, Vector2 position, Vector2 size, float powerUpTime) {
+        super(sprite, position, size, powerUpTime);
     }
 
     @Override public GameObject getGameObjectType() {

@@ -13,15 +13,18 @@ public class Wall extends CollisionEntity
 {
 
     /**
-     * @param sprite Sprite that represents the wall
+     * @param sprite   Sprite that represents the wall
      * @param position Vector2 (x,y) bottomleft position of sprite, 0,0 bottom left in frame
-     * @param size Vector2 (width, height)
+     * @param size     Vector2 (width, height)
+     * default damage to 0 for walls
      */
-    public Wall(final Sprite sprite, final Vector2 position, final Vector2 size, final int damage) {
-	super(sprite, position, size, damage);
+    public Wall(final Sprite sprite, final Vector2 position, final Vector2 size) {
+	super(sprite, position, size, 0);
     }
+
 
     @Override public GameObject getGameObjectType() {
 	return GameObject.WALL;
     }
 }
+

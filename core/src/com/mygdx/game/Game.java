@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.movableentity.coins.CoinFactory;
+import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
 import com.mygdx.game.entity.obstacle.Wall;
@@ -21,13 +23,16 @@ public class Game
     private List<Entity> gameObjects;
     private List<Vector2> coinSpawnPoints;
     private List<Vector2> enemySpawnPoints;
+    private List<CoinFactory> coinFactories;
+    private List<EnemyFactory> enemyFactories;
     private Vector2 playerSpawnPoint;
     private GameMap map;
-    // it is initialized but through a different method
+    // player is initialized but through a different method
     private Player player;
     private PlayerMaker playerMaker;
 
     private final static int NORMAL_GRAVITY = 982;
+    private final static int ENEMY_SPAWN_TIMER = 5;
 
     /**
      * Title of the game
@@ -50,14 +55,16 @@ public class Game
 	this.coinSpawnPoints = map.getCoinSpawnPoints();
 	this.enemySpawnPoints = map.getEnemySpawnPoints();
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();
+	this.coinFactories = map.getCoinFactories();
+	this.enemyFactories = map.getEnemyFactories();
 	this.playerMaker = new PlayerMaker();
 	fetchMapObstacles();
 	createPlayer();
     }
 
     public void updateGame() {
-	player.update(Gdx.graphics.getDeltaTime());
 	for (Entity object : gameObjects) {
+	    player.update(Gdx.graphics.getDeltaTime());
 	    if (player.hasCollision((CollisionEntity) object)) {
 		player.doAction(object.getGameObjectType(), (CollisionEntity) object);
 	    }

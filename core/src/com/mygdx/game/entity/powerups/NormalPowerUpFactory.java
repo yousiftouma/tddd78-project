@@ -16,7 +16,6 @@ public class NormalPowerUpFactory implements PowerUpFactory
 
     private Sprite sprite;
     private Vector2 size;
-    private int damage;
     private float powerUpTime;
     private List<Vector2> spawnPoints;
     private Random getRandomSpawnPoint = new Random();
@@ -26,12 +25,11 @@ public class NormalPowerUpFactory implements PowerUpFactory
 	this.sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
 	this.spawnPoints = spawnPoints;
 	this.size = NormalPowerUp.getPowerUpSize();
-	this.damage = 0;
 	this.powerUpTime = 10;
     }
 
     @Override public AbstractPowerUp createPowerUp() {
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
-	return new NormalPowerUp(sprite, randomPosition, size, damage, powerUpTime);
+	return new NormalPowerUp(sprite, randomPosition, size, powerUpTime);
     }
 }
