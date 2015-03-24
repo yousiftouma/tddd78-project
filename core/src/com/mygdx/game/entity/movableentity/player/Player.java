@@ -20,10 +20,11 @@ import java.util.Collection;
  */
 public class Player extends MovableEntity {
 
+    private final static int NUMBER_OF_JUMPS = 2;
     private int score;
     private PowerUpState pState;
     private float powerUpTimer;
-    private boolean jumping = false;
+    private int jumpsCount = NUMBER_OF_JUMPS;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
 	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
@@ -37,14 +38,10 @@ public class Player extends MovableEntity {
     }
 
     public void jump() {
-	if (velocity.y == 0) {
-	    pState.jump(this);
-	    jumping = true;
-	}
-	else if (jumping){
-	    pState.jump(this);
-	    jumping = false;
-	}
+	if (jumpsCount > 0){
+        pState.jump(this);
+        jumpsCount--;
+    }
 
     }
 
@@ -64,6 +61,9 @@ public class Player extends MovableEntity {
         if (type == GameObject.WALL) {
             Side side = getCollisionSide(object);
             separateSide(side, object);
+            if (side == Side.TOP){
+                jumpsCount = NUMBER_OF_JUMPS;
+            }
 
         } else if (type == GameObject.ENEMY) {
             if (!pState.isInvincible()) {
