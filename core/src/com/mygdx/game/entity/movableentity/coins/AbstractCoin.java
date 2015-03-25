@@ -23,21 +23,16 @@ public abstract class AbstractCoin extends MovableEntity
     private boolean movingLeft;
     private int value;
     private final static int DAMAGE = 0;
+    private final static int HIT_POINTS = 1;
 
     /**
      * damage set to 0
-     * @param sprite
-     * @param position
-     * @param size
-     * @param velocity
-     * @param acceleration
-     * @param hitPointsMax
-     * @param movingLeft
+     * hitpoints set to 1 (should die instantly)
      */
     protected AbstractCoin(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
-			   int hitPointsMax, boolean movingLeft)
+			   boolean movingLeft)
     {
-	super(sprite, position, size, velocity, acceleration, DAMAGE, hitPointsMax);
+	super(sprite, position, size, velocity, acceleration, DAMAGE, HIT_POINTS);
 	this.movingLeft = movingLeft;
     }
 

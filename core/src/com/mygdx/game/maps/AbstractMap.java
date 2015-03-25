@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.coins.CoinFactory;
 import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.obstacle.Wall;
+import com.mygdx.game.entity.powerups.PowerUpFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +27,13 @@ public abstract class AbstractMap
     protected List<Vector2> coinSpawnPoints;
     protected List<EnemyFactory> enemyFactories;
     protected List<CoinFactory> coinFactories;
+    protected List<PowerUpFactory> powerUpFactories;
 
     private Vector2 playerSpawnPoint;
 
+    /**
+     * protected and should be accessed by different maps in package
+     */
     protected static final int NORMAL_WALL_THICKNESS = 10;
 
     protected AbstractMap()
@@ -38,6 +43,7 @@ public abstract class AbstractMap
 	this.coinSpawnPoints = new ArrayList<>();
 	this.enemyFactories = new ArrayList<>();
 	this.coinFactories = new ArrayList<>();
+	this.powerUpFactories = new ArrayList<>();
 	this.playerSpawnPoint = null;
     }
 
@@ -55,20 +61,14 @@ public abstract class AbstractMap
 
     public abstract void addCoinFactories();
 
+    public abstract void addPowerUpFactories();
+
     public void setPlayerSpawnPoint(final Vector2 playerSpawnPoint) {
 	this.playerSpawnPoint = playerSpawnPoint;
     }
 
     public List<Wall> getWalls() {
 	return walls;
-    }
-
-    public List<Vector2> getEnemySpawnPoints() {
-	return enemySpawnPoints;
-    }
-
-    public List<Vector2> getCoinSpawnPoints() {
-	return coinSpawnPoints;
     }
 
     public Vector2 getPlayerSpawnPoint() {
@@ -81,5 +81,9 @@ public abstract class AbstractMap
 
     public List<CoinFactory> getCoinFactories() {
 	return coinFactories;
+    }
+
+    public List<PowerUpFactory> getPowerUpFactories() {
+	return powerUpFactories;
     }
 }

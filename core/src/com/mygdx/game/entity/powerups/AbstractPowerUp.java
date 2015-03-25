@@ -16,15 +16,13 @@ public abstract class AbstractPowerUp extends CollisionEntity
     protected float powerUpTime;
     public abstract float getPowerUpTime();
 
+    private static final int DAMAGE = 0;
+
     /**
-     * default damage to 0
-     * @param sprite
-     * @param position
-     * @param size
-     * @param powerUpTime
+     * damage set to 0
      */
     protected AbstractPowerUp(Sprite sprite, Vector2 position, Vector2 size, float powerUpTime) {
-	super(sprite, position, size, 0);
+	super(sprite, position, size, DAMAGE);
 	this.powerUpTime = powerUpTime;
     }
 }

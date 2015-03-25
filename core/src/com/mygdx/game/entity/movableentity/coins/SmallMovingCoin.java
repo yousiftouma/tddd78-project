@@ -12,9 +12,9 @@ public class SmallMovingCoin extends SmallStaticCoin
 {
 
     protected SmallMovingCoin(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
-			      int hitPointsMax, boolean movingLeft)
+			      boolean movingLeft)
     {
-	super(sprite, position, size, velocity, acceleration, hitPointsMax, movingLeft);
+	super(sprite, position, size, velocity, acceleration, movingLeft);
     }
 
     /**

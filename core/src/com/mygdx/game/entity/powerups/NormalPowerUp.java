@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.GameObject;
 
 /**
- * Normal powerup, can return its durationtime
+ * Normal powerup, can return its durationtime, type and size
  */
 public class NormalPowerUp extends AbstractPowerUp {
 
