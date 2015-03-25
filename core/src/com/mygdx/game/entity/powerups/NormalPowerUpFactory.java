@@ -22,7 +22,7 @@ public class NormalPowerUpFactory implements PowerUpFactory
 
     public NormalPowerUpFactory(List<Vector2> spawnPoints)
     {
-	this.sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
+	this.sprite = new Sprite(new Texture(Gdx.files.internal("powerup.png")));
 	this.spawnPoints = spawnPoints;
 	this.size = NormalPowerUp.getPowerUpSize();
 	this.powerUpTime = 10;

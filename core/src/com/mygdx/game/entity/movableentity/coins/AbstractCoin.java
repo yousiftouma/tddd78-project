@@ -17,11 +17,15 @@ import java.util.Collection;
  */
 public abstract class AbstractCoin extends MovableEntity
 {
-    protected boolean movingLeft;
-    protected int value;
+    /**
+     * protected field since subclasses wants to access it directly
+     */
+    private boolean movingLeft;
+    private int value;
+    private final static int DAMAGE = 0;
 
     /**
-     * default damage to 0
+     * damage set to 0
      * @param sprite
      * @param position
      * @param size
@@ -33,7 +37,7 @@ public abstract class AbstractCoin extends MovableEntity
     protected AbstractCoin(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
 			   int hitPointsMax, boolean movingLeft)
     {
-	super(sprite, position, size, velocity, acceleration, 0, hitPointsMax);
+	super(sprite, position, size, velocity, acceleration, DAMAGE, hitPointsMax);
 	this.movingLeft = movingLeft;
     }
 
@@ -43,6 +47,14 @@ public abstract class AbstractCoin extends MovableEntity
 
     public int getValue() {
 	return value;
+    }
+
+    public boolean isMovingLeft() {
+	return movingLeft;
+    }
+
+    public void setMovingLeft(final boolean movingLeft) {
+	this.movingLeft = movingLeft;
     }
 
     @Override public void moveLeft(final float dt) {

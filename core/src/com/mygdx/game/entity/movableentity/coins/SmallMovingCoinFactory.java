@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Factory that creates moving coins, takes an ArrayList of possible spawn points
+ * Factory that creates moving coins, takes an ArrayList of possible spawn points and boolean movingLeft
  */
 public class SmallMovingCoinFactory implements CoinFactory
 {
@@ -21,7 +21,6 @@ public class SmallMovingCoinFactory implements CoinFactory
     private Vector2 acceleration;
     private Random getRandomSpawnPoint = new Random();
     private List<Vector2> spawnPoints;
-    private int damage;
     private int hitPointsMax;
     private boolean movingLeft;
 
@@ -34,7 +33,6 @@ public class SmallMovingCoinFactory implements CoinFactory
 	this.size = SmallStaticCoin.getCoinSize();
 	this.velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
 	this.acceleration = new Vector2(0, Game.getGravity());
-	this.damage = 0;
 	this.hitPointsMax = 1;
 	this.movingLeft = movingLeft;
     }
@@ -44,6 +42,6 @@ public class SmallMovingCoinFactory implements CoinFactory
      */
     @Override public AbstractCoin createCoin() {
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
-	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
+	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration, hitPointsMax, movingLeft);
     }
 }
