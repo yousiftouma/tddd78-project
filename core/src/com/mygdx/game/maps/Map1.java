@@ -9,7 +9,7 @@ import com.mygdx.game.entity.movableentity.coins.SmallMovingCoinFactory;
 import com.mygdx.game.entity.movableentity.coins.SmallStaticCoinFactory;
 import com.mygdx.game.entity.movableentity.enemy.NormalEnemyFactory;
 import com.mygdx.game.entity.obstacle.Wall;
-import com.mygdx.game.entity.powerups.NormalPowerUpFactory;
+import com.mygdx.game.entity.movableentity.powerups.NormalStaticPowerUpFactory;
 
 /**
  * Represents the first map
@@ -83,6 +83,6 @@ public final class Map1 extends AbstractMap implements GameMap
     }
 
     @Override public void addPowerUpFactories() {
-	powerUpFactories.add(new NormalPowerUpFactory(coinSpawnPoints));
+	powerUpFactories.add(new NormalStaticPowerUpFactory(coinSpawnPoints));
     }
 }

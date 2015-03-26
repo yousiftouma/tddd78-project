@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.coins.CoinFactory;
 import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.obstacle.Wall;
-import com.mygdx.game.entity.powerups.PowerUpFactory;
+import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 
 import java.util.List;
 

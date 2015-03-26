@@ -1,9 +1,10 @@
-package com.mygdx.game.entity.powerups;
+package com.mygdx.game.entity.movableentity.powerups;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Game;
 
 import java.util.List;
 import java.util.Random;
@@ -11,25 +12,27 @@ import java.util.Random;
 /**
  * Factory for creating normal power ups
  */
-public class NormalPowerUpFactory implements PowerUpFactory
+public class NormalStaticPowerUpFactory implements PowerUpFactory
 {
 
     private Sprite sprite;
     private Vector2 size;
-    private float powerUpTime;
+    private Vector2 velocity;
+    private Vector2 acceleration;
     private List<Vector2> spawnPoints;
     private Random getRandomSpawnPoint = new Random();
 
-    public NormalPowerUpFactory(List<Vector2> spawnPoints)
+    public NormalStaticPowerUpFactory(List<Vector2> spawnPoints)
     {
 	this.sprite = new Sprite(new Texture(Gdx.files.internal("powerup.png")));
 	this.spawnPoints = spawnPoints;
-	this.size = NormalPowerUp.getPowerUpSize();
-	this.powerUpTime = 10;
+	this.size = NormalStaticPowerUp.getPowerUpSize();
+	this.velocity = new Vector2(0,0);
+	this.acceleration = new Vector2(0, Game.getGravity());
     }
 
     @Override public AbstractPowerUp createPowerUp() {
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
-	return new NormalPowerUp(sprite, randomPosition, size, powerUpTime);
+	return new NormalStaticPowerUp(sprite, randomPosition, size, velocity, acceleration);
     }
 }

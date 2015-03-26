@@ -14,10 +14,9 @@ public class SmallStaticCoin extends AbstractCoin
     private final static int COIN_WIDTH = 16;
     private final static int COIN_HEIGHT = 16;
 
-    protected SmallStaticCoin(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
-			      boolean movingLeft)
+    protected SmallStaticCoin(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration)
     {
- 	super(sprite, position, size, velocity, acceleration, movingLeft);
+ 	super(sprite, position, size, velocity, acceleration);
  	setValue(VALUE);
     }
 
