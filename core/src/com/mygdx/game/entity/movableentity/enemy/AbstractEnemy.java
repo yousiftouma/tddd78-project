@@ -25,12 +25,26 @@ public abstract class AbstractEnemy extends MovableEntity
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
+        Side side = getCollisionSide(object);
         if (type == GameObject.WALL) {
-            Side side = getCollisionSide(object);
             separateSide(side, object);
-	    if (side == Side.LEFT || side == Side.RIGHT) {
-		movingLeft = !movingLeft;
-	    }
+            if (side == Side.LEFT || side == Side.RIGHT) {
+                movingLeft = !movingLeft;
+            }
+        }
+        if (type == GameObject.ENEMY) {
+            separateSide(side, object);
+            if (side == Side.LEFT) {
+                movingLeft = false;
+                AbstractEnemy collidedEnemy = (AbstractEnemy)object;
+                collidedEnemy.setMovingLeft(true);
+            }
+            else if (side == Side.RIGHT) {
+                movingLeft = true;
+                AbstractEnemy collidedEnemy = (AbstractEnemy)object;
+                collidedEnemy.setMovingLeft(false);
+
+            }
         }
     }
 
@@ -43,6 +57,10 @@ public abstract class AbstractEnemy extends MovableEntity
         else{
             moveRight(dt);
         }
+    }
+
+    public void setMovingLeft(boolean movingLeft) {
+        this.movingLeft = movingLeft;
     }
 
     @Override public void moveLeft(final float dt) {
