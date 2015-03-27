@@ -26,6 +26,10 @@ public abstract class MovableEntity extends CollisionEntity {
 
     public abstract void doAction(GameObject type, CollisionEntity object);
 
+    /**
+     * idea is to remove itself from objects list and do something specifik to the class
+     * @param objects the list to remove itself from
+     */
     public abstract void onDeath(final Collection<Entity> objects);
 
     private final static int MAX_FREE_FALL_VELOCITY = 2000;

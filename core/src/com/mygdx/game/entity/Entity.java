@@ -13,6 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Entity  {
 
     private Sprite sprite;
+    /**
+     * In libgdx, Vector2 can be used as both points (position) and size
+     */
     private Vector2 position;
     private Vector2 size;
     public abstract GameObject getGameObjectType();

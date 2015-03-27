@@ -11,7 +11,7 @@ import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.States;
 import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
 import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
-import com.mygdx.game.entity.powerups.AbstractPowerUp;
+import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 
 import java.util.Collection;
 
@@ -70,7 +70,7 @@ public class Player extends MovableEntity {
                 hitPointsLeft -= object.getDamage();
             }
         }
-        else if (type == GameObject.NORMAL_POWER_UP) {
+        else if (type == GameObject.NORMAL_STATIC_POWER_UP) {
 	    this.pState = new PoweredUpState();
 	    powerUpTimer = ((AbstractPowerUp) object).getPowerUpTime();
             pState.setSize(this);

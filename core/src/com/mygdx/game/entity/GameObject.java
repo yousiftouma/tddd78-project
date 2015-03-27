@@ -27,7 +27,7 @@ public enum GameObject {
     /**
      * normal nonmoving powerUp
      */
-    NORMAL_POWER_UP
+    NORMAL_STATIC_POWER_UP
 
 
 }

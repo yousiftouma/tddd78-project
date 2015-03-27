@@ -1,4 +1,4 @@
-package com.mygdx.game.entity.movableentity.coins;
+package com.mygdx.game.entity.movableentity.powerups;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -10,37 +10,35 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
 
 import java.util.Collection;
 
-
 /**
- * Abstract class that is never instantiated and has no abstract methods but is necessary since we
- * inherit methods and create subclasses
+ * Abstract powerup that is never instantiated but with shared code for subclasses
  */
-public abstract class AbstractCoin extends MovableEntity
+public abstract class AbstractPowerUp extends MovableEntity
 {
 
-    private int value;
+    private float powerUpTime;
+
     private final static int DAMAGE = 0;
     private final static int HIT_POINTS = 1;
 
     /**
-     * damage set to 0
-     * hitpoints set to 1 (should die instantly)
+     * damage set to 0 hitpoints set to 1 (should die instantly)
      */
-    protected AbstractCoin(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration)
+    protected AbstractPowerUp(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration)
     {
 	super(sprite, position, size, velocity, acceleration, DAMAGE, HIT_POINTS);
     }
 
-    public void setValue(final int value) {
-	this.value = value;
+    public void setPowerUpTime(final float powerUpTime) {
+ 	this.powerUpTime = powerUpTime;
     }
 
-    public int getValue() {
-	return value;
-    }
+    public float getPowerUpTime() {
+ 	return powerUpTime;
+     }
 
     @Override public void moveLeft(final float dt) {
-        setPositionX(getPosition().x - velocity.x * dt);
+	setPositionX(getPosition().x - velocity.x * dt);
     }
 
     @Override public void moveRight(final float dt) {
@@ -52,9 +50,9 @@ public abstract class AbstractCoin extends MovableEntity
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
-        if (type == GameObject.WALL) {
-            Side side = getCollisionSide(object);
-            separateSide(side, object);
-        }
+	if (type == GameObject.WALL) {
+	    Side side = getCollisionSide(object);
+	    separateSide(side, object);
+	}
     }
 }

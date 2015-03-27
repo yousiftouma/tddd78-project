@@ -1,7 +1,10 @@
 package com.mygdx.game.maps;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.movableentity.coins.CoinFactory;
+import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.obstacle.Wall;
+import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 
 import java.util.List;
 
@@ -17,7 +20,8 @@ import java.util.List;
 public interface GameMap
 {
     List<Wall> getWalls();
-    List<Vector2> getEnemySpawnPoints();
-    List<Vector2> getCoinSpawnPoints();
+    List<CoinFactory> getCoinFactories();
+    List<EnemyFactory> getEnemyFactories();
+    List<PowerUpFactory> getPowerUpFactories();
     Vector2 getPlayerSpawnPoint();
 }

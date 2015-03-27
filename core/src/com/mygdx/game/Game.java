@@ -5,13 +5,23 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.entity.movableentity.MovableEntity;
+import com.mygdx.game.entity.movableentity.coins.CoinFactory;
+import com.mygdx.game.entity.movableentity.coins.SmallMovingCoin;
+import com.mygdx.game.entity.movableentity.coins.SmallStaticCoin;
+import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
-import com.mygdx.game.entity.obstacle.Wall;
+import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
+import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
+import com.mygdx.game.entity.movableentity.powerups.NormalStaticPowerUp;
+import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.maps.GameMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents the game, using GameRenderer to draw it up
@@ -19,15 +29,18 @@ import java.util.List;
 public class Game
 {
     private List<Entity> gameObjects;
-    private List<Vector2> coinSpawnPoints;
-    private List<Vector2> enemySpawnPoints;
+    private List<CoinFactory> coinFactories;
+    private List<EnemyFactory> enemyFactories;
+    private List<PowerUpFactory> powerUpFactories;
     private Vector2 playerSpawnPoint;
     private GameMap map;
-    // it is initialized but through a different method
+    // player is initialized but through a different method
     private Player player;
     private PlayerMaker playerMaker;
 
     private final static int NORMAL_GRAVITY = 982;
+    private final static int ENEMY_RESPAWN_TIME = 5;
+
 
     /**
      * Title of the game
@@ -47,19 +60,32 @@ public class Game
     public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
 	this.map = map;
-	this.coinSpawnPoints = map.getCoinSpawnPoints();
-	this.enemySpawnPoints = map.getEnemySpawnPoints();
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();
+	this.coinFactories = map.getCoinFactories();
+	this.enemyFactories = map.getEnemyFactories();
+	this.powerUpFactories = map.getPowerUpFactories();
 	this.playerMaker = new PlayerMaker();
 	fetchMapObstacles();
 	createPlayer();
     }
 
     public void updateGame() {
-	player.update(Gdx.graphics.getDeltaTime());
 	for (Entity object : gameObjects) {
-	    if (player.hasCollision((CollisionEntity) object)) {
-		player.doAction(object.getGameObjectType(), (CollisionEntity) object);
+	    if (object instanceof MovableEntity) {
+		((MovableEntity) object).update(Gdx.graphics.getDeltaTime());
+		for (Entity otherObject : gameObjects) {
+		    if (otherObject instanceof CollisionEntity) {
+			if (object != otherObject) {
+			    if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
+				((MovableEntity) object)
+					.doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
+			    }
+			}
+		    }
+		}
+		if (((MovableEntity) object).getHitPointsLeft() <= 0) {
+		    onObjectDeath(object.getGameObjectType(), object);
+		}
 	    }
 	}
     }
@@ -77,6 +103,34 @@ public class Game
 	}
     }
 
+    public void onObjectDeath(GameObject type, Entity object){
+	gameObjects.remove(object);
+	switch (type) {
+	    case WALL:
+		//this will never occur as wall cannot die
+		break;
+	    case ENEMY:
+	    	//nothing happens to player
+		break;
+	    case PLAYER:
+		//handle game over
+		break;
+	    case SMALL_STATIC_COIN:
+		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
+		player.addScore(smallStaticCoin.getValue());
+		break;
+	    case SMALL_MOVING_COIN:
+		final SmallMovingCoin smallMovingCoin = (SmallMovingCoin) object;
+		player.addScore(smallMovingCoin.getValue());
+		break;
+	    case NORMAL_STATIC_POWER_UP:
+		final NormalStaticPowerUp normalStaticPowerUp = (NormalStaticPowerUp) object;
+		player.setPState(new NormalState());
+		break;
+	}
+
+    }
+
     public void createPlayer() {
 	this.player = playerMaker.createPlayer();
 	gameObjects.add(player);
@@ -84,10 +138,17 @@ public class Game
     }
 
     public void fetchMapObstacles() {
+	gameObjects.addAll(map.getWalls().stream().collect(Collectors.toList()));
+    }
+
+    /*
+        public void fetchMapObstacles() {
 	for (Wall wall : map.getWalls()) {
-	    gameObjects.add(wall);
+	    collisionGameObjects.add(wall);
 	}
     }
+
+     */
 
     public static int getGravity() {
 	final int gravity = NORMAL_GRAVITY;
