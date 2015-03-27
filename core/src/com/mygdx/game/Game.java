@@ -70,16 +70,21 @@ public class Game
     }
 
     public void updateGame() {
-	player.update(Gdx.graphics.getDeltaTime());
 	for (Entity object : gameObjects) {
-	    if (object instanceof CollisionEntity) {
-		if (player.hasCollision((CollisionEntity) object)) {
-		    player.doAction(object.getGameObjectType(), (CollisionEntity) object);
-		}
-		if (object instanceof MovableEntity){
-		    if (((MovableEntity) object).getHitPointsLeft() <= 0){
-			onObjectDeath(object.getGameObjectType(), object);
+	    if (object instanceof MovableEntity) {
+		((MovableEntity) object).update(Gdx.graphics.getDeltaTime());
+		for (Entity otherObject : gameObjects) {
+		    if (otherObject instanceof CollisionEntity) {
+			if (object != otherObject) {
+			    if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
+				((MovableEntity) object)
+					.doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
+			    }
+			}
 		    }
+		}
+		if (((MovableEntity) object).getHitPointsLeft() <= 0) {
+		    onObjectDeath(object.getGameObjectType(), object);
 		}
 	    }
 	}
