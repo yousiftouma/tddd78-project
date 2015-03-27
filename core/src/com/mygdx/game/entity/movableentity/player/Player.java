@@ -10,15 +10,14 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.States;
 import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
-import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
-import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 
 import java.util.Collection;
 
 /**
  * Playerclass, can jump, move and collide with objects
  */
-public class Player extends MovableEntity {
+public class Player extends MovableEntity
+{
 
     private final static int NUMBER_OF_JUMPS = 2;
     private int score;
@@ -26,75 +25,79 @@ public class Player extends MovableEntity {
     private float powerUpTimer;
     private int jumpsCount = NUMBER_OF_JUMPS;
 
-    public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
-	    super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
-	    score = 0;
-        this.pState = new NormalState();
-        this.powerUpTimer = 0;
-    }
-
-    public void setPState(PowerUpState pState){
-        this.pState = pState;
+    public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage,
+		  int hitPointsMax)
+    {
+	super(sprite, position, size, velocity, acceleration, damage, hitPointsMax);
+	score = 0;
+	this.pState = new NormalState();
+	this.powerUpTimer = 0;
     }
 
     public void jump() {
-	if (jumpsCount > 0){
-        pState.jump(this);
-        jumpsCount--;
-    }
+	if (jumpsCount > 0) {
+	    pState.jump(this);
+	    jumpsCount--;
+	}
 
     }
 
 
-    @Override
-    public void moveLeft(float dt) {
-        pState.moveLeft(this, dt);
+    @Override public void moveLeft(float dt) {
+	pState.moveLeft(this, dt);
     }
 
-    @Override
-    public void moveRight(float dt) {
-        pState.moveRight(this, dt);
+    @Override public void moveRight(float dt) {
+	pState.moveRight(this, dt);
     }
 
-    @Override
-    public void doAction(GameObject type, CollisionEntity object) {
-        if (type == GameObject.WALL) {
-            Side side = getCollisionSide(object);
-            separateSide(side, object);
-            if (side == Side.TOP){
-                jumpsCount = NUMBER_OF_JUMPS;
-            }
+    @Override public void doAction(GameObject type, CollisionEntity object) {
+	if (type == GameObject.WALL) {
+	    Side side = getCollisionSide(object);
+	    separateSide(side, object);
+	    if (side == Side.TOP) {
+		jumpsCount = NUMBER_OF_JUMPS;
+	    }
 
-        } else if (type == GameObject.ENEMY) {
-            if (!pState.isInvincible()) {
-                hitPointsLeft -= object.getDamage();
-            }
-        }
-        else if (type == GameObject.NORMAL_STATIC_POWER_UP) {
-	    this.pState = new PoweredUpState();
-	    powerUpTimer = ((AbstractPowerUp) object).getPowerUpTime();
-            pState.setSize(this);
-        }
+	} else if (type == GameObject.ENEMY) {
+	    if (!pState.isInvincible()) {
+		hitPointsLeft -= object.getDamage();
+	    }
+	} else if (type == GameObject.NORMAL_STATIC_POWER_UP) {
+	    MovableEntity movEnt = (MovableEntity) object;
+	    movEnt.takeDamage(this.damage);
+	}
     }
 
-    @Override
-    public void onDeath(final Collection<Entity> objects) {
+    @Override public void onDeath(final Collection<Entity> objects) {
     }
 
-    @Override
-    public void update(float dt) {
-        super.update(dt);
-        if (pState.getState() != States.NORMAL_STATE){
-            powerUpTimer -= dt;
-            if (powerUpTimer <= 0){
+    @Override public void update(float dt) {
+	super.update(dt);
+	if (pState.getState() != States.NORMAL_STATE) {
+	    powerUpTimer -= dt;
+	    pState.setSize(this);
+	    if (powerUpTimer <= 0) {
 		this.pState = new NormalState();
 		pState.setSize(this);
-            }
-        }
+	    }
+	}
     }
 
-    public void setPowerUpTimer(float time){
-        powerUpTimer = time;
+    public float getPowerUpTimer() {
+	return powerUpTimer;
+    }
+
+    public PowerUpState getpState() {
+	return pState;
+    }
+
+    public void setpState(final PowerUpState pState) {
+	this.pState = pState;
+    }
+
+    public void setPowerUpTimer(float time) {
+	powerUpTimer = time;
     }
 
     public int getScore() {
@@ -103,10 +106,6 @@ public class Player extends MovableEntity {
 
     public void setScore(final int score) {
 	this.score = score;
-    }
-
-    public void addScore(final int points){
-	this.score += points;
     }
 
     @Override public GameObject getGameObjectType() {

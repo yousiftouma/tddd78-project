@@ -12,15 +12,22 @@ import com.mygdx.game.Game;
  */
 public class PlayerMaker
 {
-    private static final int MAX_PLAYER_HP = 20;
-    private static final int PLAYER_DMG = 10;
-    private static final int PLAYER_WIDTH = 48;
-    private static final int PLAYER_HEIGHT = 64;
+    private int damage;
+    private int hitpoints;
+    private int width;
+    private int height;
+
+    public PlayerMaker(int damage, int hitpoints, int width, int height) {
+	this.damage = damage;
+	this.hitpoints = hitpoints;
+	this.width = width;
+	this.height = height;
+    }
 
     public Player createPlayer(){
 	return new Player(new Sprite(new Texture(Gdx.files.internal("playertestbox.png"))), new Vector2(-100,-100),
-			  new Vector2(PLAYER_WIDTH, PLAYER_HEIGHT), new Vector2(0, 0), new Vector2(0, Game.getGravity()),
-			  PLAYER_DMG, MAX_PLAYER_HP);
+			  new Vector2(width, height), new Vector2(0, 0), new Vector2(0, Game.getGravity()),
+			  damage, hitpoints);
     }
 }
 

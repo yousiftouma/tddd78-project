@@ -14,7 +14,8 @@ import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
-import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
+import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
+import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.NormalStaticPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.maps.GameMap;
@@ -38,6 +39,11 @@ public class Game
     private Player player;
     private PlayerMaker playerMaker;
 
+
+    private static final int MAX_PLAYER_HP = 20;
+    private static final int PLAYER_DMG = 10;
+    private static final int PLAYER_WIDTH = 48;
+    private static final int PLAYER_HEIGHT = 64;
     private final static int NORMAL_GRAVITY = 982;
     private final static int ENEMY_RESPAWN_TIME = 5;
 
@@ -64,7 +70,7 @@ public class Game
 	this.coinFactories = map.getCoinFactories();
 	this.enemyFactories = map.getEnemyFactories();
 	this.powerUpFactories = map.getPowerUpFactories();
-	this.playerMaker = new PlayerMaker();
+	this.playerMaker = new PlayerMaker(PLAYER_DMG, MAX_PLAYER_HP, PLAYER_WIDTH, PLAYER_HEIGHT);
 	fetchMapObstacles();
 	createPlayer();
     }
@@ -117,18 +123,22 @@ public class Game
 		break;
 	    case SMALL_STATIC_COIN:
 		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
-		player.addScore(smallStaticCoin.getValue());
+		addScore(smallStaticCoin.getValue());
 		break;
 	    case SMALL_MOVING_COIN:
 		final SmallMovingCoin smallMovingCoin = (SmallMovingCoin) object;
-		player.addScore(smallMovingCoin.getValue());
+		addScore(smallMovingCoin.getValue());
 		break;
 	    case NORMAL_STATIC_POWER_UP:
-		final NormalStaticPowerUp normalStaticPowerUp = (NormalStaticPowerUp) object;
-		player.setPState(new NormalState());
+		player.setpState(new PoweredUpState());
+		player.setPowerUpTimer(((AbstractPowerUp) object).getPowerUpTime());
 		break;
 	}
 
+    }
+
+    public void addScore(final int points) {
+	player.setScore(player.getScore() + points);
     }
 
     public void createPlayer() {

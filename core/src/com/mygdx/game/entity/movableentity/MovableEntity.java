@@ -126,6 +126,10 @@ public abstract class MovableEntity extends CollisionEntity {
         return hitPointsLeft;
     }
 
+    public void takeDamage(int dmg){
+	hitPointsLeft -= dmg;
+    }
+
     public int getHitPointsMax() {
         return hitPointsMax;
     }
