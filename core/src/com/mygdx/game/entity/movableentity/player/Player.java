@@ -7,6 +7,7 @@ import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
+import com.mygdx.game.entity.movableentity.player.powerup.NormalInvincibilityState;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.States;
 import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
@@ -61,19 +62,27 @@ public class Player extends MovableEntity
 		}
 		break;
 	    case ENEMY:
-		if (side != Side.TOP) {
+		if (side == Side.TOP) {
+		    MovableEntity enemy = (MovableEntity) object;
+		    enemy.takeDamage(this.damage);
+		} else {
+		    separateSide(side, object);
 		    if (!pState.isInvincible()) {
 			hitPointsLeft -= object.getDamage();
+			this.pState = new NormalInvincibilityState();
+			powerUpTimer = 3;
 		    }
 		}
-		MovableEntity enemy = (MovableEntity) object;
-		enemy.takeDamage(this.damage);
 		break;
 	    case SMALL_STATIC_COIN:
 	    case SMALL_MOVING_COIN:
 	    case NORMAL_STATIC_POWER_UP:
-		MovableEntity pwrUp = (MovableEntity) object;
-		pwrUp.takeDamage(this.damage);
+		MovableEntity pwrUpOrCoin = (MovableEntity) object;
+		pwrUpOrCoin.takeDamage(this.damage);
+		break;
+	    case PLAYER:
+		//will never happen
+		break;
 	}
     }
 

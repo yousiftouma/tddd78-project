@@ -25,27 +25,32 @@ public abstract class AbstractEnemy extends MovableEntity
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
-        Side side = getCollisionSide(object);
-        if (type == GameObject.WALL) {
-            separateSide(side, object);
-            if (side == Side.LEFT || side == Side.RIGHT) {
-                movingLeft = !movingLeft;
-            }
-        }
-        if (type == GameObject.ENEMY) {
-            separateSide(side, object);
-            if (side == Side.LEFT) {
-                movingLeft = false;
-                AbstractEnemy collidedEnemy = (AbstractEnemy)object;
-                collidedEnemy.setMovingLeft(true);
-            }
-            else if (side == Side.RIGHT) {
-                movingLeft = true;
-                AbstractEnemy collidedEnemy = (AbstractEnemy)object;
-                collidedEnemy.setMovingLeft(false);
-
-            }
-        }
+	Side side = getCollisionSide(object);
+	switch (type) {
+	    case WALL:
+		separateSide(side, object);
+		if (side == Side.LEFT || side == Side.RIGHT) {
+		    movingLeft = !movingLeft;
+		}
+		break;
+	    case ENEMY:
+		separateSide(side, object);
+		if (side == Side.RIGHT) {
+		    movingLeft = false;
+		    AbstractEnemy collidedEnemy = (AbstractEnemy) object;
+		    collidedEnemy.movingLeft = true;
+		} else if (side == Side.LEFT) {
+		    movingLeft = true;
+		    AbstractEnemy collidedEnemy = (AbstractEnemy) object;
+		    collidedEnemy.movingLeft = false;
+		}
+		break;
+	    case PLAYER: //may add seperation or similiar
+	    case SMALL_STATIC_COIN:
+	    case SMALL_MOVING_COIN:
+	    case NORMAL_STATIC_POWER_UP:
+		break;
+	}
     }
 
     @Override

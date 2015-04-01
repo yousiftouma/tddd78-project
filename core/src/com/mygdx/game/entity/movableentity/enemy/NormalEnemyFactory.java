@@ -38,7 +38,7 @@ public class NormalEnemyFactory implements EnemyFactory
     }
 
     @Override public AbstractEnemy createEnemy() {
-	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
+	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt(spawnPoints.size()));
 	return new NormalEnemy(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
     }
 }

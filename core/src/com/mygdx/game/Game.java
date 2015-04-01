@@ -10,18 +10,18 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.coins.CoinFactory;
 import com.mygdx.game.entity.movableentity.coins.SmallMovingCoin;
 import com.mygdx.game.entity.movableentity.coins.SmallStaticCoin;
+import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
 import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
-import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
-import com.mygdx.game.entity.movableentity.powerups.NormalStaticPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.maps.GameMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 public class Game
 {
     private List<Entity> gameObjects;
+    private List<Entity> objectsToRemove;
     private List<CoinFactory> coinFactories;
     private List<EnemyFactory> enemyFactories;
     private List<PowerUpFactory> powerUpFactories;
@@ -39,13 +40,18 @@ public class Game
     private Player player;
     private PlayerMaker playerMaker;
 
+    private float enemySpawnTimer;
+    private float powerUpSpawnTimer;
+
+    private Random getRandomFactory = new Random();
 
     private static final int MAX_PLAYER_HP = 20;
     private static final int PLAYER_DMG = 10;
     private static final int PLAYER_WIDTH = 48;
     private static final int PLAYER_HEIGHT = 64;
     private final static int NORMAL_GRAVITY = 982;
-    private final static int ENEMY_RESPAWN_TIME = 5;
+    private final static int ENEMY_RESPAWN_TIME = 3;
+    private final static int POWER_UP_RESPAWN_TIME = 30;
 
 
     /**
@@ -65,7 +71,10 @@ public class Game
 
     public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
+	this.objectsToRemove = new ArrayList<>();
 	this.map = map;
+	this.enemySpawnTimer = 0;
+	this.powerUpSpawnTimer = POWER_UP_RESPAWN_TIME;
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();
 	this.coinFactories = map.getCoinFactories();
 	this.enemyFactories = map.getEnemyFactories();
@@ -76,15 +85,17 @@ public class Game
     }
 
     public void updateGame() {
+	objectsToRemove.clear();
+	spawnEnemy();
 	for (Entity object : gameObjects) {
 	    if (object instanceof MovableEntity) {
 		((MovableEntity) object).update(Gdx.graphics.getDeltaTime());
 		for (Entity otherObject : gameObjects) {
 		    if (otherObject instanceof CollisionEntity) {
-			if (object != otherObject) {
+			if (object != otherObject) { //!= is correct, we want to avoid checking collision with self
 			    if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
-				((MovableEntity) object)
-					.doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
+				((MovableEntity) object).doAction(otherObject.getGameObjectType(),
+								  (CollisionEntity) otherObject);
 			    }
 			}
 		    }
@@ -94,6 +105,7 @@ public class Game
 		}
 	    }
 	}
+	gameObjects.removeAll(objectsToRemove);
     }
 
     public void handleMovement() {
@@ -110,7 +122,7 @@ public class Game
     }
 
     public void onObjectDeath(GameObject type, Entity object){
-	gameObjects.remove(object);
+	objectsToRemove.add(object);
 	switch (type) {
 	    case WALL:
 		//this will never occur as wall cannot die
@@ -119,7 +131,7 @@ public class Game
 	    	//nothing happens to player
 		break;
 	    case PLAYER:
-		//handle game over
+		System.out.println("player died");
 		break;
 	    case SMALL_STATIC_COIN:
 		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
@@ -134,7 +146,6 @@ public class Game
 		player.setPowerUpTimer(((AbstractPowerUp) object).getPowerUpTime());
 		break;
 	}
-
     }
 
     public void addScore(final int points) {
@@ -147,18 +158,17 @@ public class Game
 	player.setPosition(playerSpawnPoint);
     }
 
+    public void spawnEnemy(){
+	if (enemySpawnTimer <= 0){
+	    gameObjects.add(enemyFactories.get(getRandomFactory.nextInt(enemyFactories.size())).createEnemy());
+	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
+	}
+	else enemySpawnTimer -= Gdx.graphics.getDeltaTime();
+    }
+
     public void fetchMapObstacles() {
 	gameObjects.addAll(map.getWalls().stream().collect(Collectors.toList()));
     }
-
-    /*
-        public void fetchMapObstacles() {
-	for (Wall wall : map.getWalls()) {
-	    collisionGameObjects.add(wall);
-	}
-    }
-
-     */
 
     public static int getGravity() {
 	final int gravity = NORMAL_GRAVITY;

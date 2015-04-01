@@ -30,12 +30,12 @@ public abstract class AbstractPowerUp extends MovableEntity
     }
 
     public void setPowerUpTime(final float powerUpTime) {
- 	this.powerUpTime = powerUpTime;
+	this.powerUpTime = powerUpTime;
     }
 
     public float getPowerUpTime() {
- 	return powerUpTime;
-     }
+	return powerUpTime;
+    }
 
     @Override public void moveLeft(final float dt) {
 	setPositionX(getPosition().x - velocity.x * dt);
@@ -49,9 +49,9 @@ public abstract class AbstractPowerUp extends MovableEntity
 	remove(objects);
     }
 
-    @Override public void doAction(GameObject type, CollisionEntity object) {
+    @Override public void doAction(final GameObject type, final CollisionEntity object) {
+	Side side = getCollisionSide(object);
 	if (type == GameObject.WALL) {
-	    Side side = getCollisionSide(object);
 	    separateSide(side, object);
 	}
     }

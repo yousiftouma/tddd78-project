@@ -30,6 +30,17 @@ public class SmallMovingCoin extends SmallStaticCoin
 	}
     }
 
+    @Override
+    public void update(float dt) {
+        super.update(dt);
+        if (movingLeft){
+            moveLeft(dt);
+        }
+        else{
+            moveRight(dt);
+        }
+    }
+
     /**
      * Ignores superclass method on purpose as they should return different GameObject enums
      *
