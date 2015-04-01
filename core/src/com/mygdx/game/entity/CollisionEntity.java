@@ -21,17 +21,19 @@ public abstract class CollisionEntity extends Entity {
     }
 
     @Override
-    public void setPosition(final Vector2 position) {
-	super.setPosition(position);
-        hitBox.setPosition(position);
+    public void setPosition(final Vector2 pos) {
+	super.setPosition(pos);
+        hitBox.setPosition(pos);
     }
 
-    public Rectangle getHitBox() {
-	return hitBox;
+    @Override public void setPositionX(final float posX) {
+	super.setPositionX(posX);
+	hitBox.setPosition(posX, getPosition().y);
     }
 
-    public void setHitBox(Rectangle hitBox) {
-	this.hitBox = hitBox;
+    @Override public void setPositionY(final float posY) {
+	super.setPositionY(posY);
+	hitBox.setPosition(getPosition().x, posY);
     }
 
     public boolean hasCollision(CollisionEntity object) {

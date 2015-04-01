@@ -53,10 +53,10 @@ public final class Map1 extends AbstractMap implements GameMap
     }
 
     @Override public void addWalls() {
-	walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0),
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2(-50, 0), //outside a little bit
 			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD, NORMAL_WALL_THICKNESS)));
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(Game.FRAME_WIDTH * TWO_THIRDS, 0),
-			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD, NORMAL_WALL_THICKNESS)));
+			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD + 50, NORMAL_WALL_THICKNESS)));
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, Game.FRAME_HEIGHT * ONE_THIRD),
 			   new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, NORMAL_WALL_THICKNESS)));
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(Game.FRAME_WIDTH * THREE_FIFTHS, Game.FRAME_HEIGHT * ONE_THIRD),

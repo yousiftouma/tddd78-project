@@ -45,17 +45,19 @@ public abstract class Entity  {
 	return position;
     }
 
-    public void setPosition(final Vector2 position) {
-	this.position = position;
+    public void setPosition(final Vector2 pos) {
+	this.position = pos;
 	sprite.setPosition(position.x, position.y);
     }
 
     public void setPositionX(float posX){
-        position = new Vector2(posX, position.y);
+        this.position = new Vector2(posX, position.y);
+	sprite.setPosition(posX, position.y);
     }
 
     public void setPositionY(float posY){
-        position = new Vector2(position.x, posY);
+        this.position = new Vector2(position.x, posY);
+	sprite.setPosition(position.x, posY);
     }
 
     public Vector2 getSize() {

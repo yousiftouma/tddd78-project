@@ -67,7 +67,8 @@ public abstract class MovableEntity extends CollisionEntity {
      * @param dt delta time since last frame update
      */
     public void update(float dt) {
-        setPosition(new Vector2(getPosition().x + velocity.x * dt, getPosition().y + velocity.y * dt)); // + velocity.x*dt may be problem
+	setPositionY(getPosition().y + velocity.y * dt);
+        //setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y * dt)); // + velocity.x*dt may be problem
         if (Math.abs(velocity.y) < MAX_FREE_FALL_VELOCITY) {
             velocity.y -= acceleration.y * dt;
         }
