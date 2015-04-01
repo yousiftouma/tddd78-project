@@ -16,5 +16,9 @@ public enum States
     /**
      * Slower movement and lower jump
      */
-    POWERED_DOWN_STATE
+    POWERED_DOWN_STATE,
+    /**
+     * Normal state but invincible, used after taking damage
+     */
+    NORMAL_INVINCIBILITY_STATE
 }
