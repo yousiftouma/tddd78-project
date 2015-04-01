@@ -52,20 +52,28 @@ public class Player extends MovableEntity
     }
 
     @Override public void doAction(GameObject type, CollisionEntity object) {
-	if (type == GameObject.WALL) {
-	    Side side = getCollisionSide(object);
-	    separateSide(side, object);
-	    if (side == Side.TOP) {
-		jumpsCount = NUMBER_OF_JUMPS;
-	    }
-
-	} else if (type == GameObject.ENEMY) {
-	    if (!pState.isInvincible()) {
-		hitPointsLeft -= object.getDamage();
-	    }
-	} else if (type == GameObject.NORMAL_STATIC_POWER_UP) {
-	    MovableEntity movEnt = (MovableEntity) object;
-	    movEnt.takeDamage(this.damage);
+	Side side = getCollisionSide(object);
+	switch (type) {
+	    case WALL:
+		separateSide(side, object);
+		if (side == Side.TOP) {
+		    jumpsCount = NUMBER_OF_JUMPS;
+		}
+		break;
+	    case ENEMY:
+		if (side != Side.TOP) {
+		    if (!pState.isInvincible()) {
+			hitPointsLeft -= object.getDamage();
+		    }
+		}
+		MovableEntity enemy = (MovableEntity) object;
+		enemy.takeDamage(this.damage);
+		break;
+	    case SMALL_STATIC_COIN:
+	    case SMALL_MOVING_COIN:
+	    case NORMAL_STATIC_POWER_UP:
+		MovableEntity pwrUp = (MovableEntity) object;
+		pwrUp.takeDamage(this.damage);
 	}
     }
 
