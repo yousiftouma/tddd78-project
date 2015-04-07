@@ -3,8 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.coins.CoinFactory;
@@ -17,6 +15,7 @@ import com.mygdx.game.entity.movableentity.player.PlayerMaker;
 import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
+import com.mygdx.game.entity.obstacle.Wall;
 import com.mygdx.game.maps.GameMap;
 
 import java.util.ArrayList;
@@ -25,12 +24,13 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * Represents the game, using GameRenderer to draw it up
+ * Represents the game, using GameScreen to draw it up
  */
 public class Game
 {
-    private List<Entity> gameObjects;
-    private List<Entity> objectsToRemove;
+    private List<MovableEntity> gameObjects;
+    private List<Wall> obstacles;
+    private List<MovableEntity> objectsToRemove;
     private List<CoinFactory> coinFactories;
     private List<EnemyFactory> enemyFactories;
     private List<PowerUpFactory> powerUpFactories;
@@ -71,6 +71,7 @@ public class Game
 
     public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
+	this.obstacles = new ArrayList<>();
 	this.objectsToRemove = new ArrayList<>();
 	this.map = map;
 	this.enemySpawnTimer = 0;
@@ -84,28 +85,68 @@ public class Game
 	createPlayer();
     }
 
-    public void updateGame() {
-	objectsToRemove.clear();
-	spawnEnemy();
-	for (Entity object : gameObjects) {
-	    if (object instanceof MovableEntity) {
-		((MovableEntity) object).update(Gdx.graphics.getDeltaTime());
-		for (Entity otherObject : gameObjects) {
-		    if (otherObject instanceof CollisionEntity) {
-			if (object != otherObject) { //!= is correct, we want to avoid checking collision with self
-			    if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
-				((MovableEntity) object).doAction(otherObject.getGameObjectType(),
-								  (CollisionEntity) otherObject);
-			    }
-			}
-		    }
-		}
-		if (((MovableEntity) object).getHitPointsLeft() <= 0) {
-		    onObjectDeath(object.getGameObjectType(), object);
-		}
+    public void updateGame(float delta) {
+	spawnEnemy(delta);
+	doPlayerUpdate(delta);
+	updateMovableObjects(delta);
+	checkForDeaths();
+    }
+
+    private void updateMovableObjects(final float delta) {
+	for (MovableEntity object : gameObjects) {
+	    object.update(delta);
+	    if (player.hasCollision(object)) {
+		player.doAction(object.getGameObjectType(), object);
 	    }
+	    obstacles.stream().filter(object::hasCollision).forEach(
+		    wall -> object.doAction(wall.getGameObjectType(), wall));
+	    gameObjects.stream().filter(object::hasCollision).forEach(
+		    otherObject -> object.doAction(otherObject.getGameObjectType(), otherObject));
 	}
+    }
+
+    private void checkForDeaths() {
+	if (player.getHitPointsLeft() <= 0) {
+	    onObjectDeath(player.getGameObjectType(), player);
+	} else gameObjects.stream().filter(object -> object.getHitPointsLeft() <= 0).forEach(
+		object -> onObjectDeath(object.getGameObjectType(), object));
 	gameObjects.removeAll(objectsToRemove);
+	objectsToRemove.clear();
+    }
+
+    private void doPlayerUpdate(final float delta) {
+	player.update(delta);
+	obstacles.stream().filter(player::hasCollision).forEach(wall -> player.doAction(wall.getGameObjectType(), wall));
+    }
+
+    public void onObjectDeath(GameObject type, MovableEntity object){
+	switch (type) {
+	    case WALL:
+		//this will never occur as wall cannot die
+		break;
+	    case ENEMY:
+		objectsToRemove.add(object);
+		break;
+	    case PLAYER:
+		//handle game over
+		System.out.println("player died");
+		break;
+	    case SMALL_STATIC_COIN:
+		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
+		addScore(smallStaticCoin.getValue());
+		objectsToRemove.add(object);
+		break;
+	    case SMALL_MOVING_COIN:
+		final SmallMovingCoin smallMovingCoin = (SmallMovingCoin) object;
+		addScore(smallMovingCoin.getValue());
+		objectsToRemove.add(object);
+		break;
+	    case NORMAL_STATIC_POWER_UP:
+		player.setpState(new PoweredUpState());
+		player.setPowerUpTimer(((AbstractPowerUp) object).getPowerUpTime());
+		objectsToRemove.add(object);
+		break;
+	}
     }
 
     public void handleMovement() {
@@ -121,53 +162,36 @@ public class Game
 	}
     }
 
-    public void onObjectDeath(GameObject type, Entity object){
-	objectsToRemove.add(object);
-	switch (type) {
-	    case WALL:
-		//this will never occur as wall cannot die
-		break;
-	    case ENEMY:
-	    	//nothing happens to player
-		break;
-	    case PLAYER:
-		System.out.println("player died");
-		break;
-	    case SMALL_STATIC_COIN:
-		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
-		addScore(smallStaticCoin.getValue());
-		break;
-	    case SMALL_MOVING_COIN:
-		final SmallMovingCoin smallMovingCoin = (SmallMovingCoin) object;
-		addScore(smallMovingCoin.getValue());
-		break;
-	    case NORMAL_STATIC_POWER_UP:
-		player.setpState(new PoweredUpState());
-		player.setPowerUpTimer(((AbstractPowerUp) object).getPowerUpTime());
-		break;
-	}
-    }
-
     public void addScore(final int points) {
 	player.setScore(player.getScore() + points);
     }
 
     public void createPlayer() {
 	this.player = playerMaker.createPlayer();
-	gameObjects.add(player);
+	//gameObjects.add(player);
 	player.setPosition(playerSpawnPoint);
     }
 
-    public void spawnEnemy(){
+    public void spawnEnemy(float delta){
 	if (enemySpawnTimer <= 0){
-	    gameObjects.add(enemyFactories.get(getRandomFactory.nextInt(enemyFactories.size())).createEnemy());
+	    int numberOfFactories = enemyFactories.size();
+	    int random = getRandomFactory.nextInt(numberOfFactories);
+	    EnemyFactory factory = enemyFactories.get(random);
+	    AbstractEnemy enemy = factory.createEnemy();
+	    gameObjects.add(enemy);
 	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
+	    //debugging, every object is present
+	    for (Object o : gameObjects) {
+		System.out.println(o);
+	    }
+	    System.out.println("--");
 	}
-	else enemySpawnTimer -= Gdx.graphics.getDeltaTime();
+	else enemySpawnTimer -= delta;
     }
 
+    //may need to change return type
     public void fetchMapObstacles() {
-	gameObjects.addAll(map.getWalls().stream().collect(Collectors.toList()));
+	obstacles.addAll(map.getWalls().stream().collect(Collectors.toList()));
     }
 
     public static int getGravity() {
@@ -175,7 +199,15 @@ public class Game
 	return gravity;
     }
 
-    public Iterable<Entity> getGameObjects() {
+    public Iterable<MovableEntity> getGameObjects() {
 	return gameObjects;
+    }
+
+    public List<Wall> getObstacles() {
+	return obstacles;
+    }
+
+    public Player getPlayer() {
+	return player;
     }
 }

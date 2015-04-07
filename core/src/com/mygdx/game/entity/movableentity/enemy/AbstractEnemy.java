@@ -45,7 +45,9 @@ public abstract class AbstractEnemy extends MovableEntity
 		    collidedEnemy.movingLeft = false;
 		}
 		break;
-	    case PLAYER: //may add seperation or similiar
+	    case PLAYER:
+	     separateSide(side, object); //may add seperation or similiar
+		break;
 	    case SMALL_STATIC_COIN:
 	    case SMALL_MOVING_COIN:
 	    case NORMAL_STATIC_POWER_UP:

@@ -20,6 +20,10 @@ public abstract class CollisionEntity extends Entity {
         this.damage = damage;
     }
 
+    public Rectangle getHitBox() {
+	return hitBox;
+    }
+
     @Override
     public void setPosition(final Vector2 pos) {
 	super.setPosition(pos);
@@ -36,12 +40,31 @@ public abstract class CollisionEntity extends Entity {
 	hitBox.setPosition(getPosition().x, posY);
     }
 
+    @Override public void setSize(final Vector2 size) {
+	super.setSize(size);
+	hitBox.setSize(size.x, size.y);
+    }
+
+    @Override public void setWidth(final float width) {
+	super.setWidth(width);
+	hitBox.setSize(width, getHeight());
+    }
+
+    @Override public void setHeight(final float height) {
+	super.setHeight(height);
+	hitBox.setSize(getWidth(), height);
+    }
+
     public boolean hasCollision(CollisionEntity object) {
-	if (hitBox.overlaps(object.hitBox)){
-	    return true;
+	// this is correct, wouldn't want to check collision with self
+	if (this != object) {
+	    if (hitBox.overlaps(object.hitBox)) {
+		return true;
+	    }
 	}
 	return false;
     }
+
 
     /**
      * Checks where the overlap is smallest, thus determining which side we have collided with
@@ -50,13 +73,13 @@ public abstract class CollisionEntity extends Entity {
      * @return returns which side we've collided with
      */
     public Side getCollisionSide(CollisionEntity object){
-        double topDif = Math.abs(getPosition().y - (object.getPosition().y + object.getSize().y));
+        double topDif = Math.abs(getPosition().y - (object.getPosition().y + object.getHeight()));
 
-        double bottomDif = Math.abs((getPosition().y + getSize().y) - object.getPosition().y);
+        double bottomDif = Math.abs((getPosition().y + getHeight()) - object.getPosition().y);
 
-        double leftDif = Math.abs((getPosition().x + getSize().x) - object.getPosition().x);
+        double leftDif = Math.abs((getPosition().x + getWidth()) - object.getPosition().x);
 
-        double rightDif = Math.abs(getPosition().x - (object.getPosition().x + object.getSize().x));
+        double rightDif = Math.abs(getPosition().x - (object.getPosition().x + object.getWidth()));
 
         double minDif = Math.min(Math.min(topDif, bottomDif), Math.min(leftDif, rightDif));
 

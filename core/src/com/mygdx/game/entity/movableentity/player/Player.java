@@ -62,11 +62,11 @@ public class Player extends MovableEntity
 		}
 		break;
 	    case ENEMY:
+		separateSide(side, object);
 		if (side == Side.TOP) {
 		    MovableEntity enemy = (MovableEntity) object;
 		    enemy.takeDamage(this.damage);
 		} else {
-		    separateSide(side, object);
 		    if (!pState.isInvincible()) {
 			hitPointsLeft -= object.getDamage();
 			this.pState = new NormalInvincibilityState();

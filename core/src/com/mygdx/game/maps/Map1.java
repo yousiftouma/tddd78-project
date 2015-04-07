@@ -64,7 +64,7 @@ public final class Map1 extends AbstractMap implements GameMap
     }
 
     @Override public void addEnemySpawnPoints() {
-	enemySpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_HALF, Game.FRAME_HEIGHT * THREE_FOURTHS));
+	enemySpawnPoints.add(new Vector2(Game.FRAME_WIDTH * THREE_FOURTHS, Game.FRAME_HEIGHT * THREE_FOURTHS));
     }
 
     @Override public void addCoinSpawnPoints() {

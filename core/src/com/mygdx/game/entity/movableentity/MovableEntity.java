@@ -92,33 +92,33 @@ public abstract class MovableEntity extends CollisionEntity {
             if (velocity.y < 0) {
                 velocity.y = 0;
             }
-            setPosition(new Vector2(getPosition().x, object.getPosition().y + object.getSize().y));
+            setPosition(new Vector2(getPosition().x, object.getPosition().y + object.getHeight()));
         } else if (side == Side.BOTTOM) {
             //to start falling upon collision with bottom
             if (velocity.y > 0) {
                 velocity.y = 0;
             }
-            setPosition(new Vector2(getPosition().x, object.getPosition().y - getSize().y));
+            setPosition(new Vector2(getPosition().x, object.getPosition().y - getHeight()));
         } else if (side == Side.LEFT) {
-            setPosition(new Vector2(object.getPosition().x - getSize().x, getPosition().y));
+            setPosition(new Vector2(object.getPosition().x - getWidth(), getPosition().y));
         } else if (side == Side.RIGHT) {
-            setPosition(new Vector2(object.getPosition().x + object.getSize().x, getPosition().y));
+            setPosition(new Vector2(object.getPosition().x + object.getWidth(), getPosition().y));
         }
     }
 
     private void teleportIfOutsideFrame() {
         // entity has its full size outside the frame to the left
-        if (getPosition().x < -getSize().x) {
+        if (getPosition().x < -getWidth()) {
             setPosition(new Vector2(Game.FRAME_WIDTH, getPosition().y));
         }
 
         // entity has its full size outside the frame to the right
         else if (getPosition().x > Game.FRAME_WIDTH) {
-            setPosition(new Vector2(-getSize().x, getPosition().y));
+            setPosition(new Vector2(-getWidth(), getPosition().y));
         }
 
         // entity has its full size outside the bottom of the frame
-        else if (getPosition().y < -getSize().y) {
+        else if (getPosition().y < -getHeight()) {
             setPosition(new Vector2(getPosition().x, Game.FRAME_HEIGHT));
         }
     }

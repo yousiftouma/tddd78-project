@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.obstacle.Wall;
 import com.mygdx.game.maps.GameMap;
 import com.mygdx.game.maps.Map1;
 
@@ -49,14 +50,18 @@ public class GameScreen implements Screen
 
 	 // begin drawing here
         batch.begin();
-        for(Entity object : gameToDraw.getGameObjects()){
+	for (Wall wall : gameToDraw.getObstacles()) {
+	    wall.draw(batch);
+	}
+	for(Entity object : gameToDraw.getGameObjects()){
 	    object.draw(batch);
 	}
+	gameToDraw.getPlayer().draw(batch);
         batch.end();
         // stopped drawing here
 
         // Updates here
-	gameToDraw.updateGame();
+	gameToDraw.updateGame(delta);
 
         // Controls here
 	gameToDraw.handleMovement();
