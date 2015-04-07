@@ -14,7 +14,6 @@ import java.util.Random;
  */
 public class NormalEnemyFactory implements EnemyFactory
 {
-    private Sprite sprite;
     private Vector2 size;
     private Vector2 velocity;
     private Vector2 acceleration;
@@ -26,18 +25,18 @@ public class NormalEnemyFactory implements EnemyFactory
 
     public NormalEnemyFactory(List<Vector2> spawnPoints, boolean movingLeft)
     {
-	this.sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
 	this.spawnPoints = spawnPoints;
 	this.size = NormalEnemy.getEnemySize();
 	//this.velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
 	this.velocity = new Vector2(0,0); //for debug
-	this.acceleration = new Vector2(0, Game.getGravity());
+	this.acceleration = new Vector2(0, -Game.getGravity());
 	this.damage = 10;
 	this.hitPointsMax = 10;
 	this.movingLeft = movingLeft;
     }
 
     @Override public AbstractEnemy createEnemy() {
+	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt(spawnPoints.size()));
 	return new NormalEnemy(sprite, randomPosition, size, velocity, acceleration, damage, hitPointsMax, movingLeft);
     }

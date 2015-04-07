@@ -149,12 +149,12 @@ public class Game
 	}
     }
 
-    public void handleMovement() {
+    public void handleMovement(float delta) {
 	if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    player.moveLeft(Gdx.graphics.getDeltaTime());
+	    player.moveLeft(delta);
 	}
 	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    player.moveRight(Gdx.graphics.getDeltaTime());
+	    player.moveRight(delta);
 	}
 	//isKeyJustPressed means moment when button is pressed, not while button is pressed
 	if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
@@ -182,6 +182,7 @@ public class Game
 	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
 	    //debugging, every object is present
 	    for (Object o : gameObjects) {
+		System.out.println(gameObjects.indexOf(o));
 		System.out.println(o);
 	    }
 	    System.out.println("--");

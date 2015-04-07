@@ -70,7 +70,7 @@ public abstract class MovableEntity extends CollisionEntity {
 	setPositionY(getPosition().y + velocity.y * dt);
         //setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y * dt)); // + velocity.x*dt may be problem
         if (Math.abs(velocity.y) < MAX_FREE_FALL_VELOCITY) {
-            velocity.y -= acceleration.y * dt;
+            velocity.y += acceleration.y * dt;
         }
         teleportIfOutsideFrame();
     }
@@ -151,8 +151,17 @@ public abstract class MovableEntity extends CollisionEntity {
 	return MAX_FREE_FALL_VELOCITY;
     }
 
-
     public boolean isAlive() {
         return hitPointsLeft <= 0;
+    }
+
+    @Override public String toString() {
+	return "MovableEntity{" +
+			       ", pos=" + getPosition().x + "x" + getPosition().y +
+			       ", velo=" + velocity.x + "x" + velocity.y +
+			       ", acc=" + acceleration.x + "x" + acceleration.y +
+			       ", size=" + getWidth() + "x" + getHeight() +
+			       ", hp=" + hitPointsLeft +
+			       '}';
     }
 }

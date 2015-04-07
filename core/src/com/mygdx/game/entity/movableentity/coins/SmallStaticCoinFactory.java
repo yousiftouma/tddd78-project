@@ -13,7 +13,6 @@ import java.util.Random;
  */
 public class SmallStaticCoinFactory implements CoinFactory
 {
-    private Sprite sprite;
     private Vector2 size;
     private Vector2 velocity;
     private Vector2 acceleration;
@@ -24,17 +23,17 @@ public class SmallStaticCoinFactory implements CoinFactory
     // a position
     public SmallStaticCoinFactory(List<Vector2> spawnPoints)
     {
-	this.sprite = new Sprite(new Texture(Gdx.files.internal("goldCoin5.png")));
 	this.spawnPoints = spawnPoints;
 	this.size = SmallStaticCoin.getCoinSize();
 	this.velocity = new Vector2(0, 0);
-	this.acceleration = new Vector2(0, Game.getGravity());
+	this.acceleration = new Vector2(0, -Game.getGravity());
     }
 
     /**
      * @return returns a new small static coin at a random spawnpoint
      */
     @Override public AbstractCoin createCoin() {
+	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("goldCoin5.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
 	return new SmallStaticCoin(sprite, randomPosition, size, velocity, acceleration);
     }

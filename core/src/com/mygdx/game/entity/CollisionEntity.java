@@ -100,5 +100,6 @@ public abstract class CollisionEntity extends Entity {
     public int getDamage(){
         return damage;
     }
+
 }
 

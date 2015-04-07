@@ -3,7 +3,6 @@ package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -33,6 +32,7 @@ public abstract class Entity  {
 	sprite.setPosition(position.x, position.y);
 	sprite.setSize(size.x, size.y);
     }
+
 
     public Sprite getSprite() {
 	return sprite;
@@ -88,7 +88,7 @@ public abstract class Entity  {
 	sprite.setSize(size.x, height);
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(Batch batch){
 	sprite.draw(batch);
     }
 

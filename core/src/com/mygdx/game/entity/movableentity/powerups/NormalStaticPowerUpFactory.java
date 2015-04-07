@@ -14,8 +14,6 @@ import java.util.Random;
  */
 public class NormalStaticPowerUpFactory implements PowerUpFactory
 {
-
-    private Sprite sprite;
     private Vector2 size;
     private Vector2 velocity;
     private Vector2 acceleration;
@@ -24,14 +22,14 @@ public class NormalStaticPowerUpFactory implements PowerUpFactory
 
     public NormalStaticPowerUpFactory(List<Vector2> spawnPoints)
     {
-	this.sprite = new Sprite(new Texture(Gdx.files.internal("powerup.png")));
 	this.spawnPoints = spawnPoints;
 	this.size = NormalStaticPowerUp.getPowerUpSize();
 	this.velocity = new Vector2(0,0);
-	this.acceleration = new Vector2(0, Game.getGravity());
+	this.acceleration = new Vector2(0, -Game.getGravity());
     }
 
     @Override public AbstractPowerUp createPowerUp() {
+	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("powerup.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
 	return new NormalStaticPowerUp(sprite, randomPosition, size, velocity, acceleration);
     }

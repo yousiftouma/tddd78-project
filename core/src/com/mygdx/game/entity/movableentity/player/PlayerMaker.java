@@ -26,7 +26,7 @@ public class PlayerMaker
 
     public Player createPlayer(){
 	return new Player(new Sprite(new Texture(Gdx.files.internal("playertestbox.png"))), new Vector2(-100,-100),
-			  new Vector2(width, height), new Vector2(0, 0), new Vector2(0, Game.getGravity()),
+			  new Vector2(width, height), new Vector2(0, 0), new Vector2(0, -Game.getGravity()),
 			  damage, hitpoints);
     }
 }

@@ -64,7 +64,7 @@ public class GameScreen implements Screen
 	gameToDraw.updateGame(delta);
 
         // Controls here
-	gameToDraw.handleMovement();
+	gameToDraw.handleMovement(delta);
     }
 
     @Override public void resize(final int width, final int height) {
