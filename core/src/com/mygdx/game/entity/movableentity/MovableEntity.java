@@ -34,7 +34,7 @@ public abstract class MovableEntity extends CollisionEntity {
 
     private final static int MAX_FREE_FALL_VELOCITY = 2000;
 
-    private final static int DEFAULT_VELOCITY_X = 200;
+    private final static int DEFAULT_VELOCITY_X = 100;
 
 
     protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
