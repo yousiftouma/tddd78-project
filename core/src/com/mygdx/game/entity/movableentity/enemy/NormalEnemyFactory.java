@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
-import com.mygdx.game.entity.movableentity.MovableEntity;
 
 import java.util.List;
 import java.util.Random;

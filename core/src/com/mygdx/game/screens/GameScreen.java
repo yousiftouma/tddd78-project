@@ -3,8 +3,10 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
+import com.mygdx.game.GameWindow;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.obstacle.Wall;
 import com.mygdx.game.maps.GameMap;
@@ -21,6 +23,8 @@ public class GameScreen implements Screen
 
     private SpriteBatch batch;
     private Game gameToDraw;
+    private String scoreDisplay;
+    private BitmapFont bmf;
 
     /**
      * Contains the map to render
@@ -41,12 +45,15 @@ public class GameScreen implements Screen
     }
 
     @Override public void show() {
+	scoreDisplay = "score: 0";
+	bmf = new BitmapFont();
     }
 
     @Override public void render(final float delta) {
 	//backgroundcolor, rgba
 	Gdx.gl.glClearColor(RED, GREEN, BLUE, 1);
 	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	scoreDisplay = "score: " + gameToDraw.getPlayer().getScore();
 
 	 // begin drawing here
         batch.begin();
@@ -57,6 +64,8 @@ public class GameScreen implements Screen
 	    object.draw(batch);
 	}
 	gameToDraw.getPlayer().draw(batch);
+	bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+	bmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
         batch.end();
         // stopped drawing here
 

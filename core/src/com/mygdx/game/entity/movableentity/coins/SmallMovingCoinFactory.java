@@ -15,22 +15,14 @@ import java.util.Random;
  */
 public class SmallMovingCoinFactory implements CoinFactory
 {
-    private Vector2 size;
-    private Vector2 velocity;
-    private Vector2 acceleration;
     private Random getRandomSpawnPoint = new Random();
     private List<Vector2> spawnPoints;
     private boolean movingLeft;
 
-    // If factory shouldnt know spawnpoints, spawn it outside the world first or make createCoin take
-    // a position
     public SmallMovingCoinFactory(List<Vector2> spawnPoints, boolean movingLeft)
     {
 
 	this.spawnPoints = spawnPoints;
-	this.size = SmallStaticCoin.getCoinSize();
-	this.velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
-	this.acceleration = new Vector2(0, -Game.getGravity());
 	this.movingLeft = movingLeft;
     }
 
@@ -38,6 +30,9 @@ public class SmallMovingCoinFactory implements CoinFactory
      * @return returns a new small moving coin at a random spawnpoint
      */
     @Override public AbstractCoin createCoin() {
+	Vector2 size = SmallStaticCoin.getCoinSize();
+	Vector2 velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
+	Vector2 acceleration = new Vector2(0, -Game.getGravity());
 	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("goldCoin5.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
 	return new SmallMovingCoin(sprite, randomPosition, size, velocity, acceleration, movingLeft);
