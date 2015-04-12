@@ -87,7 +87,7 @@ public class HighscoreManager
 	}
 
 	while (position < listSize) {
-	    highscoreString.append(position + 1).append(".\t").append(scores.get(position).getName()).append("\t\t")
+	    highscoreString.append(position + 1).append(". ").append(scores.get(position).getName()).append(" ")
 		    .append(scores.get(position).getScore()).append("\n");
 	    position++;
 	}

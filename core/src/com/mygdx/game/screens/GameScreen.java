@@ -12,8 +12,10 @@ import com.mygdx.game.entity.obstacle.Wall;
 import com.mygdx.game.maps.GameMap;
 import com.mygdx.game.maps.Map1;
 
+import javax.swing.*;
+
 /**
- * Renders everything
+ * Renders everything for the game
  */
 public class GameScreen implements Screen
 {
@@ -25,13 +27,25 @@ public class GameScreen implements Screen
     private Game gameToDraw;
     private String scoreDisplay;
     private BitmapFont bmf;
+    private GameWindow window;
+    private int mapNumber;
 
     /**
      * Contains the map to render
+     *
      * @param mapNumber which map to render in screen, must be within range
      */
-    public GameScreen(int mapNumber) {
-	assert (0 <= mapNumber && mapNumber <=10); //necessary?
+    public GameScreen(int mapNumber, GameWindow window) {
+	assert (0 <= mapNumber && mapNumber <= 10); //necessary?
+	this.window = window;
+	this.mapNumber = mapNumber;
+
+    }
+
+    /**
+     * called when this screen is set with setScreen
+     */
+    @Override public void show() {
 	GameMap mapToPlay;
 	switch (mapNumber) {
 	    case 1:
@@ -46,9 +60,26 @@ public class GameScreen implements Screen
 	this.bmf = new BitmapFont();
     }
 
-    @Override public void show() {
+    /**
+     * called when another screen is set with setScreen
+     */
+    @Override public void hide() {
+
     }
 
+    /**
+     * used to dispose of heavy objects
+     */
+    @Override public void dispose() {
+	batch.dispose();
+	bmf.dispose();
+    }
+
+    /**
+     * draws libgdx objects
+     *
+     * @param delta is time since last update
+     */
     @Override public void render(final float delta) {
 	//backgroundcolor, rgba
 	Gdx.gl.glClearColor(RED, GREEN, BLUE, 1);
@@ -76,26 +107,33 @@ public class GameScreen implements Screen
 	    // Controls here
 	    gameToDraw.handleMovement(delta);
 	}
+	else {
+	    String highscore = gameToDraw.getHighscoreManager().getHighscoreString();
+	    Object[] options = {"Yes, please",
+	                        "No way!"};
+	    int userChoice = JOptionPane.showOptionDialog(null, highscore, "Here is the highscore, play more?",
+						 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+						 //do not use a custom Icon
+						 options,  //the titles of buttons
+						 options[0]); //default button title
+	    if (userChoice == JOptionPane.YES_OPTION) {
+		window.setScreen(new MenuScreen(window));
+	    }
+	    else {
+		this.dispose();
+		window.dispose();
+	    }
+	}
 
     }
 
     @Override public void resize(final int width, final int height) {
-
     }
 
     @Override public void pause() {
-
     }
 
     @Override public void resume() {
-
     }
 
-    @Override public void hide() {
-
-    }
-
-    @Override public void dispose() {
-
-    }
 }

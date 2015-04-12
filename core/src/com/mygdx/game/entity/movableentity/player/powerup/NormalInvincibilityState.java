@@ -9,4 +9,9 @@ public class NormalInvincibilityState extends NormalState
     @Override public boolean isInvincible() {
 	return !super.isInvincible(); //True
     }
+
+    //as intended, shouldn't return same state
+    @Override public States getState() {
+	return States.NORMAL_INVINCIBILITY_STATE;
+    }
 }

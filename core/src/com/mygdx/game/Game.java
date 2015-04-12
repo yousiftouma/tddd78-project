@@ -96,6 +96,7 @@ public class Game
 	doPlayerUpdate(delta);
 	updateMovableObjects(delta);
 	checkForDeaths();
+	System.out.println("powerup= " + player.getPowerUpTimer());
     }
 
     private void updateMovableObjects(final float delta) {
@@ -135,7 +136,6 @@ public class Game
 		break;
 	    case PLAYER:
 		//handle game over
-		gameOver = true;
 		String name = (String)JOptionPane.showInputDialog(
 		                    null,
 		                    "Please enter your name!",
@@ -145,6 +145,7 @@ public class Game
 		                    null, // no options
 		                    null); // no default
 		highscoreManager.addScore(name, player.getScore());
+		gameOver = true;
 
 		System.out.println("player dead");
 		break;
@@ -197,12 +198,6 @@ public class Game
 	    AbstractEnemy enemy = factory.createEnemy();
 	    gameObjects.add(enemy);
 	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
-	    //debugging, every object is present
-	    for (Object o : gameObjects) {
-		System.out.println(gameObjects.indexOf(o));
-		System.out.println(o);
-	    }
-	    System.out.println("--");
 	}
 	else enemySpawnTimer -= delta;
     }
@@ -231,5 +226,9 @@ public class Game
 
     public boolean isGameOver() {
 	return gameOver;
+    }
+
+    public HighscoreManager getHighscoreManager() {
+	return highscoreManager;
     }
 }
