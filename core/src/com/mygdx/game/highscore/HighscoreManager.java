@@ -9,8 +9,9 @@ import java.io.*;
  */
 public class HighscoreManager
 {
-    private ArrayList<Score> scores;
+    private List<Score> scores;
     private ObjectOutputStream outputStream = null;
+    private ObjectInputStream inputStream = null;
 
     private static final String HIGHSCORE_FILENAME = "highscore.dat";
 
@@ -18,7 +19,7 @@ public class HighscoreManager
 	scores = new ArrayList<>();
     }
 
-    public ArrayList<Score> getScores() {
+    public List<Score> getScores() {
 	loadScoreFile();
 	sort();
 	return scores;
@@ -37,23 +38,26 @@ public class HighscoreManager
     }
 
     public void loadScoreFile() {
-	try {
-	    try (ObjectInput inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILENAME))) {
-		//we know it is an arraylist
-		scores = (ArrayList<Score>) inputStream.readObject();
-	    }
-	} catch (ClassNotFoundException | IOException e) {
-	    System.out.println("error loading scores: " + e.getMessage());
-	} finally {
-	    try {
-		if (outputStream != null) {
-		    outputStream.flush();
-		    outputStream.close();
-		}
-	    } catch (IOException e) {
-		System.out.println("error loading scores: " + e.getMessage());
-	    }
-	}
+            try {
+		inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILENAME));
+		// we know the type to be List
+		scores = (List<Score>) inputStream.readObject();
+
+            } catch (FileNotFoundException e) {
+                System.out.println("Error loading highscorefile, File Not Found Exception: " + e.getMessage());
+            } catch (IOException e) {
+                System.out.println("Error loading highscorefile, IO Exception: " + e.getMessage());
+            } catch (ClassNotFoundException e) {
+                System.out.println("Error loading highscorefile, Class Not Found Exception: " + e.getMessage());
+            } finally {
+                try {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println("Error loading highscorefile, IO Error: " + e.getMessage());
+                }
+            }
     }
 
     public void updateScoreFile() {
@@ -82,7 +86,7 @@ public class HighscoreManager
 	List<Score> scores = getScores();
 	int position = 0;
 
-	if (scores.size() < listSize){
+	if (scores.size() < listSize) {
 	    listSize = scores.size();
 	}
 
