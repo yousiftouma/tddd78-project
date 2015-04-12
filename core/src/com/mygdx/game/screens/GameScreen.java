@@ -42,11 +42,11 @@ public class GameScreen implements Screen
 	}
 	this.gameToDraw = new Game(mapToPlay);
 	this.batch = new SpriteBatch();
+	this.scoreDisplay = "score: 0";
+	this.bmf = new BitmapFont();
     }
 
     @Override public void show() {
-	scoreDisplay = "score: 0";
-	bmf = new BitmapFont();
     }
 
     @Override public void render(final float delta) {
@@ -55,25 +55,28 @@ public class GameScreen implements Screen
 	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	scoreDisplay = "score: " + gameToDraw.getPlayer().getScore();
 
-	 // begin drawing here
-        batch.begin();
-	for (Wall wall : gameToDraw.getObstacles()) {
-	    wall.draw(batch);
-	}
-	for(Entity object : gameToDraw.getGameObjects()){
-	    object.draw(batch);
-	}
-	gameToDraw.getPlayer().draw(batch);
-	bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-	bmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
-        batch.end();
-        // stopped drawing here
+	if (!gameToDraw.isGameOver()) {
+	    // begin drawing here
+	    batch.begin();
+	    for (Wall wall : gameToDraw.getObstacles()) {
+		wall.draw(batch);
+	    }
+	    for (Entity object : gameToDraw.getGameObjects()) {
+		object.draw(batch);
+	    }
+	    gameToDraw.getPlayer().draw(batch);
+	    bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+	    bmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
+	    batch.end();
+	    // stopped drawing here
 
-        // Updates here
-	gameToDraw.updateGame(delta);
+	    // Updates here
+	    gameToDraw.updateGame(delta);
 
-        // Controls here
-	gameToDraw.handleMovement(delta);
+	    // Controls here
+	    gameToDraw.handleMovement(delta);
+	}
+
     }
 
     @Override public void resize(final int width, final int height) {

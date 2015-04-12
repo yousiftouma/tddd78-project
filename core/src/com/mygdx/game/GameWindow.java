@@ -11,8 +11,8 @@ import javax.swing.*;
 public class GameWindow extends com.badlogic.gdx.Game
 {
 
-    private String mapNumberString = null;
-    private Integer mapNumber = null;
+    //private String mapNumberString = null;
+    //private Integer mapNumber = null;
 
     /**
      * Runs upon starting launcher, selects screen to show
@@ -40,7 +40,7 @@ public class GameWindow extends com.badlogic.gdx.Game
     @Override public void create(){
 
 	final Object[] maps = {"1"};
-	mapNumberString = (String)JOptionPane.showInputDialog(
+	String mapNumberString = (String)JOptionPane.showInputDialog(
 	                    null, // no parent frame
 	                    "Chose a map to play!", // text
 	                    "Mapselector", // title of dialog
@@ -48,7 +48,7 @@ public class GameWindow extends com.badlogic.gdx.Game
 			    null, // no icon
 			    maps, // options
 	                    "1"); // default
-	mapNumber = Integer.parseInt(mapNumberString);
+	int mapNumber = Integer.parseInt(mapNumberString);
 	setScreen(new GameScreen(mapNumber));
     }
 

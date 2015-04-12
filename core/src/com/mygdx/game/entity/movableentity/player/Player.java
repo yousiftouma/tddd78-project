@@ -66,6 +66,7 @@ public class Player extends MovableEntity
 		if (side == Side.TOP) {
 		    MovableEntity enemy = (MovableEntity) object;
 		    enemy.takeDamage(this.damage);
+		    System.out.println(this);
 		} else {
 		    if (!pState.isInvincible()) {
 			hitPointsLeft -= object.getDamage();
@@ -128,4 +129,14 @@ public class Player extends MovableEntity
     @Override public GameObject getGameObjectType() {
 	return GameObject.PLAYER;
     }
+
+    @Override public String toString() {
+   	return "Player{" +
+   			       ", pos=" + getPosition().x + "x" + getPosition().y +
+   			       ", velo=" + velocity.x + "x" + velocity.y +
+   			       ", acc=" + acceleration.x + "x" + acceleration.y +
+   			       ", size=" + getWidth() + "x" + getHeight() +
+   			       ", hp=" + hitPointsLeft +
+   			       '}';
+       }
 }

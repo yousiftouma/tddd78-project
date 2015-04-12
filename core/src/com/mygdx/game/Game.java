@@ -16,8 +16,10 @@ import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.entity.obstacle.Wall;
+import com.mygdx.game.highscore.HighscoreManager;
 import com.mygdx.game.maps.GameMap;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,6 +36,7 @@ public class Game
     private List<CoinFactory> coinFactories;
     private List<EnemyFactory> enemyFactories;
     private List<PowerUpFactory> powerUpFactories;
+    private Random getRandomFactory = new Random();
     private Vector2 playerSpawnPoint;
     private GameMap map;
     // player is initialized but through a different method
@@ -43,7 +46,8 @@ public class Game
     private float enemySpawnTimer;
     private float powerUpSpawnTimer;
 
-    private Random getRandomFactory = new Random();
+    private HighscoreManager highscoreManager;
+    private boolean gameOver;
 
     private static final int MAX_PLAYER_HP = 20;
     private static final int PLAYER_DMG = 10;
@@ -81,6 +85,8 @@ public class Game
 	this.enemyFactories = map.getEnemyFactories();
 	this.powerUpFactories = map.getPowerUpFactories();
 	this.playerMaker = new PlayerMaker(PLAYER_DMG, MAX_PLAYER_HP, PLAYER_WIDTH, PLAYER_HEIGHT);
+	this.highscoreManager = new HighscoreManager();
+	this.gameOver = false;
 	fetchMapObstacles();
 	createPlayer();
     }
@@ -129,7 +135,18 @@ public class Game
 		break;
 	    case PLAYER:
 		//handle game over
-		System.out.println("player died");
+		gameOver = true;
+		String name = (String)JOptionPane.showInputDialog(
+		                    null,
+		                    "Please enter your name!",
+		                    "Adding highscore...",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null, // no icon
+		                    null, // no options
+		                    null); // no default
+		highscoreManager.addScore(name, player.getScore());
+
+		System.out.println("player dead");
 		break;
 	    case SMALL_STATIC_COIN:
 		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
@@ -212,5 +229,7 @@ public class Game
 	return player;
     }
 
-
+    public boolean isGameOver() {
+	return gameOver;
+    }
 }

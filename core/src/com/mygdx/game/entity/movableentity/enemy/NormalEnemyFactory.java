@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
+import com.mygdx.game.entity.movableentity.MovableEntity;
 
 import java.util.List;
 import java.util.Random;
@@ -30,8 +31,7 @@ public class NormalEnemyFactory implements EnemyFactory
 
     @Override public AbstractEnemy createEnemy() {
 	Vector2 size = NormalEnemy.getEnemySize();
-	//Vector2 velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
-	Vector2 velocity = new Vector2(0, 0);
+	Vector2 velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
 	Vector2 acceleration = new Vector2(0, -Game.getGravity());
 	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt(spawnPoints.size()));
