@@ -96,7 +96,6 @@ public class Game
 	doPlayerUpdate(delta);
 	updateMovableObjects(delta);
 	checkForDeaths();
-	System.out.println("powerup= " + player.getPowerUpTimer());
     }
 
     private void updateMovableObjects(final float delta) {

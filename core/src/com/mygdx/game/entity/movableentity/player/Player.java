@@ -95,6 +95,7 @@ public class Player extends MovableEntity
 	if (pState.getState() != States.NORMAL_STATE) {
 	    powerUpTimer -= dt;
 	    pState.setSize(this);
+	    System.out.println("powerup= " + powerUpTimer);
 	    if (powerUpTimer <= 0) {
 		this.pState = new NormalState();
 		pState.setSize(this);

@@ -12,11 +12,13 @@ public class HighscoreManager
     private List<Score> scores;
     private ObjectOutputStream outputStream = null;
     private ObjectInputStream inputStream = null;
+    private ScoreComparator comparator = new ScoreComparator();
 
     private static final String HIGHSCORE_FILENAME = "highscore.dat";
 
     public HighscoreManager() {
-	scores = new ArrayList<>();
+	this.scores = new ArrayList<>();
+	this.comparator = new ScoreComparator();
     }
 
     public List<Score> getScores() {
@@ -26,8 +28,6 @@ public class HighscoreManager
     }
 
     private void sort() {
-	//We want it to be specifically ScoreComparator
-	ScoreComparator comparator = new ScoreComparator();
 	Collections.sort(scores, comparator);
     }
 
@@ -41,10 +41,13 @@ public class HighscoreManager
             try {
 		inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILENAME));
 		// we know the type to be List
+		assert (inputStream.readObject() instanceof List) : "Internal Error: " +
+								    "Faulty cast List<Score> when reading from highscorefile";
 		scores = (List<Score>) inputStream.readObject();
 
             } catch (FileNotFoundException e) {
-                System.out.println("Error loading highscorefile, File Not Found Exception: " + e.getMessage());
+                System.out.println("Error loading highscorefile, File Not Found Exception," +
+				   " will try to create file: " + e.getMessage());
             } catch (IOException e) {
                 System.out.println("Error loading highscorefile, IO Exception: " + e.getMessage());
             } catch (ClassNotFoundException e) {
