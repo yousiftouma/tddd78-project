@@ -108,6 +108,7 @@ public class GameScreen implements Screen
 	    gameToDraw.handleMovement(delta);
 	}
 	else {
+	    this.pause();
 	    String highscore = gameToDraw.getHighscoreManager().getHighscoreString();
 	    Object[] options = {"Yes, please",
 	                        "No way!"};
@@ -117,6 +118,7 @@ public class GameScreen implements Screen
 						 options,  //the titles of buttons
 						 options[0]); //default button title
 	    if (userChoice == JOptionPane.YES_OPTION) {
+		this.resume();
 		window.setScreen(new MenuScreen(window));
 	    }
 	    else {
@@ -131,9 +133,11 @@ public class GameScreen implements Screen
     }
 
     @Override public void pause() {
+	Gdx.graphics.setContinuousRendering(false);
     }
 
     @Override public void resume() {
+	Gdx.graphics.setContinuousRendering(true);
     }
 
 }

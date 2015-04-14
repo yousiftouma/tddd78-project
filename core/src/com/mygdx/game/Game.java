@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  */
 public class Game
 {
+    public static final float MAX_DELTA_TIME = 0.1f;
     private List<MovableEntity> gameObjects;
     private List<Wall> obstacles;
     private List<MovableEntity> objectsToRemove;
@@ -51,11 +52,13 @@ public class Game
 
     private static final int MAX_PLAYER_HP = 20;
     private static final int PLAYER_DMG = 10;
-    private static final int PLAYER_WIDTH = 48;
+    private static final int PLAYER_WIDTH = 64;
     private static final int PLAYER_HEIGHT = 64;
     private final static int NORMAL_GRAVITY = 982;
     private final static int ENEMY_RESPAWN_TIME = 3;
     private final static int POWER_UP_RESPAWN_TIME = 30;
+
+    private float timePassed = 0;
 
 
     /**
@@ -91,7 +94,18 @@ public class Game
 	createPlayer();
     }
 
+
+    public void updateGame2(float delta) {
+
+    }
+
+
     public void updateGame(float delta) {
+	if (delta >= MAX_DELTA_TIME) {
+	    delta = MAX_DELTA_TIME;
+	}
+
+	timePassed += delta; //debug tool
 	spawnEnemy(delta);
 	doPlayerUpdate(delta);
 	updateMovableObjects(delta);
@@ -197,6 +211,7 @@ public class Game
 	    AbstractEnemy enemy = factory.createEnemy();
 	    gameObjects.add(enemy);
 	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
+	    System.out.println(timePassed);
 	}
 	else enemySpawnTimer -= delta;
     }
