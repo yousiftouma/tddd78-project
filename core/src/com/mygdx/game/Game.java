@@ -3,6 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entity.CollisionEntity;
+import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.coins.CoinFactory;
@@ -30,9 +32,12 @@ import java.util.stream.Collectors;
  */
 public class Game
 {
+    /**
+     * Maximal time to be used for gameupdate, used to avoid visual bugs when deltatime from GameScreen is faulty.
+     */
     public static final float MAX_DELTA_TIME = 0.1f;
-    private List<MovableEntity> gameObjects;
-    private List<Wall> obstacles;
+    private List<Entity> gameObjects;
+    //private List<Wall> obstacles;
     private List<MovableEntity> objectsToRemove;
     private List<CoinFactory> coinFactories;
     private List<EnemyFactory> enemyFactories;
@@ -78,7 +83,7 @@ public class Game
 
     public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
-	this.obstacles = new ArrayList<>();
+	//this.obstacles = new ArrayList<>();
 	this.objectsToRemove = new ArrayList<>();
 	this.map = map;
 	this.enemySpawnTimer = 0;
@@ -95,12 +100,38 @@ public class Game
     }
 
 
-    public void updateGame2(float delta) {
-
+    public void updateGame(float delta) {
+	if (delta >= MAX_DELTA_TIME) {
+	    delta = MAX_DELTA_TIME;
+	}
+	timePassed += delta; //debug tool
+	spawnEnemy(delta);
+	for (Entity object : gameObjects) {
+	    if (object instanceof Player) {
+		((Player) object).update(delta);
+	    }
+	    if (object instanceof MovableEntity) {
+		if (object != player) {
+		    ((MovableEntity) object).update(delta);
+		}
+		for (Entity otherObject : gameObjects) {
+		    if (otherObject instanceof CollisionEntity) {
+			if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
+			    ((MovableEntity) object).doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
+			}
+		    }
+		}
+		if (((MovableEntity) object).getHitPointsLeft() <= 0) {
+		    onObjectDeath(object.getGameObjectType(), (MovableEntity) object);
+		}
+	    }
+	}
+	gameObjects.removeAll(objectsToRemove);
+	objectsToRemove.clear();
     }
 
 
-    public void updateGame(float delta) {
+    /*public void updateGame(float delta) {
 	if (delta >= MAX_DELTA_TIME) {
 	    delta = MAX_DELTA_TIME;
 	}
@@ -110,36 +141,35 @@ public class Game
 	doPlayerUpdate(delta);
 	updateMovableObjects(delta);
 	checkForDeaths();
-    }
+    }*/
 
-    private void updateMovableObjects(final float delta) {
+    /*private void updateMovableObjects(final float delta) {
 	for (MovableEntity object : gameObjects) {
 	    object.update(delta);
 	    if (player.hasCollision(object)) {
 		player.doAction(object.getGameObjectType(), object);
 	    }
-	    obstacles.stream().filter(object::hasCollision).forEach(
-		    wall -> object.doAction(wall.getGameObjectType(), wall));
-	    gameObjects.stream().filter(object::hasCollision).forEach(
-		    otherObject -> object.doAction(otherObject.getGameObjectType(), otherObject));
+	    obstacles.stream().filter(object::hasCollision).forEach(wall -> object.doAction(wall.getGameObjectType(), wall));
+	    gameObjects.stream().filter(object::hasCollision)
+		    .forEach(otherObject -> object.doAction(otherObject.getGameObjectType(), otherObject));
 	}
-    }
+    }*/
 
-    private void checkForDeaths() {
+   /* private void checkForDeaths() {
 	if (player.getHitPointsLeft() <= 0) {
 	    onObjectDeath(player.getGameObjectType(), player);
-	} else gameObjects.stream().filter(object -> object.getHitPointsLeft() <= 0).forEach(
-		object -> onObjectDeath(object.getGameObjectType(), object));
+	} else gameObjects.stream().filter(object -> object.getHitPointsLeft() <= 0)
+		.forEach(object -> onObjectDeath(object.getGameObjectType(), object));
 	gameObjects.removeAll(objectsToRemove);
 	objectsToRemove.clear();
-    }
+    }*/
 
-    private void doPlayerUpdate(final float delta) {
+    /*private void doPlayerUpdate(final float delta) {
 	player.update(delta);
 	obstacles.stream().filter(player::hasCollision).forEach(wall -> player.doAction(wall.getGameObjectType(), wall));
-    }
+    }*/
 
-    public void onObjectDeath(GameObject type, MovableEntity object){
+    public void onObjectDeath(GameObject type, MovableEntity object) {
 	switch (type) {
 	    case WALL:
 		//this will never occur as wall cannot die
@@ -149,18 +179,14 @@ public class Game
 		break;
 	    case PLAYER:
 		//handle game over
-		String name = (String)JOptionPane.showInputDialog(
-		                    null,
-		                    "Please enter your name!",
-		                    "Adding highscore...",
-		                    JOptionPane.PLAIN_MESSAGE,
-		                    null, // no icon
-		                    null, // no options
-		                    null); // no default
+		System.out.println("player dead");
+		String name = (String) JOptionPane
+			.showInputDialog(null, "Please enter your name!", "Adding highscore...", JOptionPane.PLAIN_MESSAGE,
+					 null, // no icon
+					 null, // no options
+					 null); // no default
 		highscoreManager.addScore(name, player.getScore());
 		gameOver = true;
-
-		System.out.println("player dead");
 		break;
 	    case SMALL_STATIC_COIN:
 		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
@@ -199,12 +225,12 @@ public class Game
 
     public void createPlayer() {
 	this.player = playerMaker.createPlayer();
-	//gameObjects.add(player);
+	gameObjects.add(player);
 	player.setPosition(playerSpawnPoint);
     }
 
-    public void spawnEnemy(float delta){
-	if (enemySpawnTimer <= 0){
+    public void spawnEnemy(float delta) {
+	if (enemySpawnTimer <= 0) {
 	    int numberOfFactories = enemyFactories.size();
 	    int random = getRandomFactory.nextInt(numberOfFactories);
 	    EnemyFactory factory = enemyFactories.get(random);
@@ -212,13 +238,12 @@ public class Game
 	    gameObjects.add(enemy);
 	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
 	    System.out.println(timePassed);
-	}
-	else enemySpawnTimer -= delta;
+	} else enemySpawnTimer -= delta;
     }
 
     //may need to change return type
     public void fetchMapObstacles() {
-	obstacles.addAll(map.getWalls().stream().collect(Collectors.toList()));
+	gameObjects.addAll(map.getWalls().stream().collect(Collectors.toList()));
     }
 
     public static int getGravity() {
@@ -226,13 +251,13 @@ public class Game
 	return gravity;
     }
 
-    public Iterable<MovableEntity> getGameObjects() {
+    public Iterable<Entity> getGameObjects() {
 	return gameObjects;
     }
 
-    public List<Wall> getObstacles() {
+    /*public List<Wall> getObstacles() {
 	return obstacles;
-    }
+    }*/
 
     public Player getPlayer() {
 	return player;

@@ -89,13 +89,13 @@ public class GameScreen implements Screen
 	if (!gameToDraw.isGameOver()) {
 	    // begin drawing here
 	    batch.begin();
-	    for (Wall wall : gameToDraw.getObstacles()) {
+	    /*for (Wall wall : gameToDraw.getObstacles()) {
 		wall.draw(batch);
-	    }
+	    }*/
 	    for (Entity object : gameToDraw.getGameObjects()) {
 		object.draw(batch);
 	    }
-	    gameToDraw.getPlayer().draw(batch);
+	    //gameToDraw.getPlayer().draw(batch);
 	    bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 	    bmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
 	    batch.end();
