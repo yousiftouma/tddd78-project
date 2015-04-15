@@ -17,7 +17,6 @@ import com.mygdx.game.entity.movableentity.player.PlayerMaker;
 import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
-import com.mygdx.game.entity.obstacle.Wall;
 import com.mygdx.game.highscore.HighscoreManager;
 import com.mygdx.game.maps.GameMap;
 
@@ -111,6 +110,7 @@ public class Game
 		((Player) object).update(delta);
 	    }
 	    if (object instanceof MovableEntity) {
+		// this is correct, we want it to NOT be the OBJECT player
 		if (object != player) {
 		    ((MovableEntity) object).update(delta);
 		}
@@ -176,6 +176,7 @@ public class Game
 		break;
 	    case ENEMY:
 		objectsToRemove.add(object);
+		addScore(1);
 		break;
 	    case PLAYER:
 		//handle game over

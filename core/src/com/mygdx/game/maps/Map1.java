@@ -20,23 +20,6 @@ public final class Map1 extends AbstractMap implements GameMap
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
     static final Map1 INSTANCE = new Map1();
 
-
-    private final static int PLAYER_SPAWN_X = 100;
-    private final static int PLAYER_SPAWN_Y = 300;
-
-    private final static float ONE_HALF = 1.0f/2;
-
-    private final static float ONE_THIRD = 1.0f/3;
-    private final static float TWO_THIRDS = 2.0f/3;
-
-    private final static float ONE_FOURTH = 1.0f/4;
-    private final static float THREE_FOURTHS = 3.0f/4;
-
-    private final static float ONE_FIFTH = 1.0f/5;
-    private final static float THREE_FIFTHS = 3.0f/5;
-
-
-
     private Map1()
     {
 	addWalls();
@@ -53,14 +36,17 @@ public final class Map1 extends AbstractMap implements GameMap
     }
 
     @Override public void addWalls() {
-	walls.add(new Wall(new Sprite(wallTexture), new Vector2(-50, 0), //outside a little bit
-			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD, NORMAL_WALL_THICKNESS)));
+	walls.add(new Wall(new Sprite(wallTexture), new Vector2(OUTSIDE_SCREEN_TO_THE_LEFT, 0),
+			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD - OUTSIDE_SCREEN_TO_THE_LEFT, getNormalWallThickness())));
+
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(Game.FRAME_WIDTH * TWO_THIRDS, 0),
-			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD + 50, NORMAL_WALL_THICKNESS)));
+			   new Vector2(Game.FRAME_WIDTH * ONE_THIRD + OUTSIDE_SCREEN_TO_THE_RIGHT, getNormalWallThickness())));
+
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, Game.FRAME_HEIGHT * ONE_THIRD),
-			   new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, NORMAL_WALL_THICKNESS)));
+			   new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, getNormalWallThickness())));
+
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(Game.FRAME_WIDTH * THREE_FIFTHS, Game.FRAME_HEIGHT * ONE_THIRD),
-			   new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, NORMAL_WALL_THICKNESS)));
+			   new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, getNormalWallThickness())));
     }
 
     @Override public void addEnemySpawnPoints() {

@@ -3,16 +3,15 @@ package com.mygdx.game.entity.movableentity.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
+import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalInvincibilityState;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.States;
 import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
 
-import java.util.Collection;
 
 /**
  * Playerclass, can jump, move and collide with objects
@@ -64,16 +63,17 @@ public class Player extends MovableEntity
 	    case ENEMY:
 		separateSide(side, object);
 		if (side == Side.TOP) {
-		    MovableEntity enemy = (MovableEntity) object;
+		    AbstractEnemy enemy = (AbstractEnemy) object;
 		    enemy.takeDamage(this.damage);
-		} else {
+		} /*else {
+		    System.out.println("player detects enemy collision");
 		    if (!pState.isInvincible()) {
 			hitPointsLeft -= object.getDamage();
 			this.pState = new NormalInvincibilityState();
 			powerUpTimer = 3;
-			System.out.println(this);
+			System.out.println("taken damage:   " + this);
 		    }
-		}
+		}*/
 		break;
 	    case SMALL_STATIC_COIN:
 	    case SMALL_MOVING_COIN:
@@ -87,15 +87,14 @@ public class Player extends MovableEntity
 	}
     }
 
-    @Override public void onDeath(final Collection<Entity> objects) {
-    }
+
 
     @Override public void update(float dt) {
 	super.update(dt);
 	if (pState.getState() != States.NORMAL_STATE) {
 	    powerUpTimer -= dt;
 	    pState.setSize(this);
-	    //System.out.println("powerup= " + powerUpTimer);
+	    System.out.println("powerup= " + powerUpTimer);
 	    if (powerUpTimer <= 0) {
 		this.pState = new NormalState();
 		pState.setSize(this);

@@ -3,12 +3,10 @@ package com.mygdx.game.entity.movableentity.powerups;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
-import java.util.Collection;
 
 /**
  * Abstract powerup that is never instantiated but with shared code for subclasses
@@ -43,10 +41,6 @@ public abstract class AbstractPowerUp extends MovableEntity
 
     @Override public void moveRight(final float dt) {
 	setPositionX(getPosition().x + velocity.x * dt);
-    }
-
-    @Override public void onDeath(final Collection<Entity> objects) {
-	remove(objects);
     }
 
     @Override public void doAction(final GameObject type, final CollisionEntity object) {

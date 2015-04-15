@@ -4,11 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.CollisionEntity;
-import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 
-import java.util.Collection;
 
 /**
  * Entity that can move
@@ -24,13 +22,12 @@ public abstract class MovableEntity extends CollisionEntity {
 
     public abstract void moveRight(float dt);
 
-    public abstract void doAction(GameObject type, CollisionEntity object);
-
     /**
-     * idea is to remove itself from objects list and do something specifik to the class
-     * @param objects the list to remove itself from
+     * when colliding
+     * @param type what type of gameobject we collide with
+     * @param object actual object to interact with
      */
-    public abstract void onDeath(final Collection<Entity> objects);
+    public abstract void doAction(GameObject type, CollisionEntity object);
 
     private final static int MAX_FREE_FALL_VELOCITY = 2000;
 
@@ -74,10 +71,6 @@ public abstract class MovableEntity extends CollisionEntity {
         }
         teleportIfOutsideFrame();
     }
-
-    public void remove(Collection<Entity> objects){
-    	objects.remove(this);
-        }
 
     /**
      * Seperates our MovableEntity from the CollisionEntity we collided with, depending on

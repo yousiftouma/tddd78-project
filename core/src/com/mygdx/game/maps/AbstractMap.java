@@ -31,10 +31,25 @@ public abstract class AbstractMap
 
     private Vector2 playerSpawnPoint;
 
-    /**
-     * protected and should be accessed by different maps in package
-     */
-    protected static final int NORMAL_WALL_THICKNESS = 10;
+    private static final int NORMAL_WALL_THICKNESS = 10;
+
+    // following constants are used to set size and position of obstacles like walls
+    protected final static int PLAYER_SPAWN_X = 100;
+    protected final static int PLAYER_SPAWN_Y = 300;
+
+    protected final static float ONE_HALF = 1.0f / 2;
+
+    protected final static float ONE_THIRD = 1.0f / 3;
+    protected final static float TWO_THIRDS = 2.0f / 3;
+
+    protected final static float ONE_FOURTH = 1.0f / 4;
+    protected final static float THREE_FOURTHS = 3.0f / 4;
+
+    protected final static float ONE_FIFTH = 1.0f / 5;
+    protected final static float THREE_FIFTHS = 3.0f / 5;
+
+    protected final static float OUTSIDE_SCREEN_TO_THE_LEFT = -100.0f;
+    protected final static float OUTSIDE_SCREEN_TO_THE_RIGHT = 100.0f;
 
     protected AbstractMap()
     {
@@ -85,5 +100,13 @@ public abstract class AbstractMap
 
     public List<PowerUpFactory> getPowerUpFactories() {
 	return powerUpFactories;
+    }
+
+    /**
+     * getter for constant
+     * @return normal wall thickness, used when creating maps and for collision logic
+     */
+    public static int getNormalWallThickness() {
+	return NORMAL_WALL_THICKNESS;
     }
 }

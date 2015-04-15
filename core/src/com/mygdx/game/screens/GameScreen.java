@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
 import com.mygdx.game.GameWindow;
 import com.mygdx.game.entity.Entity;
-import com.mygdx.game.entity.obstacle.Wall;
 import com.mygdx.game.maps.GameMap;
 import com.mygdx.game.maps.Map1;
 
@@ -23,6 +22,8 @@ public class GameScreen implements Screen
     private static final float GREEN = 0.5f;
     private static final float BLUE = 0.2f;
 
+
+    // we assert initialization as show() is always run when this screen is set
     private SpriteBatch batch;
     private Game gameToDraw;
     private String scoreDisplay;
@@ -64,7 +65,6 @@ public class GameScreen implements Screen
      * called when another screen is set with setScreen
      */
     @Override public void hide() {
-
     }
 
     /**
