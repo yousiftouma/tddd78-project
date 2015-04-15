@@ -9,6 +9,7 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalInvincibilityState;
 import com.mygdx.game.maps.AbstractMap;
+import com.mygdx.game.screens.GameScreen;
 
 /**
  * Abstract enemy class with abstract methods with different implementation for different types of enemies
@@ -56,6 +57,7 @@ public abstract class AbstractEnemy extends MovableEntity
 		    player.setpState(new NormalInvincibilityState());
 		    player.setPowerUpTimer(3);
 		    System.out.println("taken damage:   " + player);
+		    GameScreen.getTakeDamageSound().play();
 		}
 		break;
 	    case SMALL_STATIC_COIN:

@@ -19,6 +19,7 @@ import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.highscore.HighscoreManager;
 import com.mygdx.game.maps.GameMap;
+import com.mygdx.game.screens.GameScreen;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class Game
     private Random getRandomFactory = new Random();
     private Vector2 playerSpawnPoint;
     private GameMap map;
+    private GameScreen gameScreen;
     // player is initialized but through a different method
     private Player player;
     private PlayerMaker playerMaker;
@@ -80,11 +82,12 @@ public class Game
     public static final int FRAME_WIDTH = 640;
 
 
-    public Game(GameMap map) {
+    public Game(GameMap map, GameScreen gameScreen) {
 	this.gameObjects = new ArrayList<>();
 	//this.obstacles = new ArrayList<>();
 	this.objectsToRemove = new ArrayList<>();
 	this.map = map;
+	this.gameScreen = gameScreen;
 	this.enemySpawnTimer = 0;
 	this.powerUpSpawnTimer = POWER_UP_RESPAWN_TIME;
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();

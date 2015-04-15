@@ -2,6 +2,8 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,8 +32,11 @@ public class GameScreen implements Screen
     private String hpDisplay;
     private BitmapFont scoreBmf;
     private BitmapFont hpBmf;
+    private static Sound dealDamageSound = Gdx.audio.newSound(Gdx.files.internal("give_damage_sound.wav"));
+    private static Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("take_damage_sound.wav"));
+    private static Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("pickup_sound.wav"));
+    private Music gameLoopMusic;
     private GameWindow window;
-    private int mapNumber;
 
     /**
      * Contains the map to render
@@ -41,14 +46,6 @@ public class GameScreen implements Screen
     public GameScreen(int mapNumber, GameWindow window) {
 	assert (0 <= mapNumber && mapNumber <= 10); //necessary?
 	this.window = window;
-	this.mapNumber = mapNumber;
-
-    }
-
-    /**
-     * called when this screen is set with setScreen
-     */
-    @Override public void show() {
 	GameMap mapToPlay;
 	switch (mapNumber) {
 	    case 1:
@@ -57,18 +54,30 @@ public class GameScreen implements Screen
 	    default:
 		mapToPlay = Map1.getInstance();
 	}
-	this.gameToDraw = new Game(mapToPlay);
+	this.gameToDraw = new Game(mapToPlay, this);
 	this.batch = new SpriteBatch();
 	this.scoreDisplay = "score: 0";
 	this.hpDisplay = "HP: 0"; //just initialize
 	this.scoreBmf = new BitmapFont();
 	this.hpBmf = new BitmapFont();
+	this.gameLoopMusic = Gdx.audio.newMusic(Gdx.files.internal("gameloop_sound.mp3"));
+    }
+
+    /**
+     * called when this screen is set with setScreen
+     */
+    @Override public void show() {
+	gameLoopMusic.setLooping(true);
+	gameLoopMusic.setVolume(0.2f);
+	gameLoopMusic.play();
     }
 
     /**
      * called when another screen is set with setScreen
      */
     @Override public void hide() {
+	gameLoopMusic.setLooping(false);
+	gameLoopMusic.pause();
     }
 
     /**
@@ -78,6 +87,7 @@ public class GameScreen implements Screen
 	batch.dispose();
 	scoreBmf.dispose();
 	hpBmf.dispose();
+	gameLoopMusic.dispose();
     }
 
     /**
@@ -148,4 +158,15 @@ public class GameScreen implements Screen
 	Gdx.graphics.setContinuousRendering(true);
     }
 
+    public static Sound getDealDamageSound() {
+	return dealDamageSound;
+    }
+
+    public static Sound getTakeDamageSound() {
+	return takeDamageSound;
+    }
+
+    public static Sound getPickUpSound() {
+	return pickUpSound;
+    }
 }

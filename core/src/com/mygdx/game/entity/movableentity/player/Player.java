@@ -10,6 +10,7 @@ import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.States;
 import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
+import com.mygdx.game.screens.GameScreen;
 
 
 /**
@@ -64,6 +65,7 @@ public class Player extends MovableEntity
 		if (side == Side.TOP) {
 		    AbstractEnemy enemy = (AbstractEnemy) object;
 		    enemy.takeDamage(this.damage);
+		    GameScreen.getDealDamageSound().play();
 		} /*else {
 		    System.out.println("player detects enemy collision");
 		    if (!pState.isInvincible()) {
@@ -79,6 +81,7 @@ public class Player extends MovableEntity
 	    case NORMAL_STATIC_POWER_UP:
 		MovableEntity pwrUpOrCoin = (MovableEntity) object;
 		pwrUpOrCoin.takeDamage(this.damage);
+		GameScreen.getPickUpSound().play();
 		break;
 	    case PLAYER:
 		//will never happen
