@@ -24,6 +24,8 @@ public class GameScreen implements Screen
     private static final float GREEN = 0.5f;
     private static final float BLUE = 0.2f;
 
+    private static final float VOLUME_PERCENTAGE = 0.2f;
+
 
     // we assert initialization as show() is always run when this screen is set
     private SpriteBatch batch;
@@ -68,8 +70,9 @@ public class GameScreen implements Screen
      */
     @Override public void show() {
 	gameLoopMusic.setLooping(true);
-	gameLoopMusic.setVolume(0.2f);
+	gameLoopMusic.setVolume(VOLUME_PERCENTAGE);
 	gameLoopMusic.play();
+
     }
 
     /**
