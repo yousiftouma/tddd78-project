@@ -27,7 +27,9 @@ public class GameScreen implements Screen
     private SpriteBatch batch;
     private Game gameToDraw;
     private String scoreDisplay;
-    private BitmapFont bmf;
+    private String hpDisplay;
+    private BitmapFont scoreBmf;
+    private BitmapFont hpBmf;
     private GameWindow window;
     private int mapNumber;
 
@@ -58,7 +60,9 @@ public class GameScreen implements Screen
 	this.gameToDraw = new Game(mapToPlay);
 	this.batch = new SpriteBatch();
 	this.scoreDisplay = "score: 0";
-	this.bmf = new BitmapFont();
+	this.hpDisplay = "HP: 0"; //just initialize
+	this.scoreBmf = new BitmapFont();
+	this.hpBmf = new BitmapFont();
     }
 
     /**
@@ -72,7 +76,8 @@ public class GameScreen implements Screen
      */
     @Override public void dispose() {
 	batch.dispose();
-	bmf.dispose();
+	scoreBmf.dispose();
+	hpBmf.dispose();
     }
 
     /**
@@ -85,6 +90,7 @@ public class GameScreen implements Screen
 	Gdx.gl.glClearColor(RED, GREEN, BLUE, 1);
 	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	scoreDisplay = "score: " + gameToDraw.getPlayer().getScore();
+	hpDisplay = "HP: " + gameToDraw.getPlayer().getHitPointsLeft();
 
 	if (!gameToDraw.isGameOver()) {
 	    // begin drawing here
@@ -96,8 +102,10 @@ public class GameScreen implements Screen
 		object.draw(batch);
 	    }
 	    //gameToDraw.getPlayer().draw(batch);
-	    bmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-	    bmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
+	    scoreBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+	    scoreBmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
+	    hpBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+	    hpBmf.draw(batch, hpDisplay, 10*10, Game.FRAME_HEIGHT - 10);
 	    batch.end();
 	    // stopped drawing here
 

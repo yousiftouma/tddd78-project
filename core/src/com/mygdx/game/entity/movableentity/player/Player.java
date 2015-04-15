@@ -7,7 +7,6 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
-import com.mygdx.game.entity.movableentity.player.powerup.NormalInvincibilityState;
 import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
 import com.mygdx.game.entity.movableentity.player.powerup.States;
 import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
