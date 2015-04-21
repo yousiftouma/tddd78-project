@@ -34,9 +34,6 @@ public abstract class AbstractMap
     private static final int NORMAL_WALL_THICKNESS = 10;
 
     // following constants are used to set size and position of obstacles like walls
-    protected final static int PLAYER_SPAWN_X = 100;
-    protected final static int PLAYER_SPAWN_Y = 300;
-
     protected final static float ONE_HALF = 1.0f / 2;
 
     protected final static float ONE_THIRD = 1.0f / 3;

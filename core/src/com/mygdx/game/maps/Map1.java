@@ -20,6 +20,9 @@ public final class Map1 extends AbstractMap implements GameMap
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
     static final Map1 INSTANCE = new Map1();
 
+    private final static int PLAYER_SPAWN_X = 100;
+    private final static int PLAYER_SPAWN_Y = 300;
+
     private Map1()
     {
 	addWalls();

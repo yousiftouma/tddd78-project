@@ -211,16 +211,18 @@ public class Game
     }
 
     public void handleMovement(float delta) {
-	if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    player.moveLeft(delta);
-	}
-	if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    player.moveRight(delta);
-	}
-	//isKeyJustPressed means moment when button is pressed, not while button is pressed
-	if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-	    player.jump();
-	}
+	    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		player.moveLeft(delta);
+		System.out.println("movingleft");
+	    }
+	    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		player.moveRight(delta);
+		System.out.println("movingright");
+	    }
+	    //isKeyJustPressed means moment when button is pressed, not while button is pressed
+	    if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+		player.jump();
+	    }
     }
 
     public void addScore(final int points) {
@@ -231,6 +233,7 @@ public class Game
 	this.player = playerMaker.createPlayer();
 	gameObjects.add(player);
 	player.setPosition(playerSpawnPoint);
+	System.out.println("player spawned: " + player);
     }
 
     public void spawnEnemy(float delta) {

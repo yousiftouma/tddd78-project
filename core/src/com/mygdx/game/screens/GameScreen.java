@@ -147,7 +147,6 @@ public class GameScreen implements Screen
 		window.dispose();
 	    }
 	}
-
     }
 
     @Override public void resize(final int width, final int height) {
@@ -161,15 +160,15 @@ public class GameScreen implements Screen
 	Gdx.graphics.setContinuousRendering(true);
     }
 
+    public static Sound getPickUpSound(){
+	return pickUpSound;
+    }
+
     public static Sound getDealDamageSound() {
 	return dealDamageSound;
     }
 
     public static Sound getTakeDamageSound() {
 	return takeDamageSound;
-    }
-
-    public static Sound getPickUpSound() {
-	return pickUpSound;
     }
 }

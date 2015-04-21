@@ -29,8 +29,7 @@ public class MenuScreen implements Screen
 	try {
 	    mapNumber = Integer.parseInt(mapNumberString);
 	}
-	catch (NumberFormatException e) { //user presses Avbryt
-	    e.printStackTrace();
+	catch (NumberFormatException ignored) { //user presses Avbryt
 	    System.exit(0);
 	}
 
