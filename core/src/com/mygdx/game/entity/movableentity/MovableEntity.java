@@ -29,7 +29,7 @@ public abstract class MovableEntity extends CollisionEntity {
      */
     public abstract void doAction(GameObject type, CollisionEntity object);
 
-    private final static int MAX_FREE_FALL_VELOCITY = 2000;
+    private final static int MAX_FREE_FALL_VELOCITY = 1000;
 
     private final static int DEFAULT_VELOCITY_X = 100;
 
