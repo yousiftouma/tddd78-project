@@ -7,7 +7,7 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.player.Player;
-import com.mygdx.game.entity.movableentity.player.powerup.NormalInvincibilityState;
+import com.mygdx.game.entity.movableentity.player.states.NormalInvincibilityState;
 import com.mygdx.game.maps.AbstractMap;
 import com.mygdx.game.screens.GameScreen;
 
@@ -51,12 +51,10 @@ public abstract class AbstractEnemy extends MovableEntity
 	    case PLAYER:
 		separateSide(side, object);
 		Player player = (Player) object;
-		if (!player.getpState().isInvincible()) {
-		    System.out.println("enemy detects player collision");
+		if ((side != Side.BOTTOM) && (!player.getpState().isInvincible())) {
 		    player.takeDamage(this.damage);
 		    player.setpState(new NormalInvincibilityState());
 		    player.setPowerUpTimer(3);
-		    System.out.println("taken damage:   " + player);
 		    GameScreen.getTakeDamageSound().play();
 		}
 		break;

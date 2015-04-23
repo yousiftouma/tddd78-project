@@ -9,7 +9,7 @@ import com.mygdx.game.entity.movableentity.MovableEntity;
 
 
 /**
- * Abstract powerup that is never instantiated but with shared code for subclasses
+ * Abstract states that is never instantiated but with shared code for subclasses
  */
 public abstract class AbstractPowerUp extends MovableEntity
 {

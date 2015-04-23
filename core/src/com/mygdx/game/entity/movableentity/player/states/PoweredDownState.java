@@ -1,4 +1,4 @@
-package com.mygdx.game.entity.movableentity.player.powerup;
+package com.mygdx.game.entity.movableentity.player.states;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.player.Player;
@@ -6,7 +6,7 @@ import com.mygdx.game.entity.movableentity.player.Player;
 /**
  * PowereddownState for player, with lower jump- and movementspeed, not invincible.
  */
-public class PoweredDownState implements PowerUpState
+public class PoweredDownState implements State
 {
     private static final int JUMP_SPEED = 300;
     private static final int RUNNING_SPEED = 200;

@@ -1,4 +1,4 @@
-package com.mygdx.game.entity.movableentity.player.powerup;
+package com.mygdx.game.entity.movableentity.player.states;
 
 /**
  * Replica of normal state but invincible, used to not take massive damage when colliding with enemy

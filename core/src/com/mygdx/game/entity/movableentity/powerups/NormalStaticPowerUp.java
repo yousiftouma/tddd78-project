@@ -6,7 +6,7 @@ import com.mygdx.game.entity.GameObject;
 
 
 /**
- * Normal powerup, can return its durationtime, type and size
+ * Normal states, can return its durationtime, type and size
  */
 public class NormalStaticPowerUp extends AbstractPowerUp {
 

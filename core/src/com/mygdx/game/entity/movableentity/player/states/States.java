@@ -1,4 +1,4 @@
-package com.mygdx.game.entity.movableentity.player.powerup;
+package com.mygdx.game.entity.movableentity.player.states;
 
 /**
  * Enum representing each player state

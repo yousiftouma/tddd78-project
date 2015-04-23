@@ -1,20 +1,20 @@
-package com.mygdx.game.entity.movableentity.player.powerup;
+package com.mygdx.game.entity.movableentity.player.states;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.movableentity.player.Player;
 
 /**
- * PoweredupState for player, with higher jump and movementspeed, player is also invincible.
+ * Normalstate for player, with normal jump- and movementspeed, not invincible.
  */
-public class PoweredUpState implements PowerUpState
+public class NormalState implements State
 {
-    private static final int JUMP_SPEED = 600;
-    private static final int RUNNING_SPEED = 600;
-    private static final int NORMAL_PLAYER_WIDTH = 96;
-    private static final int NORMAL_PLAYER_HEIGHT = 96;
+    private static final int JUMP_SPEED = 500;
+    private static final int RUNNING_SPEED = 300;
+    private static final int NORMAL_PLAYER_WIDTH = 64;
+    private static final int NORMAL_PLAYER_HEIGHT = 64;
 
     @Override public States getState() {
-	return States.POWERED_UP_STATE;
+	return States.NORMAL_STATE;
     }
 
     @Override public void jump(Player p) {
@@ -34,6 +34,6 @@ public class PoweredUpState implements PowerUpState
     }
 
     @Override public boolean isInvincible() {
-	return true;
+	return false;
     }
 }

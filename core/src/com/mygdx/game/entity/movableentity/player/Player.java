@@ -7,9 +7,9 @@ import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
-import com.mygdx.game.entity.movableentity.player.powerup.NormalState;
-import com.mygdx.game.entity.movableentity.player.powerup.States;
-import com.mygdx.game.entity.movableentity.player.powerup.PowerUpState;
+import com.mygdx.game.entity.movableentity.player.states.NormalState;
+import com.mygdx.game.entity.movableentity.player.states.States;
+import com.mygdx.game.entity.movableentity.player.states.State;
 import com.mygdx.game.screens.GameScreen;
 
 
@@ -21,7 +21,7 @@ public class Player extends MovableEntity
 
     private final static int NUMBER_OF_JUMPS = 2;
     private int score;
-    private PowerUpState pState;
+    private State pState;
     private float powerUpTimer;
     private int jumpsCount = NUMBER_OF_JUMPS;
 
@@ -66,15 +66,7 @@ public class Player extends MovableEntity
 		    AbstractEnemy enemy = (AbstractEnemy) object;
 		    enemy.takeDamage(this.damage);
 		    GameScreen.getDealDamageSound().play();
-		} /*else {
-		    System.out.println("player detects enemy collision");
-		    if (!pState.isInvincible()) {
-			hitPointsLeft -= object.getDamage();
-			this.pState = new NormalInvincibilityState();
-			powerUpTimer = 3;
-			System.out.println("taken damage:   " + this);
-		    }
-		}*/
+		}
 		break;
 	    case SMALL_STATIC_COIN:
 	    case SMALL_MOVING_COIN:
@@ -108,11 +100,11 @@ public class Player extends MovableEntity
 	return powerUpTimer;
     }
 
-    public PowerUpState getpState() {
+    public State getpState() {
 	return pState;
     }
 
-    public void setpState(final PowerUpState pState) {
+    public void setpState(final State pState) {
 	this.pState = pState;
     }
 

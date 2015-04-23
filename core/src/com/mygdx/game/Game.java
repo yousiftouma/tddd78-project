@@ -15,7 +15,7 @@ import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
 import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
-import com.mygdx.game.entity.movableentity.player.powerup.PoweredUpState;
+import com.mygdx.game.entity.movableentity.player.states.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.highscore.HighscoreManager;
@@ -40,6 +40,7 @@ public class Game
     public static final float MAX_DELTA_TIME = 0.1f;
     private List<Entity> gameObjects;
     //private List<Wall> obstacles;
+    private List<CollisionPair> collisions;
     private List<MovableEntity> objectsToRemove;
     private List<CoinFactory> coinFactories;
     private List<EnemyFactory> enemyFactories;
@@ -88,6 +89,7 @@ public class Game
 	this.gameObjects = new ArrayList<>();
 	//this.obstacles = new ArrayList<>();
 	this.objectsToRemove = new ArrayList<>();
+	this.collisions = new ArrayList<>();
 	this.map = map;
 	this.gameScreen = gameScreen;
 	this.enemySpawnTimer = 0;
@@ -112,29 +114,53 @@ public class Game
 	spawnEnemy(delta);
 	spawnCoin();
 	spawnPowerUp(delta);
+	findCollisions(delta);
+	handleCollisions();
+	collisions.clear();
+	checkForDeaths();
+	gameObjects.removeAll(objectsToRemove);
+	objectsToRemove.clear();
+    }
+
+    /**
+     * checks for collisions and adds them to a list to be handled when finished checking
+     * we check MovableEntity objects against CollisionEntity objects
+     * @param delta time since last update, used to update objects
+     */
+    private void findCollisions(final float delta) {
 	for (Entity object : gameObjects) {
-	    if (object instanceof Player) {
-		((Player) object).update(delta);
-	    }
 	    if (object instanceof MovableEntity) {
-		// this is correct, we want it to NOT be the OBJECT player
-		if (object != player) {
-		    ((MovableEntity) object).update(delta);
-		}
+		((MovableEntity) object).update(delta);
 		for (Entity otherObject : gameObjects) {
 		    if (otherObject instanceof CollisionEntity) {
 			if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
-			    ((MovableEntity) object).doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
+			    collisions.add(new CollisionPair((MovableEntity) object, (CollisionEntity) otherObject));
+			    //((MovableEntity) object).doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
 			}
 		    }
 		}
+	    }
+	}
+    }
+
+    private void handleCollisions() {
+	for (CollisionPair collisionPair : collisions) {
+		collisionPair.getMovableObject().doAction(collisionPair.getCollisionObject().getGameObjectType(),
+							  collisionPair.getCollisionObject());
+	}
+    }
+
+    /**
+     * checks if anything has died, if so, proceeds to handle it
+     */
+    private void checkForDeaths() {
+	for (Entity object : gameObjects) {
+	    if (object instanceof MovableEntity) {
 		if (((MovableEntity) object).getHitPointsLeft() <= 0) {
 		    onObjectDeath(object.getGameObjectType(), (MovableEntity) object);
 		}
 	    }
 	}
-	gameObjects.removeAll(objectsToRemove);
-	objectsToRemove.clear();
     }
 
 
@@ -270,7 +296,7 @@ public class Game
     }
 
     /**
-     * spawns a powerup if there is currently none available
+     * spawns a states if there is currently none available
      * and enough time has passed
      * otherwise reduces time from counter
      * @param delta time since last check

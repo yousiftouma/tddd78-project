@@ -11,7 +11,8 @@ import com.mygdx.game.entity.Side;
 /**
  * Entity that can move
  */
-public abstract class MovableEntity extends CollisionEntity {
+public abstract class MovableEntity extends CollisionEntity
+{
     protected Vector2 velocity;
     protected Vector2 acceleration;
     protected Vector2 spawnPosition;
@@ -34,7 +35,8 @@ public abstract class MovableEntity extends CollisionEntity {
     private final static int DEFAULT_VELOCITY_X = 100;
 
 
-    protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage, int hitPointsMax) {
+    protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage,
+			    int hitPointsMax) {
         super(sprite, position, size, damage);
         this.velocity = velocity;
         this.acceleration = acceleration;

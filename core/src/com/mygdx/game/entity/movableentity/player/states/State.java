@@ -1,11 +1,11 @@
-package com.mygdx.game.entity.movableentity.player.powerup;
+package com.mygdx.game.entity.movableentity.player.states;
 
 import com.mygdx.game.entity.movableentity.player.Player;
 
 /**
  * Interface for different powerupstates, stating the methods that has to be present in a state
  */
-public interface PowerUpState
+public interface State
 {
     public void jump(Player p);
 
