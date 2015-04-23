@@ -74,6 +74,7 @@ public abstract class AbstractEnemy extends MovableEntity
 	} else {
 	    moveRight(dt);
 	}
+	//can add enemy death when falling out of screen to the bottom
     }
 
     public void setMovingLeft(boolean movingLeft) {

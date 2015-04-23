@@ -7,6 +7,7 @@ import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.movableentity.MovableEntity;
+import com.mygdx.game.entity.movableentity.coins.AbstractCoin;
 import com.mygdx.game.entity.movableentity.coins.CoinFactory;
 import com.mygdx.game.entity.movableentity.coins.SmallMovingCoin;
 import com.mygdx.game.entity.movableentity.coins.SmallStaticCoin;
@@ -23,6 +24,7 @@ import com.mygdx.game.screens.GameScreen;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -108,6 +110,8 @@ public class Game
 	}
 	timePassed += delta; //debug tool
 	spawnEnemy(delta);
+	spawnCoin();
+	spawnPowerUp(delta);
 	for (Entity object : gameObjects) {
 	    if (object instanceof Player) {
 		((Player) object).update(delta);
@@ -172,7 +176,7 @@ public class Game
 	obstacles.stream().filter(player::hasCollision).forEach(wall -> player.doAction(wall.getGameObjectType(), wall));
     }*/
 
-    public void onObjectDeath(GameObject type, MovableEntity object) {
+    private void onObjectDeath(GameObject type, MovableEntity object) {
 	switch (type) {
 	    case WALL:
 		//this will never occur as wall cannot die
@@ -225,18 +229,22 @@ public class Game
 	    }
     }
 
-    public void addScore(final int points) {
+    private void addScore(final int points) {
 	player.setScore(player.getScore() + points);
     }
 
-    public void createPlayer() {
+    private void createPlayer() {
 	this.player = playerMaker.createPlayer();
 	gameObjects.add(player);
 	player.setPosition(playerSpawnPoint);
 	System.out.println("player spawned: " + player);
     }
 
-    public void spawnEnemy(float delta) {
+    /**
+     * spawns a enemy if enough time has passed, otherwise reduces time from timer
+     * @param delta time since last check
+     */
+    private void spawnEnemy(float delta) {
 	if (enemySpawnTimer <= 0) {
 	    int numberOfFactories = enemyFactories.size();
 	    int random = getRandomFactory.nextInt(numberOfFactories);
@@ -248,8 +256,53 @@ public class Game
 	} else enemySpawnTimer -= delta;
     }
 
+    /**
+     * spawns a coin if there is currently none available
+     */
+    private void spawnCoin() {
+	if (!containsInstance(gameObjects, AbstractCoin.class)) {
+	    int numberOfFactories = coinFactories.size();
+	    int random = getRandomFactory.nextInt(numberOfFactories);
+	    CoinFactory factory = coinFactories.get(random);
+	    AbstractCoin coin = factory.createCoin();
+	    gameObjects.add(coin);
+	}
+    }
+
+    /**
+     * spawns a powerup if there is currently none available
+     * and enough time has passed
+     * otherwise reduces time from counter
+     * @param delta time since last check
+     */
+    private void spawnPowerUp(float delta) {
+	if (powerUpSpawnTimer <= 0) {
+	    if (!containsInstance(gameObjects, AbstractPowerUp.class)) {
+		int numberOfFactories = powerUpFactories.size();
+		int random = getRandomFactory.nextInt(numberOfFactories);
+		PowerUpFactory factory = powerUpFactories.get(random);
+		AbstractPowerUp pwrUp = factory.createPowerUp();
+		gameObjects.add(pwrUp);
+		powerUpSpawnTimer = POWER_UP_RESPAWN_TIME;
+	    }
+	}
+	else powerUpSpawnTimer -= delta;
+    }
+
+
+    /**
+     * generic method to check if a collection contains a specific class
+     * @param list collection to check
+     * @param clazz class to check occurance for
+     * @param <E> generic class
+     * @return boolean, true if collection contains class
+     */
+    private static <E> boolean containsInstance(Collection<E> list, Class<? extends E> clazz) {
+        return list.stream().anyMatch(clazz::isInstance);
+    }
+
     //may need to change return type
-    public void fetchMapObstacles() {
+    private void fetchMapObstacles() {
 	gameObjects.addAll(map.getWalls().stream().collect(Collectors.toList()));
     }
 

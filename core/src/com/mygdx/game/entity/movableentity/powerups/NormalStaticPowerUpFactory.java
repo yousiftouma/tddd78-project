@@ -27,7 +27,7 @@ public class NormalStaticPowerUpFactory implements PowerUpFactory
 	Vector2 velocity = new Vector2(0,0);
 	Vector2 acceleration = new Vector2(0, -Game.getGravity());
 	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("powerup.png")));
-	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt());
+	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt(spawnPoints.size()));
 	return new NormalStaticPowerUp(sprite, randomPosition, size, velocity, acceleration);
     }
 }
