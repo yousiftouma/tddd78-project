@@ -225,11 +225,9 @@ public class Game
     public void handleMovement(float delta) {
 	    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 		player.moveLeft(delta);
-		System.out.println("movingleft");
 	    }
 	    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 		player.moveRight(delta);
-		System.out.println("movingright");
 	    }
 	    //isKeyJustPressed means moment when button is pressed, not while button is pressed
 	    if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
