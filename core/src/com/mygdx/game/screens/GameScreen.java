@@ -34,6 +34,9 @@ public class GameScreen implements Screen
     private String hpDisplay;
     private BitmapFont scoreBmf;
     private BitmapFont hpBmf;
+    // I think this is the only way to have the sound accessible to whoever needs it (the concrete entities
+    // that needs to play sounds on certain actions)
+    // The problem is that Gdx.audio is non final static
     private static Sound dealDamageSound = Gdx.audio.newSound(Gdx.files.internal("give_damage_sound.wav"));
     private static Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("take_damage_sound.wav"));
     private static Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("pickup_sound.wav"));
