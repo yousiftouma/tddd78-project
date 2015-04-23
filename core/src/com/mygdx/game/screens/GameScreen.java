@@ -1,7 +1,6 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -14,6 +13,7 @@ import com.mygdx.game.GameWindow;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.maps.GameMap;
 import com.mygdx.game.maps.Map1;
+import com.mygdx.game.maps.Map2;
 
 import javax.swing.*;
 
@@ -59,15 +59,17 @@ public class GameScreen implements Screen
     public GameScreen(int mapNumber, GameWindow window) {
 	assert (0 <= mapNumber && mapNumber <= 10); //necessary?
 	this.window = window;
-	GameMap mapToPlay;
+	GameMap mapToPlay = null;
 	switch (mapNumber) {
 	    case 1:
 		mapToPlay = Map1.getInstance();
 		break;
-	    default:
-		mapToPlay = Map1.getInstance();
+	    case 2:
+		mapToPlay = Map2.getInstance();
+		break;
 	}
-	this.gameToDraw = new Game(mapToPlay, this);
+	assert (mapToPlay != null): "Map to play was null when trying to get instance!";
+	this.gameToDraw = new Game(mapToPlay);
 	this.batch = new SpriteBatch();
 	this.scoreDisplay = "score: 0";
 	// 0 for HP just to initialize

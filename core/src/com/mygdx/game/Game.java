@@ -85,13 +85,12 @@ public class Game
     public static final int FRAME_WIDTH = 640;
 
 
-    public Game(GameMap map, GameScreen gameScreen) {
+    public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
 	//this.obstacles = new ArrayList<>();
 	this.objectsToRemove = new ArrayList<>();
 	this.collisions = new ArrayList<>();
 	this.map = map;
-	final GameScreen gameScreen1 = gameScreen;
 	this.enemySpawnTimer = 0;
 	this.powerUpSpawnTimer = POWER_UP_RESPAWN_TIME;
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();
@@ -135,9 +134,11 @@ public class Game
      * @param delta time since last update, used to update objects
      */
     private void findCollisions(final float delta) {
+	//ignore replacement possibility because of unreadability
 	for (Entity object : gameObjects) {
 	    if (object instanceof MovableEntity) {
 		((MovableEntity) object).update(delta);
+		//ignore replacement possibility because of unreadability
 		for (Entity otherObject : gameObjects) {
 		    if (otherObject instanceof CollisionEntity) {
 			if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
@@ -161,6 +162,7 @@ public class Game
      * See explanation for instanceof operator written in findCollisions method javadoc
      */
     private void checkForDeaths() {
+	//ignore replacement possibility because of unreadability
 	for (Entity object : gameObjects) {
 	    if (object instanceof MovableEntity) {
 		if (((MovableEntity) object).getHitPointsLeft() <= 0) {
@@ -186,6 +188,7 @@ public class Game
 		    name = getNameFromUser();
 		} catch (WrongInputException e){
 		    e.getMessage();
+		    name = "*no name*";
 		}
 
 		highscoreManager.addScore(name, player.getScore());

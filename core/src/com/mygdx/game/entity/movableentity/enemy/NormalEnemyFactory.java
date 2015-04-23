@@ -31,7 +31,7 @@ public class NormalEnemyFactory implements EnemyFactory
 
     @Override public AbstractEnemy createEnemy() {
 	Vector2 size = NormalEnemy.getEnemySize();
-	Vector2 velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
+	Vector2 velocity = new Vector2(MovableEntity.DEFAULT_VELOCITY_X, 0);
 	Vector2 acceleration = new Vector2(0, -Game.getGravity());
 	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("enemy.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt(spawnPoints.size()));

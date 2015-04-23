@@ -19,7 +19,7 @@ public class MenuScreen implements Screen
     }
 
     @Override public void show() {
-	final Object[] maps = { "1" };
+	final Object[] maps = { "1", "2" };
 	String mapNumberString = (String) JOptionPane.showInputDialog(null, // no parent frame
 								      "Choose a map to play!", // text
 								      "Mapselector", // title of dialog

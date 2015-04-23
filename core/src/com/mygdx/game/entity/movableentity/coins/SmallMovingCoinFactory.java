@@ -31,7 +31,7 @@ public class SmallMovingCoinFactory implements CoinFactory
      */
     @Override public AbstractCoin createCoin() {
 	Vector2 size = SmallStaticCoin.getCoinSize();
-	Vector2 velocity = new Vector2(MovableEntity.getDefaultVelocityX(), 0);
+	Vector2 velocity = new Vector2(MovableEntity.DEFAULT_VELOCITY_X, 0);
 	Vector2 acceleration = new Vector2(0, -Game.getGravity());
 	Sprite sprite = new Sprite(new Texture(Gdx.files.internal("goldCoin5.png")));
 	Vector2 randomPosition = spawnPoints.get(getRandomSpawnPoint.nextInt(spawnPoints.size()));

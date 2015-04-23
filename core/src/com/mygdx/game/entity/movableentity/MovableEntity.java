@@ -30,9 +30,15 @@ public abstract class MovableEntity extends CollisionEntity
      */
     public abstract void doAction(GameObject type, CollisionEntity object);
 
-    private final static int MAX_FREE_FALL_VELOCITY = 1000;
+    /**
+     * maximum velocity a MovableEntity can achieve
+     */
+    public final static int MAX_FREE_FALL_VELOCITY = 1000;
 
-    private final static int DEFAULT_VELOCITY_X = 100;
+    /**
+     * The default velocity for a MovableEntity
+     */
+    public final static int DEFAULT_VELOCITY_X = 100;
 
 
     protected MovableEntity(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage,
@@ -128,22 +134,6 @@ public abstract class MovableEntity extends CollisionEntity
 
     public int getHitPointsMax() {
         return hitPointsMax;
-    }
-
-    /**
-     * getter for constant
-     * @return default velocity for movableentities
-     */
-    public static int getDefaultVelocityX() {
-	return DEFAULT_VELOCITY_X;
-    }
-
-    /**
-     * getter for constant
-     * @return maximal fallspeed
-     */
-    public static int getMaxFreeFallVelocity() {
-	return MAX_FREE_FALL_VELOCITY;
     }
 
     public boolean isAlive() {

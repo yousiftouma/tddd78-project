@@ -32,7 +32,7 @@ public abstract class AbstractEnemy extends MovableEntity
 		separateSide(side, object);
 		// check both that collisionside returns right or left but also if it seems to be a wall and not platform
 		// to avoid sometimes changing direction when about to fall off platform (and getting side = left or right)
-		if ((side == Side.LEFT || side == Side.RIGHT) && object.getWidth() < AbstractMap.getNormalWallThickness()) {
+		if ((side == Side.LEFT || side == Side.RIGHT) && object.getWidth() <= AbstractMap.NORMAL_WALL_THICKNESS) {
 		    movingLeft = !movingLeft;
 		}
 		break;
@@ -73,10 +73,6 @@ public abstract class AbstractEnemy extends MovableEntity
 	    moveRight(dt);
 	}
 	//can add enemy death when falling out of screen to the bottom
-    }
-
-    public void setMovingLeft(boolean movingLeft) {
-	this.movingLeft = movingLeft;
     }
 
     @Override public void moveLeft(final float dt) {

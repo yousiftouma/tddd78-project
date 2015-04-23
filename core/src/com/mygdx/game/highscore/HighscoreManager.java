@@ -41,8 +41,6 @@ public class HighscoreManager
             try {
 		inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILENAME));
 		// we know the type to be List
-		assert (inputStream.readObject() instanceof List) : "Internal Error: " +
-								    "Faulty cast List<Score> when reading from highscorefile";
 		scores = (List<Score>) inputStream.readObject();
 
             } catch (FileNotFoundException e) {
