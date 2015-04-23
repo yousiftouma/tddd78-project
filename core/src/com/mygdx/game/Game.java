@@ -18,6 +18,7 @@ import com.mygdx.game.entity.movableentity.player.PlayerMaker;
 import com.mygdx.game.entity.movableentity.player.states.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
+import com.mygdx.game.exceptions.WrongInputException;
 import com.mygdx.game.highscore.HighscoreManager;
 import com.mygdx.game.maps.GameMap;
 import com.mygdx.game.screens.GameScreen;
@@ -48,7 +49,6 @@ public class Game
     private Random getRandomFactory = new Random();
     private Vector2 playerSpawnPoint;
     private GameMap map;
-    private GameScreen gameScreen;
     // player is initialized but through a different method
     private Player player;
     private PlayerMaker playerMaker;
@@ -91,7 +91,7 @@ public class Game
 	this.objectsToRemove = new ArrayList<>();
 	this.collisions = new ArrayList<>();
 	this.map = map;
-	this.gameScreen = gameScreen;
+	final GameScreen gameScreen1 = gameScreen;
 	this.enemySpawnTimer = 0;
 	this.powerUpSpawnTimer = POWER_UP_RESPAWN_TIME;
 	this.playerSpawnPoint = map.getPlayerSpawnPoint();
@@ -125,6 +125,13 @@ public class Game
     /**
      * checks for collisions and adds them to a list to be handled when finished checking
      * we check MovableEntity objects against CollisionEntity objects
+     *
+     * The instanceof operator is used since gameObjects is specified to be filled with Entity
+     * that doesn't have a update method or hasCollision method. Therefor we assert type before we try
+     * to perform these methods.
+     * It is possible to add an empty method in Entity and MovableEntity resp. CollisionEntity
+     * would override this instead of having the "first" implementation but this seems unnecessary
+     *
      * @param delta time since last update, used to update objects
      */
     private void findCollisions(final float delta) {
@@ -135,7 +142,6 @@ public class Game
 		    if (otherObject instanceof CollisionEntity) {
 			if (((MovableEntity) object).hasCollision((CollisionEntity) otherObject)) {
 			    collisions.add(new CollisionPair((MovableEntity) object, (CollisionEntity) otherObject));
-			    //((MovableEntity) object).doAction(otherObject.getGameObjectType(), (CollisionEntity) otherObject);
 			}
 		    }
 		}
@@ -152,6 +158,7 @@ public class Game
 
     /**
      * checks if anything has died, if so, proceeds to handle it
+     * See explanation for instanceof operator written in findCollisions method javadoc
      */
     private void checkForDeaths() {
 	for (Entity object : gameObjects) {
@@ -162,45 +169,6 @@ public class Game
 	    }
 	}
     }
-
-
-    /*public void updateGame(float delta) {
-	if (delta >= MAX_DELTA_TIME) {
-	    delta = MAX_DELTA_TIME;
-	}
-
-	timePassed += delta; //debug tool
-	spawnEnemy(delta);
-	doPlayerUpdate(delta);
-	updateMovableObjects(delta);
-	checkForDeaths();
-    }*/
-
-    /*private void updateMovableObjects(final float delta) {
-	for (MovableEntity object : gameObjects) {
-	    object.update(delta);
-	    if (player.hasCollision(object)) {
-		player.doAction(object.getGameObjectType(), object);
-	    }
-	    obstacles.stream().filter(object::hasCollision).forEach(wall -> object.doAction(wall.getGameObjectType(), wall));
-	    gameObjects.stream().filter(object::hasCollision)
-		    .forEach(otherObject -> object.doAction(otherObject.getGameObjectType(), otherObject));
-	}
-    }*/
-
-   /* private void checkForDeaths() {
-	if (player.getHitPointsLeft() <= 0) {
-	    onObjectDeath(player.getGameObjectType(), player);
-	} else gameObjects.stream().filter(object -> object.getHitPointsLeft() <= 0)
-		.forEach(object -> onObjectDeath(object.getGameObjectType(), object));
-	gameObjects.removeAll(objectsToRemove);
-	objectsToRemove.clear();
-    }*/
-
-    /*private void doPlayerUpdate(final float delta) {
-	player.update(delta);
-	obstacles.stream().filter(player::hasCollision).forEach(wall -> player.doAction(wall.getGameObjectType(), wall));
-    }*/
 
     private void onObjectDeath(GameObject type, MovableEntity object) {
 	switch (type) {
@@ -213,12 +181,13 @@ public class Game
 		break;
 	    case PLAYER:
 		//handle game over
-		System.out.println("player dead");
-		String name = (String) JOptionPane
-			.showInputDialog(null, "Please enter your name!", "Adding highscore...", JOptionPane.PLAIN_MESSAGE,
-					 null, // no icon
-					 null, // no options
-					 null); // no default
+		String name = "";
+		try {
+		    name = getNameFromUser();
+		} catch (WrongInputException e){
+		    e.getMessage();
+		}
+
 		highscoreManager.addScore(name, player.getScore());
 		gameOver = true;
 		break;
@@ -239,6 +208,19 @@ public class Game
 		break;
 	}
     }
+
+    private String getNameFromUser() throws WrongInputException {
+	String name = (String) JOptionPane
+		.showInputDialog(null, "Please enter your name!", "Adding highscore...", JOptionPane.PLAIN_MESSAGE, null,
+				 // no icon
+				 null, // no options
+				 null); // no default
+	if (name.isEmpty()) {
+	    throw new WrongInputException("No name entered, blank name assigned to this score");
+	}
+	return name;
+    }
+
 
     public void handleMovement(float delta) {
 	    if (Gdx.input.isKeyPressed(Keys.LEFT)) {

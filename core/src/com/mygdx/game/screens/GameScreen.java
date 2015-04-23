@@ -1,6 +1,8 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -26,6 +28,11 @@ public class GameScreen implements Screen
 
     private static final float VOLUME_PERCENTAGE = 0.2f;
 
+    private static final float TWO_FIFTHS = 2/5.0f;
+    private static final float ONE_TENTH = 1/10.0f;
+    private static final float THREE_FOURTHS = 3/4.0f;
+    private static final float MARGIN = 10.0f;
+
 
     // we assert initialization as show() is always run when this screen is set
     private SpriteBatch batch;
@@ -34,6 +41,7 @@ public class GameScreen implements Screen
     private String hpDisplay;
     private BitmapFont scoreBmf;
     private BitmapFont hpBmf;
+    private BitmapFont quitBmf;
     // I think this is the only way to have the sound accessible to whoever needs it (the concrete entities
     // that needs to play sounds on certain actions)
     // The problem is that Gdx.audio is non final static
@@ -62,7 +70,9 @@ public class GameScreen implements Screen
 	this.gameToDraw = new Game(mapToPlay, this);
 	this.batch = new SpriteBatch();
 	this.scoreDisplay = "score: 0";
-	this.hpDisplay = "HP: 0"; //just initialize
+	// 0 for HP just to initialize
+	this.hpDisplay = "HP: 0";
+	this.quitBmf = new BitmapFont();
 	this.scoreBmf = new BitmapFont();
 	this.hpBmf = new BitmapFont();
 	this.gameLoopMusic = Gdx.audio.newMusic(Gdx.files.internal("gameloop_sound.mp3"));
@@ -97,8 +107,7 @@ public class GameScreen implements Screen
     }
 
     /**
-     * draws libgdx objects
-     *
+     * draws everything in the gamewindow
      * @param delta is time since last update
      */
     @Override public void render(final float delta) {
@@ -111,17 +120,17 @@ public class GameScreen implements Screen
 	if (!gameToDraw.isGameOver()) {
 	    // begin drawing here
 	    batch.begin();
-	    /*for (Wall wall : gameToDraw.getObstacles()) {
-		wall.draw(batch);
-	    }*/
+
 	    for (Entity object : gameToDraw.getGameObjects()) {
 		object.draw(batch);
 	    }
-	    //gameToDraw.getPlayer().draw(batch);
 	    scoreBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-	    scoreBmf.draw(batch, scoreDisplay, 10, Game.FRAME_HEIGHT - 10);
+	    scoreBmf.draw(batch, scoreDisplay, Game.FRAME_WIDTH * ONE_TENTH, Game.FRAME_HEIGHT - MARGIN);
 	    hpBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-	    hpBmf.draw(batch, hpDisplay, 10*10, Game.FRAME_HEIGHT - 10);
+	    hpBmf.draw(batch, hpDisplay, Game.FRAME_WIDTH * TWO_FIFTHS, Game.FRAME_HEIGHT - MARGIN);
+	    quitBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+	    quitBmf.draw(batch, "Quit: CTRL-Q", Game.FRAME_WIDTH * THREE_FOURTHS, Game.FRAME_HEIGHT - MARGIN);
+
 	    batch.end();
 	    // stopped drawing here
 
@@ -130,6 +139,7 @@ public class GameScreen implements Screen
 
 	    // Controls here
 	    gameToDraw.handleMovement(delta);
+	    checkForOtherKeyInputs();
 	}
 	else {
 	    this.pause();
@@ -146,6 +156,18 @@ public class GameScreen implements Screen
 		window.setScreen(new MenuScreen(window));
 	    }
 	    else {
+		this.dispose();
+		window.dispose();
+	    }
+	}
+    }
+
+    /**
+     * checks if user presses CTRL-Q to quit
+     */
+    private void checkForOtherKeyInputs() {
+	if (Gdx.input.isKeyPressed(Keys.Q)) {
+	    if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)) {
 		this.dispose();
 		window.dispose();
 	    }

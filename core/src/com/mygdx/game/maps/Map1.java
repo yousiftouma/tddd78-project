@@ -18,6 +18,7 @@ import com.mygdx.game.entity.movableentity.powerups.NormalStaticPowerUpFactory;
 public final class Map1 extends AbstractMap implements GameMap
 {
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
+    // we need this to be a Map1 since it is a singleton
     static final Map1 INSTANCE = new Map1();
 
     private final static int PLAYER_SPAWN_X = 100;
@@ -58,6 +59,7 @@ public final class Map1 extends AbstractMap implements GameMap
 
     @Override public void addCoinSpawnPoints() {
 	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_FOURTH, Game.FRAME_HEIGHT * THREE_FOURTHS));
+	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH* ONE_HALF, Game.FRAME_HEIGHT* THREE_FOURTHS));
     }
 
     @Override public void addEnemyFactories() {
