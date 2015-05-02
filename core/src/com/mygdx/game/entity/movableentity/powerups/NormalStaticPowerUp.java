@@ -15,7 +15,7 @@ public class NormalStaticPowerUp extends AbstractPowerUp {
     private final static float POWER_UP_TIME = 10;
 
     public NormalStaticPowerUp(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration) {
-        super(sprite, position, size, velocity, acceleration, false);
+        super(sprite, position, size, velocity, acceleration);
 	setPowerUpTime(POWER_UP_TIME);
     }
 
@@ -27,4 +27,9 @@ public class NormalStaticPowerUp extends AbstractPowerUp {
 	return new Vector2(POWER_UP_WIDTH, POWER_UP_HEIGHT);
     }
 
+    @Override public void moveLeft(final float dt) {
+    }
+
+    @Override public void moveRight(final float dt) {
+    }
 }

@@ -17,12 +17,12 @@ public class NormalMovingPowerDown extends AbstractPowerUp {
 
     private final static int POWER_UP_WIDTH = 32;
     private final static int POWER_UP_HEIGHT = 32;
-    private final static float POWER_UP_TIME = 10;
+    private final static float POWER_DOWN_TIME = 10;
 
     public NormalMovingPowerDown(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
 				 boolean movingLeft) {
         super(sprite, position, size, velocity, acceleration);
-	setPowerUpTime(POWER_UP_TIME);
+	setPowerUpTime(POWER_DOWN_TIME);
 	this.movingLeft = movingLeft;
     }
 

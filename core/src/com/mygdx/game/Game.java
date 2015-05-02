@@ -62,7 +62,7 @@ public class Game
     private static final int PLAYER_HEIGHT = 64;
     private final static int NORMAL_GRAVITY = 982;
     private final static int ENEMY_RESPAWN_TIME = 3;
-    private final static int POWER_UP_RESPAWN_TIME = 30;
+    private final static int POWER_UP_RESPAWN_TIME = 10;
     /**
      * change this if game should give points when killing enemies, used for tuning gameplay
      */

@@ -10,8 +10,8 @@ public class PoweredDownState implements State
 {
     private static final int JUMP_SPEED = 300;
     private static final int RUNNING_SPEED = 200;
-    private static final int WEAK_PLAYER_WIDTH = 40;
-    private static final int WEAK_PLAYER_HEIGHT = 40;
+    private static final int WEAK_PLAYER_WIDTH = 32;
+    private static final int WEAK_PLAYER_HEIGHT = 32;
 
     @Override public States getState() {
 	return States.POWERED_DOWN_STATE;
