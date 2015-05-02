@@ -56,6 +56,8 @@ public abstract class AbstractEnemy extends MovableEntity
 		    player.setpState(new NormalInvincibilityState());
 		    player.setPowerUpTimer(3);
 		    GameScreen.getTakeDamageSound().play();
+		    System.out.println("player pos= " + player.getPosition());
+		    System.out.println("enemy pos= " + this.getPosition());
 		}
 		break;
 	    case SMALL_STATIC_COIN:
