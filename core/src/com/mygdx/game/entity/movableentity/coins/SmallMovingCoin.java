@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.entity.Side;
+import com.mygdx.game.maps.AbstractMap;
 
 /**
  * A small moving coin that will have a velocity when created in factory, but with same class-structur as SmallStaticCoin
@@ -24,7 +25,9 @@ public class SmallMovingCoin extends SmallStaticCoin
 	super.doAction(type, object);
 	if (type == GameObject.WALL) {
 	    Side side = getCollisionSide(object);
-	    if (side == Side.LEFT || side == Side.RIGHT) {
+	    // check both that collisionside returns right or left but also if it seems to be a wall and not platform
+	    // to avoid sometimes changing direction when about to fall off platform (and getting side = left or right)
+	    if ((side == Side.LEFT || side == Side.RIGHT) && object.getWidth() <= AbstractMap.NORMAL_WALL_THICKNESS) {
 		movingLeft = !movingLeft;
 	    }
 	}
@@ -42,19 +45,11 @@ public class SmallMovingCoin extends SmallStaticCoin
     }
 
     /**
-     * Ignores superclass method on purpose as they should return different GameObject enums
-     *
+     * Ignores superclass method on purpose as they should return different GameObject enum.
      * @return actual GameObject type
      */
     @Override public GameObject getGameObjectType() {
 	return GameObject.SMALL_MOVING_COIN;
     }
 
-    public boolean isMovingLeft() {
-	return movingLeft;
-    }
-
-    public void setMovingLeft(final boolean movingLeft) {
-	this.movingLeft = movingLeft;
-    }
 }

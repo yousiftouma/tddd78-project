@@ -20,10 +20,10 @@ public abstract class CollisionEntity extends Entity {
         this.damage = damage;
     }
 
-    public Rectangle getHitBox() {
-	return hitBox;
-    }
-
+    /**
+     * all setters need to also account for the hitBox
+     * @param pos Vector2(x,y)
+     */
     @Override
     public void setPosition(final Vector2 pos) {
 	super.setPosition(pos);
@@ -55,6 +55,13 @@ public abstract class CollisionEntity extends Entity {
 	hitBox.setSize(getWidth(), height);
     }
 
+    /**
+     * checks if this has collision with some other objects
+     * Does this by checking if the libgdx class rectangle's overlap method returns true
+     * Makes sure to not check if the other object is itself
+     * @param object other object
+     * @return boolean hasCollision
+     */
     public boolean hasCollision(CollisionEntity object) {
 	// this is correct, wouldn't want to check collision with self
 	if (this != object) {
@@ -68,7 +75,8 @@ public abstract class CollisionEntity extends Entity {
 
     /**
      * Checks where the overlap is smallest, thus determining which side we have collided with
-     * comparisons are equalitychecks that are acceptable for double datatype
+     * comparisons are done by equalitychecks that are acceptable for the double datatype with a
+     * reasonable acceptable error which we have defined
      * @param object object that we check collision with
      * @return returns which side we've collided with
      */
@@ -97,9 +105,11 @@ public abstract class CollisionEntity extends Entity {
         }
     }
 
-    public int getDamage(){
-        return damage;
+
+    public int getDamage() {
+	return damage;
     }
+
 
 }
 

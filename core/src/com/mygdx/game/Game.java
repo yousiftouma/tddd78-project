@@ -15,13 +15,13 @@ import com.mygdx.game.entity.movableentity.enemy.AbstractEnemy;
 import com.mygdx.game.entity.movableentity.enemy.EnemyFactory;
 import com.mygdx.game.entity.movableentity.player.Player;
 import com.mygdx.game.entity.movableentity.player.PlayerMaker;
+import com.mygdx.game.entity.movableentity.player.states.PoweredDownState;
 import com.mygdx.game.entity.movableentity.player.states.PoweredUpState;
 import com.mygdx.game.entity.movableentity.powerups.AbstractPowerUp;
 import com.mygdx.game.entity.movableentity.powerups.PowerUpFactory;
 import com.mygdx.game.exceptions.WrongInputException;
 import com.mygdx.game.highscore.HighscoreManager;
 import com.mygdx.game.maps.GameMap;
-import com.mygdx.game.screens.GameScreen;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -31,16 +31,13 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * Represents the game, using GameScreen to draw it up
+ * Represents the game.
+ * Has lists of different factories and points that we import from the specifik map
  */
 public class Game
 {
-    /**
-     * Maximal time to be used for gameupdate, used to avoid visual bugs when deltatime from GameScreen is faulty.
-     */
-    public static final float MAX_DELTA_TIME = 0.1f;
+
     private List<Entity> gameObjects;
-    //private List<Wall> obstacles;
     private List<CollisionPair> collisions;
     private List<MovableEntity> objectsToRemove;
     private List<CoinFactory> coinFactories;
@@ -49,7 +46,6 @@ public class Game
     private Random getRandomFactory = new Random();
     private Vector2 playerSpawnPoint;
     private GameMap map;
-    // player is initialized but through a different method
     private Player player;
     private PlayerMaker playerMaker;
 
@@ -57,6 +53,7 @@ public class Game
     private float powerUpSpawnTimer;
 
     private HighscoreManager highscoreManager;
+
     private boolean gameOver;
 
     private static final int MAX_PLAYER_HP = 20;
@@ -66,12 +63,21 @@ public class Game
     private final static int NORMAL_GRAVITY = 982;
     private final static int ENEMY_RESPAWN_TIME = 3;
     private final static int POWER_UP_RESPAWN_TIME = 30;
+    /**
+     * change this if game should give points when killing enemies, used for tuning gameplay
+     */
+    private final static boolean ENEMIES_GIVE_POINTS = true;
+
+    /**
+     * Maximal time to be used for gameupdate, used to avoid visual bugs when deltatime from GameScreen is faulty,
+     * which can happen after a game over
+     */
+    private static final float MAX_DELTA_TIME = 0.1f;
 
     private float timePassed = 0;
 
-
     /**
-     * Title of the game
+     * Title of the game, should be accessible where needed
      */
     public static final String TITLE = "The Game Title";
 
@@ -85,9 +91,15 @@ public class Game
     public static final int FRAME_WIDTH = 640;
 
 
+    /**
+     * Initializes lists for objects, collisions, sets timer so enemy spawns right away
+     * gets the map and from the map gets the mapspecifik lists of factories etc
+     * also initializes the player after creating the playermaker
+     * Creates a highscoremanager to be used upon gameover
+     * @param map the map we are using to play game on
+     */
     public Game(GameMap map) {
 	this.gameObjects = new ArrayList<>();
-	//this.obstacles = new ArrayList<>();
 	this.objectsToRemove = new ArrayList<>();
 	this.collisions = new ArrayList<>();
 	this.map = map;
@@ -105,6 +117,11 @@ public class Game
     }
 
 
+    /**
+     * Is called by GameScreen as often as possible, progresses game
+     * @param delta time since last update, passed from GameScreen, used for calculations
+     *              when moving objects and figuring out if its time to spawn something
+     */
     public void updateGame(float delta) {
 	if (delta >= MAX_DELTA_TIME) {
 	    delta = MAX_DELTA_TIME;
@@ -122,14 +139,15 @@ public class Game
     }
 
     /**
-     * checks for collisions and adds them to a list to be handled when finished checking
-     * we check MovableEntity objects against CollisionEntity objects
+     * checks for collisions and adds them as a CollisionPair to a list to be handled when finished checking.
+     * We check MovableEntity objects against CollisionEntity objects
      *
      * The instanceof operator is used since gameObjects is specified to be filled with Entity
-     * that doesn't have a update method or hasCollision method. Therefor we assert type before we try
+     * that doesn't have a update method or hasCollision method. Therefore we assert type before we try
      * to perform these methods.
-     * It is possible to add an empty method in Entity and MovableEntity resp. CollisionEntity
-     * would override this instead of having the "first" implementation but this seems unnecessary
+     * It is possible to add an empty method in Entity so that MovableEntity and CollisionEntity
+     * can override this method instead of having the "first" implementation but this seems unnecessary
+     * as this would never be used by an entity that cannot update
      *
      * @param delta time since last update, used to update objects
      */
@@ -150,6 +168,10 @@ public class Game
 	}
     }
 
+    /**
+     * Performs action related to the collision detected for each collision detected in the current
+     * update of the game
+     */
     private void handleCollisions() {
 	for (CollisionPair collisionPair : collisions) {
 		collisionPair.getMovableObject().doAction(collisionPair.getCollisionObject().getGameObjectType(),
@@ -172,6 +194,13 @@ public class Game
 	}
     }
 
+    /**
+     * Called when an object has died, performs something specific to that type och object
+     * but always removes them from the list of objects, using a temporary list to store them
+     * so we avoid concurrency errors (i.e. removing objects from a list currently being iterated through)
+     * @param type type of object
+     * @param object the specific object
+     */
     private void onObjectDeath(GameObject type, MovableEntity object) {
 	switch (type) {
 	    case WALL:
@@ -179,18 +208,19 @@ public class Game
 		break;
 	    case ENEMY:
 		objectsToRemove.add(object);
-		addScore(1);
+		if (ENEMIES_GIVE_POINTS) {
+		    addScore(1);
+		}
 		break;
 	    case PLAYER:
 		//handle game over
-		String name = "";
+		String name;
 		try {
 		    name = getNameFromUser();
 		} catch (WrongInputException e){
 		    e.getMessage();
 		    name = "*no name*";
 		}
-
 		highscoreManager.addScore(name, player.getScore());
 		gameOver = true;
 		break;
@@ -206,6 +236,11 @@ public class Game
 		break;
 	    case NORMAL_STATIC_POWER_UP:
 		player.setpState(new PoweredUpState());
+		player.setPowerUpTimer(((AbstractPowerUp) object).getPowerUpTime());
+		objectsToRemove.add(object);
+		break;
+	    case NORMAL_MOVING_POWER_DOWN:
+		player.setpState(new PoweredDownState());
 		player.setPowerUpTimer(((AbstractPowerUp) object).getPowerUpTime());
 		objectsToRemove.add(object);
 		break;
@@ -225,6 +260,10 @@ public class Game
     }
 
 
+    /**
+     * uses libgdx keyinput handling
+     * @param delta time since last update, sent to calculate movement
+     */
     public void handleMovement(float delta) {
 	    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 		player.moveLeft(delta);
@@ -232,7 +271,8 @@ public class Game
 	    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 		player.moveRight(delta);
 	    }
-	    //isKeyJustPressed means moment when button is pressed, not while button is pressed
+	    //isKeyJustPressed means moment when button is pressed, not while button is pressed,
+	    //thus making it impossible to hold key to keep moving up
 	    if (Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 		player.jump();
 	    }
@@ -246,7 +286,6 @@ public class Game
 	this.player = playerMaker.createPlayer();
 	gameObjects.add(player);
 	player.setPosition(playerSpawnPoint);
-	System.out.println("player spawned: " + player);
     }
 
     /**
@@ -279,7 +318,7 @@ public class Game
     }
 
     /**
-     * spawns a states if there is currently none available
+     * spawns a powerup if there is currently none available
      * and enough time has passed
      * otherwise reduces time from counter
      * @param delta time since last check
@@ -310,7 +349,6 @@ public class Game
         return list.stream().anyMatch(clazz::isInstance);
     }
 
-    //may need to change return type
     private void fetchMapObstacles() {
 	gameObjects.addAll(map.getWalls().stream().collect(Collectors.toList()));
     }
@@ -323,10 +361,6 @@ public class Game
     public Iterable<Entity> getGameObjects() {
 	return gameObjects;
     }
-
-    /*public List<Wall> getObstacles() {
-	return obstacles;
-    }*/
 
     public Player getPlayer() {
 	return player;

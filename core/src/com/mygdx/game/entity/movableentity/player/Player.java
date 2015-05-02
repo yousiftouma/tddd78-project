@@ -19,11 +19,11 @@ import com.mygdx.game.screens.GameScreen;
 public class Player extends MovableEntity
 {
 
-    private final static int NUMBER_OF_JUMPS = 2;
+    private final static int ALLOWED_CONSECUTIVE_JUMPS = 2;
     private int score;
     private State pState;
     private float powerUpTimer;
-    private int jumpsCount = NUMBER_OF_JUMPS;
+    private int jumpsCount = ALLOWED_CONSECUTIVE_JUMPS;
 
     public Player(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration, int damage,
 		  int hitPointsMax)
@@ -57,10 +57,11 @@ public class Player extends MovableEntity
 	    case WALL:
 		separateSide(side, object);
 		if (side == Side.TOP) {
-		    jumpsCount = NUMBER_OF_JUMPS;
+		    jumpsCount = ALLOWED_CONSECUTIVE_JUMPS;
 		}
 		break;
 	    case ENEMY:
+		// we deal damage to enemy, never take
 		separateSide(side, object);
 		if (side == Side.TOP) {
 		    AbstractEnemy enemy = (AbstractEnemy) object;
@@ -68,9 +69,11 @@ public class Player extends MovableEntity
 		    GameScreen.getDealDamageSound().play();
 		}
 		break;
+	    case NORMAL_MOVING_POWER_DOWN:
 	    case SMALL_STATIC_COIN:
 	    case SMALL_MOVING_COIN:
 	    case NORMAL_STATIC_POWER_UP:
+		// all 4 above are handled the same way
 		MovableEntity pwrUpOrCoin = (MovableEntity) object;
 		pwrUpOrCoin.takeDamage(this.damage);
 		GameScreen.getPickUpSound().play();
@@ -82,7 +85,11 @@ public class Player extends MovableEntity
     }
 
 
-
+    /**
+     * If we are powered up or down we progress the timer
+     * If timer has run out, we return to normal state
+     * @param dt delta time since last frame update
+     */
     @Override public void update(float dt) {
 	super.update(dt);
 	if (pState.getState() != States.NORMAL_STATE) {
@@ -94,10 +101,6 @@ public class Player extends MovableEntity
 		pState.setSize(this);
 	    }
 	}
-    }
-
-    public float getPowerUpTimer() {
-	return powerUpTimer;
     }
 
     public State getpState() {

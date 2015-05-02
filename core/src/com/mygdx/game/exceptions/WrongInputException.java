@@ -7,12 +7,6 @@ import javax.swing.*;
  */
 public class WrongInputException extends Exception
 {
-
-    public WrongInputException() {
-	final String defaultErrorMsg = "Something was wrong with input!";
-	JOptionPane.showMessageDialog(null, defaultErrorMsg);
-    }
-
     public WrongInputException(final String message) {
 	JOptionPane.showMessageDialog(null, message);
     }

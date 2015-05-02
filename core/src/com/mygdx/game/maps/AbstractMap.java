@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Superclass for maps that creates the arraylists of content but never fills them. This class is never instantiated
- * and therefore abstract but needed to reduce codeduplication.
+ * and therefore abstract but needed to reduce code duplication. (like a code skeleton)
  */
 
 public abstract class AbstractMap
@@ -24,7 +24,7 @@ public abstract class AbstractMap
      * In libgdx Vector2 can be used as a point
      */
     protected List<Vector2> enemySpawnPoints;
-    protected List<Vector2> coinSpawnPoints;
+    protected List<Vector2> coinAndPowerUpSpawnPoints;
     protected List<EnemyFactory> enemyFactories;
     protected List<CoinFactory> coinFactories;
     protected List<PowerUpFactory> powerUpFactories;
@@ -32,7 +32,7 @@ public abstract class AbstractMap
     private Vector2 playerSpawnPoint;
 
     /**
-     * normal thickness for a wall, used for collisionchecking with walls
+     * normal thickness for a wall, used for collisionchecking with walls (thus public)
      * and when creating walls
      */
     public static final int NORMAL_WALL_THICKNESS = 10;
@@ -57,7 +57,7 @@ public abstract class AbstractMap
     {
 	this.walls = new ArrayList<>();
 	this.enemySpawnPoints = new ArrayList<>();
-	this.coinSpawnPoints = new ArrayList<>();
+	this.coinAndPowerUpSpawnPoints = new ArrayList<>();
 	this.enemyFactories = new ArrayList<>();
 	this.coinFactories = new ArrayList<>();
 	this.powerUpFactories = new ArrayList<>();

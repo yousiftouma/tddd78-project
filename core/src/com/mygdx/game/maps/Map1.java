@@ -58,8 +58,8 @@ public final class Map1 extends AbstractMap implements GameMap
     }
 
     @Override public void addCoinSpawnPoints() {
-	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_FOURTH, Game.FRAME_HEIGHT * THREE_FOURTHS));
-	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH* ONE_HALF, Game.FRAME_HEIGHT* THREE_FOURTHS));
+	coinAndPowerUpSpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_FOURTH, Game.FRAME_HEIGHT * THREE_FOURTHS));
+	coinAndPowerUpSpawnPoints.add(new Vector2(Game.FRAME_WIDTH* ONE_HALF, Game.FRAME_HEIGHT* THREE_FOURTHS));
     }
 
     @Override public void addEnemyFactories() {
@@ -68,12 +68,12 @@ public final class Map1 extends AbstractMap implements GameMap
     }
 
     @Override public void addCoinFactories() {
-	coinFactories.add(new SmallStaticCoinFactory(coinSpawnPoints));
-	coinFactories.add(new SmallMovingCoinFactory(coinSpawnPoints, true));
-	coinFactories.add(new SmallMovingCoinFactory(coinSpawnPoints, false));
+	coinFactories.add(new SmallStaticCoinFactory(coinAndPowerUpSpawnPoints));
+	coinFactories.add(new SmallMovingCoinFactory(coinAndPowerUpSpawnPoints, true));
+	coinFactories.add(new SmallMovingCoinFactory(coinAndPowerUpSpawnPoints, false));
     }
 
     @Override public void addPowerUpFactories() {
-	powerUpFactories.add(new NormalStaticPowerUpFactory(coinSpawnPoints));
+	powerUpFactories.add(new NormalStaticPowerUpFactory(coinAndPowerUpSpawnPoints));
     }
 }

@@ -27,7 +27,11 @@ public enum GameObject {
     /**
      * normal nonmoving powerUp
      */
-    NORMAL_STATIC_POWER_UP
+    NORMAL_STATIC_POWER_UP,
+    /**
+     * normal, moving powerDown
+     */
+    NORMAL_MOVING_POWER_DOWN
 
 
 }

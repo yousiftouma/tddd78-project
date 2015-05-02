@@ -1,6 +1,5 @@
 package com.mygdx.game.highscore;
 
-
 import java.util.*;
 import java.io.*;
 
@@ -46,10 +45,13 @@ public class HighscoreManager
             } catch (FileNotFoundException e) {
                 System.out.println("Error loading highscorefile, File Not Found Exception," +
 				   " will try to create file: " + e.getMessage());
+		e.printStackTrace();
             } catch (IOException e) {
                 System.out.println("Error loading highscorefile, IO Exception: " + e.getMessage());
+		e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 System.out.println("Error loading highscorefile, Class Not Found Exception: " + e.getMessage());
+		e.printStackTrace();
             } finally {
                 try {
                     if (inputStream != null) {
@@ -57,6 +59,7 @@ public class HighscoreManager
                     }
                 } catch (IOException e) {
                     System.out.println("Error loading highscorefile, IO Error: " + e.getMessage());
+		    e.printStackTrace();
                 }
             }
     }
@@ -67,8 +70,10 @@ public class HighscoreManager
 	    outputStream.writeObject(scores);
 	} catch (FileNotFoundException e) {
 	    System.out.println("error updating scores: " + e.getMessage() + "new file will be created");
+	    e.printStackTrace();
 	} catch (IOException e) {
 	    System.out.println("error updating scores: " + e.getMessage());
+	    e.printStackTrace();
 	} finally {
 	    try {
 		if (outputStream != null) {
@@ -77,6 +82,7 @@ public class HighscoreManager
 		}
 	    } catch (IOException e) {
 		System.out.println("error updating scores: " + e.getMessage());
+		e.printStackTrace();
 	    }
 	}
     }
@@ -91,7 +97,7 @@ public class HighscoreManager
 	    listSize = scores.size();
 	}
 
-	while (position < listSize) {
+	while (position < listSize) { //output example: 1. Mikael 50 *newline* 2. Jonas 45
 	    highscoreString.append(position + 1).append(". ").append(scores.get(position).getName()).append(" ")
 		    .append(scores.get(position).getScore()).append("\n");
 	    position++;

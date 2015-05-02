@@ -5,7 +5,8 @@ import com.mygdx.game.entity.CollisionEntity;
 import com.mygdx.game.entity.movableentity.MovableEntity;
 
 /**
- * Class to represent a collisionpair tuple
+ * Class to represent a collisionpair tuple, used to store collisions in the current
+ * gameloop before handling them
  */
 public class CollisionPair
 {

@@ -1,7 +1,7 @@
 package com.mygdx.game.entity.movableentity.player.states;
 
 /**
- * Replica of normal state but invincible, used to not take massive damage when colliding with enemy
+ * Replica of normal state but invincible, used to not take massive damage instantly when colliding with enemy
  */
 public class NormalInvincibilityState extends NormalState
 {
@@ -10,7 +10,10 @@ public class NormalInvincibilityState extends NormalState
 	return !super.isInvincible(); //True
     }
 
-    //as intended, shouldn't return same state
+    /**
+     * Ignores superclass method on purpose as they should return different GameObject enum.
+     * @return actual GameObject type
+     */
     @Override public States getState() {
 	return States.NORMAL_INVINCIBILITY_STATE;
     }

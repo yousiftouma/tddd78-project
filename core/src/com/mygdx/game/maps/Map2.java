@@ -8,17 +8,18 @@ import com.mygdx.game.Game;
 import com.mygdx.game.entity.movableentity.coins.SmallMovingCoinFactory;
 import com.mygdx.game.entity.movableentity.coins.SmallStaticCoinFactory;
 import com.mygdx.game.entity.movableentity.enemy.NormalEnemyFactory;
+import com.mygdx.game.entity.movableentity.powerups.NormalMovingPowerDownFactory;
 import com.mygdx.game.entity.movableentity.powerups.NormalStaticPowerUpFactory;
 import com.mygdx.game.entity.obstacle.Wall;
 
 /**
- * Represents the first map
+ * Represents the second map
  * Singleton
  */
 public final class Map2 extends AbstractMap implements GameMap
 {
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
-    // we need this to be a Map1 since it is a singleton
+    // we need this to be a Map2 since it is a singleton
     static final Map2 INSTANCE = new Map2();
 
     private final static int PLAYER_SPAWN_X = 100;
@@ -64,8 +65,8 @@ public final class Map2 extends AbstractMap implements GameMap
     }
 
     @Override public void addCoinSpawnPoints() {
-	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_FOURTH, Game.FRAME_HEIGHT * THREE_FOURTHS));
-	coinSpawnPoints.add(new Vector2(Game.FRAME_WIDTH* ONE_HALF, Game.FRAME_HEIGHT* THREE_FOURTHS));
+	coinAndPowerUpSpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_FOURTH, Game.FRAME_HEIGHT * THREE_FOURTHS));
+	coinAndPowerUpSpawnPoints.add(new Vector2(Game.FRAME_WIDTH* ONE_HALF, Game.FRAME_HEIGHT* THREE_FOURTHS));
     }
 
     @Override public void addEnemyFactories() {
@@ -74,12 +75,14 @@ public final class Map2 extends AbstractMap implements GameMap
     }
 
     @Override public void addCoinFactories() {
-	coinFactories.add(new SmallStaticCoinFactory(coinSpawnPoints));
-	coinFactories.add(new SmallMovingCoinFactory(coinSpawnPoints, true));
-	coinFactories.add(new SmallMovingCoinFactory(coinSpawnPoints, false));
+	coinFactories.add(new SmallStaticCoinFactory(coinAndPowerUpSpawnPoints));
+	coinFactories.add(new SmallMovingCoinFactory(coinAndPowerUpSpawnPoints, true));
+	coinFactories.add(new SmallMovingCoinFactory(coinAndPowerUpSpawnPoints, false));
     }
 
     @Override public void addPowerUpFactories() {
-	powerUpFactories.add(new NormalStaticPowerUpFactory(coinSpawnPoints));
+	powerUpFactories.add(new NormalStaticPowerUpFactory(coinAndPowerUpSpawnPoints));
+	powerUpFactories.add(new NormalMovingPowerDownFactory(coinAndPowerUpSpawnPoints, false));
+	powerUpFactories.add(new NormalMovingPowerDownFactory(coinAndPowerUpSpawnPoints, true));
     }
 }

@@ -35,18 +35,16 @@ public abstract class AbstractPowerUp extends MovableEntity
 	return powerUpTime;
     }
 
-    @Override public void moveLeft(final float dt) {
-	setPositionX(getPosition().x - velocity.x * dt);
-    }
-
-    @Override public void moveRight(final float dt) {
-	setPositionX(getPosition().x + velocity.x * dt);
-    }
-
+    /**
+     * any powerup should separate from walls
+     * @param type what type of gameobject we collide with
+     * @param object actual object to interact with
+     */
     @Override public void doAction(final GameObject type, final CollisionEntity object) {
 	Side side = getCollisionSide(object);
 	if (type == GameObject.WALL) {
 	    separateSide(side, object);
 	}
     }
+
 }

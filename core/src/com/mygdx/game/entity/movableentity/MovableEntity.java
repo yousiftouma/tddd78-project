@@ -10,21 +10,30 @@ import com.mygdx.game.entity.Side;
 
 /**
  * Entity that can move
+ * These entities can also die (in some sense, they have some sort of lifespan), so they have hitpoints
+ * Also have acceleration and velocity vectors beside spawnpositions
  */
 public abstract class MovableEntity extends CollisionEntity
 {
     protected Vector2 velocity;
     protected Vector2 acceleration;
+    //not true, used in factories
     protected Vector2 spawnPosition;
+    //used to set hp when creating objects
     protected int hitPointsMax;
     protected int hitPointsLeft;
 
+    /**
+     * moving will be handled differently depending on type of class
+     * @param dt delta time since last update, used for calculating movement
+     */
     public abstract void moveLeft(float dt);
 
+    //why remove abstract methods?
     public abstract void moveRight(float dt);
 
     /**
-     * when colliding
+     * when colliding, we perform an action, depending on self and other object
      * @param type what type of gameobject we collide with
      * @param object actual object to interact with
      */
@@ -55,17 +64,17 @@ public abstract class MovableEntity extends CollisionEntity
         return velocity;
     }
 
-    public Vector2 getAcceleration() {
+/*    public Vector2 getAcceleration() {
         return acceleration;
-    }
+    }*/
 
     public void setVelocity(final Vector2 velocity) {
         this.velocity = velocity;
     }
 
-    public void setAcceleration(final Vector2 acceleration) {
+/*    public void setAcceleration(final Vector2 acceleration) {
         this.acceleration = acceleration;
-    }
+    }*/
 
     /**
      * primarily updates fallspeed according to gravity
@@ -73,7 +82,6 @@ public abstract class MovableEntity extends CollisionEntity
      */
     public void update(float dt) {
 	setPositionY(getPosition().y + velocity.y * dt);
-        //setPosition(new Vector2(getPosition().x, getPosition().y + velocity.y * dt)); // + velocity.x*dt may be problem
         if (Math.abs(velocity.y) < MAX_FREE_FALL_VELOCITY) {
             velocity.y += acceleration.y * dt;
         }
@@ -130,14 +138,6 @@ public abstract class MovableEntity extends CollisionEntity
 
     public void takeDamage(int dmg){
 	hitPointsLeft -= dmg;
-    }
-
-    public int getHitPointsMax() {
-        return hitPointsMax;
-    }
-
-    public boolean isAlive() {
-        return hitPointsLeft <= 0;
     }
 
     @Override public String toString() {

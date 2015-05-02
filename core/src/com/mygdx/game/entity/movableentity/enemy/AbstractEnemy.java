@@ -49,6 +49,7 @@ public abstract class AbstractEnemy extends MovableEntity
 		}
 		break;
 	    case PLAYER:
+		// we only deal damage, never take (player deals damage to us)
 		separateSide(side, object);
 		Player player = (Player) object;
 		if ((side != Side.BOTTOM) && (!player.getpState().isInvincible())) {
@@ -60,6 +61,7 @@ public abstract class AbstractEnemy extends MovableEntity
 		    System.out.println("enemy pos= " + this.getPosition());
 		}
 		break;
+	    case NORMAL_MOVING_POWER_DOWN:
 	    case SMALL_STATIC_COIN:
 	    case SMALL_MOVING_COIN:
 	    case NORMAL_STATIC_POWER_UP:
@@ -74,7 +76,6 @@ public abstract class AbstractEnemy extends MovableEntity
 	} else {
 	    moveRight(dt);
 	}
-	//can add enemy death when falling out of screen to the bottom
     }
 
     @Override public void moveLeft(final float dt) {

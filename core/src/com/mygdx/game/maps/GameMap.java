@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Interface for maps. Must be able to return themselves to anyone who wants it, but each map is singleton and can only be
- * created once
+ * created once which is logical since it is unnecessary to have multiple map objects that all will stay the same
  *
  * We use eager initialization since the scale of the game allows it. It's ok to create all maps upon starting the game
  * instead of having lazy initialization where the map is only created when called. If the game becomes too big so that

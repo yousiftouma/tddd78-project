@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Represents all drawable objects in the game.
- * Is abstract as diffrent Entities will have different types for example
+ * Is abstract as diffrent Entities will have different types for example and
+ * we don't need to instantiate this class because of that
  */
 public abstract class Entity  {
 
@@ -18,6 +19,11 @@ public abstract class Entity  {
      */
     private Vector2 position;
     private Vector2 size;
+
+    /**
+     * will return different types for different subclasses
+     * @return enum GameObject
+     */
     public abstract GameObject getGameObjectType();
 
     /**
@@ -33,7 +39,6 @@ public abstract class Entity  {
 	sprite.setSize(size.x, size.y);
     }
 
-
     public Sprite getSprite() {
 	return sprite;
     }
@@ -46,6 +51,11 @@ public abstract class Entity  {
 	return position;
     }
 
+    /**
+     * setters for position need to set position of both the entityobject itself but also
+     * its sprite
+     * @param pos Vector2(x,y)
+     */
     public void setPosition(final Vector2 pos) {
 	this.position = pos;
 	sprite.setPosition(position.x, position.y);
@@ -73,6 +83,10 @@ public abstract class Entity  {
         return size.y;
     }
 
+    /**
+     * as with setters for position, this functions in the same manner
+     * @param size Vector2(width, height)
+     */
     public void setSize(final Vector2 size) {
 	this.size = size;
 	sprite.setSize(size.x, size.y);

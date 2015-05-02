@@ -18,10 +18,33 @@ import com.mygdx.game.maps.Map2;
 import javax.swing.*;
 
 /**
- * Renders everything for the game
+ * Class to draw everything, implements the libgdx screen interface which has
+ * some methods seen below
  */
 public class GameScreen implements Screen
 {
+    //libgdx class SpriteBatch that buffers several sprites to be sent to the graphicscard for rendering
+    //simultaneously instead of one by one
+    private SpriteBatch batch;
+    private Game gameToDraw;
+    private String scoreDisplay;
+    private String hpDisplay;
+    //libgdx class to display text as bitmaps
+    private BitmapFont scoreBmf;
+    private BitmapFont hpBmf;
+    private BitmapFont quitBmf;
+    // We think this is the only way to have the sound accessible to whoever needs it (the concrete entities
+    // that needs to play sounds on certain actions)
+    // The problem is that Gdx.audio is non final static
+    // but this is a libgdx class so we don't think we can handle this in any other way
+    // Also, Sound is a libgdx class that handles sound with simple play, pause and similar methods
+    private static Sound dealDamageSound = Gdx.audio.newSound(Gdx.files.internal("give_damage_sound.wav"));
+    private static Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("take_damage_sound.wav"));
+    private static Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("pickup_sound.wav"));
+    //Music is a libgdx class to handle longer sounds, in our case backgroundmusic
+    private Music gameLoopMusic;
+    private GameWindow window;
+
     private static final float RED = 0.7f;
     private static final float GREEN = 0.5f;
     private static final float BLUE = 0.2f;
@@ -33,31 +56,13 @@ public class GameScreen implements Screen
     private static final float THREE_FOURTHS = 3/4.0f;
     private static final float MARGIN = 10.0f;
 
-
-    // we assert initialization as show() is always run when this screen is set
-    private SpriteBatch batch;
-    private Game gameToDraw;
-    private String scoreDisplay;
-    private String hpDisplay;
-    private BitmapFont scoreBmf;
-    private BitmapFont hpBmf;
-    private BitmapFont quitBmf;
-    // I think this is the only way to have the sound accessible to whoever needs it (the concrete entities
-    // that needs to play sounds on certain actions)
-    // The problem is that Gdx.audio is non final static
-    private static Sound dealDamageSound = Gdx.audio.newSound(Gdx.files.internal("give_damage_sound.wav"));
-    private static Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("take_damage_sound.wav"));
-    private static Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("pickup_sound.wav"));
-    private Music gameLoopMusic;
-    private GameWindow window;
-
     /**
-     * Contains the map to render
-     *
-     * @param mapNumber which map to render in screen, must be within range
+     * Constructor of the gamescreen
+     * @param mapNumber which map to render in screen, this method needs to contain a case for
+     *                  each map
+     * @param window the window the screen is set in
      */
     public GameScreen(int mapNumber, GameWindow window) {
-	assert (0 <= mapNumber && mapNumber <= 10); //necessary?
 	this.window = window;
 	GameMap mapToPlay = null;
 	switch (mapNumber) {
@@ -82,6 +87,7 @@ public class GameScreen implements Screen
 
     /**
      * called when this screen is set with setScreen
+     * interfacemethod
      */
     @Override public void show() {
 	gameLoopMusic.setLooping(true);
@@ -92,6 +98,7 @@ public class GameScreen implements Screen
 
     /**
      * called when another screen is set with setScreen
+     * interfacemethod
      */
     @Override public void hide() {
 	gameLoopMusic.setLooping(false);
@@ -99,7 +106,8 @@ public class GameScreen implements Screen
     }
 
     /**
-     * used to dispose of heavy objects
+     * used to dispose of heavy objects like a spritebatch or other mediaobjects
+     * interfacemethod
      */
     @Override public void dispose() {
 	batch.dispose();
@@ -109,7 +117,8 @@ public class GameScreen implements Screen
     }
 
     /**
-     * draws everything in the gamewindow
+     * interfacemethod
+     * draws everything in the gamewindow, called as fast as the computer can handle rendering
      * @param delta is time since last update
      */
     @Override public void render(final float delta) {
@@ -120,12 +129,13 @@ public class GameScreen implements Screen
 	hpDisplay = "HP: " + gameToDraw.getPlayer().getHitPointsLeft();
 
 	if (!gameToDraw.isGameOver()) {
-	    // begin drawing here
+	    // create a spritebatch to send to graphics card for drawing
 	    batch.begin();
 
 	    for (Entity object : gameToDraw.getGameObjects()) {
 		object.draw(batch);
 	    }
+	    //sets white color to all bitmapfonts and draws them
 	    scoreBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 	    scoreBmf.draw(batch, scoreDisplay, Game.FRAME_WIDTH * ONE_TENTH, Game.FRAME_HEIGHT - MARGIN);
 	    hpBmf.setColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -134,7 +144,7 @@ public class GameScreen implements Screen
 	    quitBmf.draw(batch, "Quit: CTRL-Q", Game.FRAME_WIDTH * THREE_FOURTHS, Game.FRAME_HEIGHT - MARGIN);
 
 	    batch.end();
-	    // stopped drawing here
+	    // sent the spritebatch
 
 	    // Updates here
 	    gameToDraw.updateGame(delta);
@@ -176,13 +186,23 @@ public class GameScreen implements Screen
 	}
     }
 
+    /**
+     * interfacemethod, more used for mobile apps
+     */
     @Override public void resize(final int width, final int height) {
     }
 
+    /**
+     * interfacemethod, also mostly used for mobile applications but used in our case to stop
+     * rendering when game over
+     */
     @Override public void pause() {
 	Gdx.graphics.setContinuousRendering(false);
     }
 
+    /**
+     * interfacemethod, also mostly used for mobile apps, but used here to resume rendering
+     */
     @Override public void resume() {
 	Gdx.graphics.setContinuousRendering(true);
     }
