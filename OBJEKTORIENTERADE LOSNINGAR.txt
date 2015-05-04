@@ -1,0 +1,17 @@
+1. 	Skapa en klass som håller specifik information som en tupel (CollisionPair)
+
+	Skulle kunna göra vanliga tupler/listor för varje par som man sparar, vilket man kanske skulle gjort i python som standardlösning efter att ha gått den kursen
+
+2. 
+
+
+
+Användandet av gränssnitt (interface) för att representera abstrakta datatyper som har flera konkreta implementationer.
+
+Abstrakta klasser för att specificera gemensam funktionalitet hos en uppsättning klasser.
+
+Implementationsärvning, där en klass ärver metodimplementationer och fält från en annan (och lägger till egen kod alternativt "modifierar" existerande metoder via overriding). Här menar vi ärvning från en konkret superklass, för att skilja det från punkten ovan.
+
+Sen/dynamisk bindning inom en typhierarki, för att anropa "rätt" implementation av en metod utan att känna till objektets verkliga typ.
+
+Konstruktorer för att initialisera objekt.

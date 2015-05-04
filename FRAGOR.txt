@@ -1,0 +1,2 @@
+HighscoreManager: hur ska vi hantera exceptions mer än printa felet i konsollen?
+fråga om inspektionerna, unused methods?

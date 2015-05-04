@@ -1,0 +1,11 @@
+1. CollisionPair - istället för att sköta collisionen direkt i loopen
+2. Maps som singleton - Onödigt att skapa fler instanser av samma karta, då den alltid ska vara likadan och oföränderlig oavsett
+3. Använda ett GameWindow med olika Screens för att skilja en meny åt från rendering av spel - modularitet
+4. Fabriker för olika objekt som ska skapas flera gånger i spelet, speciellt med slumpmässig utdata - modulärt (factory method pattern)
+5. Ha flera steg av entity så klasser undviker att ha metoder de inte bör ha eller behöver - typ wall är ej movable
+6. Enums - bidrar till att slippa använda strängar eller annat, bra att ha när något kan anta olika värden och du snabbt ska kolla olika möjligheter
+hjälper även i utvecklingen när en metod beror på vad den får för parameter som då kan vara en enum
+7. Abstrakta klasser - klasser som aldrig ska instansieras - kan användas som kodskelett för ärvning men även ha ett "namn" för metoder som ska finnas
+men som ska ha olika implementation
+8. State pattern - om spelaren ska reagera olika beroende på state hjälper det att ha olika states med olika implemenation av vissa metoder som är 
+specifika för det statet

@@ -1,0 +1,8 @@
+1. Enum
+2. Grafiskt gränssnitt
+3. Tangentbordsstyrning
+4. Filhantering
+5. Resurshantering
+6. Ljudhantering
+7. State pattern
+8. Factory Method pattern
