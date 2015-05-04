@@ -43,11 +43,21 @@ public class Player extends MovableEntity
     }
 
 
-    @Override public void moveLeft(float dt) {
+    /**
+     * ignores superclass method as intended as movement is handled
+     * based on input and state
+     * @param dt time since last update, used for calculating movement
+     */
+    public void moveLeft(float dt) {
 	pState.moveLeft(this, dt);
     }
 
-    @Override public void moveRight(float dt) {
+    /**
+     * ignores superclass method as intended as movement is handled
+     * based on input and state
+     * @param dt time since last update, used for calculating movement
+     */
+    public void moveRight(float dt) {
 	pState.moveRight(this, dt);
     }
 

@@ -78,12 +78,5 @@ public abstract class AbstractEnemy extends MovableEntity
 	}
     }
 
-    @Override public void moveLeft(final float dt) {
-	setPositionX(getPosition().x - velocity.x * dt);
-    }
-
-    @Override public void moveRight(final float dt) {
-	setPositionX(getPosition().x + velocity.x * dt);
-    }
 
 }

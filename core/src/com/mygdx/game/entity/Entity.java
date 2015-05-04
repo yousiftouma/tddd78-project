@@ -39,14 +39,6 @@ public abstract class Entity  {
 	sprite.setSize(size.x, size.y);
     }
 
-    public Sprite getSprite() {
-	return sprite;
-    }
-
-    public void setSprite(final Sprite sprite) {
-	this.sprite = sprite;
-    }
-
     public Vector2 getPosition() {
 	return position;
     }
@@ -71,10 +63,6 @@ public abstract class Entity  {
 	sprite.setPosition(position.x, posY);
     }
 
-    public Vector2 getSize() {
-        return size;
-    }
-
     public float getWidth(){
         return size.x;
     }
@@ -90,16 +78,6 @@ public abstract class Entity  {
     public void setSize(final Vector2 size) {
 	this.size = size;
 	sprite.setSize(size.x, size.y);
-    }
-
-    public void setWidth(float width) {
-        this.size = new Vector2(width, size.y);
-	sprite.setSize(width, size.y);
-    }
-
-    public void setHeight(float height) {
-        this.size = new Vector2(size.x, height);
-	sprite.setSize(size.x, height);
     }
 
     public void draw(Batch batch){

@@ -45,15 +45,6 @@ public abstract class CollisionEntity extends Entity {
 	hitBox.setSize(size.x, size.y);
     }
 
-    @Override public void setWidth(final float width) {
-	super.setWidth(width);
-	hitBox.setSize(width, getHeight());
-    }
-
-    @Override public void setHeight(final float height) {
-	super.setHeight(height);
-	hitBox.setSize(getWidth(), height);
-    }
 
     /**
      * checks if this has collision with some other objects
@@ -104,12 +95,6 @@ public abstract class CollisionEntity extends Entity {
             return Side.RIGHT;
         }
     }
-
-
-    public int getDamage() {
-	return damage;
-    }
-
 
 }
 

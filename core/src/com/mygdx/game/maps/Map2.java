@@ -16,11 +16,10 @@ import com.mygdx.game.entity.obstacle.Wall;
  * Represents the second map
  * Singleton
  */
-public final class Map2 extends AbstractMap implements GameMap
+public final class Map2 extends AbstractMap
 {
     private Texture wallTexture = new Texture(Gdx.files.internal("truck_material-new-256.png"));
-    // we need this to be a Map2 since it is a singleton
-    static final Map2 INSTANCE = new Map2();
+    static final GameMap INSTANCE = new Map2();
 
     private final static int PLAYER_SPAWN_X = 100;
     private final static int PLAYER_SPAWN_Y = 300;
@@ -29,7 +28,7 @@ public final class Map2 extends AbstractMap implements GameMap
     {
 	addWalls();
 	addEnemySpawnPoints();
-	addCoinSpawnPoints();
+	addCoinAndPowerUpSpawnPoints();
 	addCoinFactories();
 	addEnemyFactories();
 	addPowerUpFactories();
@@ -40,7 +39,7 @@ public final class Map2 extends AbstractMap implements GameMap
 	return INSTANCE;
     }
 
-    @Override public void addWalls() {
+    public void addWalls() {
 	walls.add(new Wall(new Sprite(wallTexture), new Vector2(0, 0),
 			   new Vector2(Game.FRAME_WIDTH * TWO_FIFTHS, NORMAL_WALL_THICKNESS)));
 
@@ -60,27 +59,27 @@ public final class Map2 extends AbstractMap implements GameMap
 			   new Vector2(Game.FRAME_WIDTH * ONE_FIFTH, NORMAL_WALL_THICKNESS)));
     }
 
-    @Override public void addEnemySpawnPoints() {
+    public void addEnemySpawnPoints() {
 	enemySpawnPoints.add(new Vector2(Game.FRAME_WIDTH * THREE_FOURTHS, Game.FRAME_HEIGHT * THREE_FOURTHS));
     }
 
-    @Override public void addCoinSpawnPoints() {
+    public void addCoinAndPowerUpSpawnPoints() {
 	coinAndPowerUpSpawnPoints.add(new Vector2(Game.FRAME_WIDTH * ONE_FOURTH, Game.FRAME_HEIGHT * THREE_FOURTHS));
 	coinAndPowerUpSpawnPoints.add(new Vector2(Game.FRAME_WIDTH* ONE_HALF, Game.FRAME_HEIGHT* THREE_FOURTHS));
     }
 
-    @Override public void addEnemyFactories() {
+    public void addEnemyFactories() {
 	enemyFactories.add(new NormalEnemyFactory(enemySpawnPoints, true));
 	enemyFactories.add(new NormalEnemyFactory(enemySpawnPoints, false));
     }
 
-    @Override public void addCoinFactories() {
+    public void addCoinFactories() {
 	coinFactories.add(new SmallStaticCoinFactory(coinAndPowerUpSpawnPoints));
 	coinFactories.add(new SmallMovingCoinFactory(coinAndPowerUpSpawnPoints, true));
 	coinFactories.add(new SmallMovingCoinFactory(coinAndPowerUpSpawnPoints, false));
     }
 
-    @Override public void addPowerUpFactories() {
+    public void addPowerUpFactories() {
 	powerUpFactories.add(new NormalStaticPowerUpFactory(coinAndPowerUpSpawnPoints));
 	powerUpFactories.add(new NormalMovingPowerDownFactory(coinAndPowerUpSpawnPoints, false));
 	powerUpFactories.add(new NormalMovingPowerDownFactory(coinAndPowerUpSpawnPoints, true));

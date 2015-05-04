@@ -37,11 +37,11 @@ public abstract class AbstractCoin extends MovableEntity
 	return value;
     }
 
-    @Override public void moveLeft(final float dt) {
+    public void moveLeft(final float dt) {
         setPositionX(getPosition().x - velocity.x * dt);
     }
 
-    @Override public void moveRight(final float dt) {
+    public void moveRight(final float dt) {
 	setPositionX(getPosition().x + velocity.x * dt);
     }
 

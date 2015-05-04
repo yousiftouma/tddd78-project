@@ -14,7 +14,7 @@ import java.util.List;
  * and therefore abstract but needed to reduce code duplication. (like a code skeleton)
  */
 
-public abstract class AbstractMap
+public abstract class AbstractMap implements GameMap
 {
     /**
      * protected fields since the subclass wants to access their version of the lists directly to fill them
@@ -63,22 +63,6 @@ public abstract class AbstractMap
 	this.powerUpFactories = new ArrayList<>();
 	this.playerSpawnPoint = null;
     }
-
-    /**
-     * Override these add-methods in subclass to fill map with walls, factories and spawnpoints specific to that map.
-     * Call them in constructor together with setting player spawnpoint.
-     */
-    public abstract void addWalls();
-
-    public abstract void addEnemySpawnPoints();
-
-    public abstract void addCoinSpawnPoints();
-
-    public abstract void addEnemyFactories();
-
-    public abstract void addCoinFactories();
-
-    public abstract void addPowerUpFactories();
 
     public void setPlayerSpawnPoint(final Vector2 playerSpawnPoint) {
 	this.playerSpawnPoint = playerSpawnPoint;

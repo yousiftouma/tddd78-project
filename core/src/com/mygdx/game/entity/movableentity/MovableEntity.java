@@ -17,20 +17,7 @@ public abstract class MovableEntity extends CollisionEntity
 {
     protected Vector2 velocity;
     protected Vector2 acceleration;
-    //not true, used in factories
-    protected Vector2 spawnPosition;
-    //used to set hp when creating objects
-    protected int hitPointsMax;
     protected int hitPointsLeft;
-
-    /**
-     * moving will be handled differently depending on type of class
-     * @param dt delta time since last update, used for calculating movement
-     */
-    public abstract void moveLeft(float dt);
-
-    //why remove abstract methods?
-    public abstract void moveRight(float dt);
 
     /**
      * when colliding, we perform an action, depending on self and other object
@@ -55,8 +42,6 @@ public abstract class MovableEntity extends CollisionEntity
         super(sprite, position, size, damage);
         this.velocity = velocity;
         this.acceleration = acceleration;
-        this.spawnPosition = position;
-        this.hitPointsMax = hitPointsMax;
         this.hitPointsLeft = hitPointsMax;
     }
 
@@ -64,17 +49,11 @@ public abstract class MovableEntity extends CollisionEntity
         return velocity;
     }
 
-/*    public Vector2 getAcceleration() {
-        return acceleration;
-    }*/
 
     public void setVelocity(final Vector2 velocity) {
         this.velocity = velocity;
     }
 
-/*    public void setAcceleration(final Vector2 acceleration) {
-        this.acceleration = acceleration;
-    }*/
 
     /**
      * primarily updates fallspeed according to gravity
@@ -86,6 +65,14 @@ public abstract class MovableEntity extends CollisionEntity
             velocity.y += acceleration.y * dt;
         }
         teleportIfOutsideFrame();
+    }
+
+    public void moveLeft(final float dt) {
+	setPositionX(getPosition().x - velocity.x * dt);
+    }
+
+    public void moveRight(final float dt) {
+	setPositionX(getPosition().x + velocity.x * dt);
     }
 
     /**

@@ -27,9 +27,4 @@ public class NormalStaticPowerUp extends AbstractPowerUp {
 	return new Vector2(POWER_UP_WIDTH, POWER_UP_HEIGHT);
     }
 
-    @Override public void moveLeft(final float dt) {
-    }
-
-    @Override public void moveRight(final float dt) {
-    }
 }

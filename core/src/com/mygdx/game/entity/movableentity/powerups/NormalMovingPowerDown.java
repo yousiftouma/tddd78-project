@@ -55,12 +55,4 @@ public class NormalMovingPowerDown extends AbstractPowerUp {
 	}
     }
 
-    @Override public void moveLeft(final float dt) {
-	setPositionX(getPosition().x - velocity.x * dt);
-    }
-
-    @Override public void moveRight(final float dt) {
-	setPositionX(getPosition().x + velocity.x * dt);
-    }
-
 }
