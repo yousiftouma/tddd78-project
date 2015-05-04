@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Interface for maps. Each map is singleton and can only be
  * created once which is logical since it is unnecessary to have multiple map objects that all will stay the same
- * Must be able to return the factories, walls and spawnpoints of the map.
+ * Must be able to return the factories, walls and player spawnpoint of the map.
  *
  * We use eager initialization since the scale of the game allows it. It's ok to create all maps upon starting the game
  * instead of having lazy initialization where the map is only created when called. If the game becomes too big so that

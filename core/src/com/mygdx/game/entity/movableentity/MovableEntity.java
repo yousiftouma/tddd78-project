@@ -12,6 +12,8 @@ import com.mygdx.game.entity.Side;
  * Entity that can move
  * These entities can also die (in some sense, they have some sort of lifespan), so they have hitpoints
  * Also have acceleration and velocity vectors beside spawnpositions
+ * Like CollisionEntity we never instantiate this class so it's abstract, with inherited
+ * abstract methods
  */
 public abstract class MovableEntity extends CollisionEntity
 {

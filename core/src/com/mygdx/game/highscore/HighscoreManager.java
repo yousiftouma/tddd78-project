@@ -87,6 +87,11 @@ public class HighscoreManager
 	}
     }
 
+    /**
+     * We init a stringbuilder and append rows as shown in output example, one row for each
+     * element in the list but maximum 10 rows
+     * @return a string formatted as a list
+     */
     public String getHighscoreString() {
 	StringBuilder highscoreString = new StringBuilder();
 	int listSize = 10;

@@ -20,7 +20,7 @@ public abstract class AbstractPowerUp extends MovableEntity
     private final static int HIT_POINTS = 1;
 
     /**
-     * damage set to 0 hitpoints set to 1 (should die instantly)
+     * damage set to 0 hitpoints set to 1 (should die instantly and not deal damage)
      */
     protected AbstractPowerUp(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration)
     {

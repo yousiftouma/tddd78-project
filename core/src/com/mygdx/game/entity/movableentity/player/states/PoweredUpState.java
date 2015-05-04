@@ -10,8 +10,8 @@ public class PoweredUpState implements State
 {
     private static final int JUMP_SPEED = 600;
     private static final int RUNNING_SPEED = 600;
-    private static final int NORMAL_PLAYER_WIDTH = 96;
-    private static final int NORMAL_PLAYER_HEIGHT = 96;
+    private static final int POWERED_PLAYER_WIDTH = 96;
+    private static final int POWERED_PLAYER_HEIGHT = 96;
 
     @Override public States getState() {
 	return States.POWERED_UP_STATE;
@@ -30,7 +30,7 @@ public class PoweredUpState implements State
     }
 
     @Override public void setSize(Player p) {
-	p.setSize(new Vector2(NORMAL_PLAYER_WIDTH, NORMAL_PLAYER_HEIGHT));
+	p.setSize(new Vector2(POWERED_PLAYER_WIDTH, POWERED_PLAYER_HEIGHT));
     }
 
     @Override public boolean isInvincible() {

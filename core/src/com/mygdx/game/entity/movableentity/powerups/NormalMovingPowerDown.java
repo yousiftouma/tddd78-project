@@ -14,16 +14,19 @@ import com.mygdx.game.maps.AbstractMap;
 public class NormalMovingPowerDown extends AbstractPowerUp {
 
     private boolean movingLeft;
+    private float duration;
 
     private final static int POWER_UP_WIDTH = 32;
     private final static int POWER_UP_HEIGHT = 32;
     private final static float POWER_DOWN_TIME = 10;
+    private final static int LIFETIME = 10;
 
     public NormalMovingPowerDown(Sprite sprite, Vector2 position, Vector2 size, Vector2 velocity, Vector2 acceleration,
 				 boolean movingLeft) {
         super(sprite, position, size, velocity, acceleration);
 	setPowerUpTime(POWER_DOWN_TIME);
 	this.movingLeft = movingLeft;
+	this.duration = LIFETIME;
     }
 
     @Override public GameObject getGameObjectType() {
@@ -46,6 +49,12 @@ public class NormalMovingPowerDown extends AbstractPowerUp {
 	    }
 	}
     }
+
+    /**
+     * Powerdowns should die by themselves after a while, so they take their only hitpoint as damage
+     * when duration has ran out
+     * @param dt delta time since last frame update
+     */
     @Override public void update(float dt) {
 	super.update(dt);
 	if (movingLeft) {
@@ -53,6 +62,10 @@ public class NormalMovingPowerDown extends AbstractPowerUp {
 	} else {
 	    moveRight(dt);
 	}
+	if (duration <= 0){
+	    hitPointsLeft--;
+	}
+	else duration -= dt;
     }
 
 }

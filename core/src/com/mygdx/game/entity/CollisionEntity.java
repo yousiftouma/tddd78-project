@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Has a hitBox which can collide with other hitBoxes.
- * Doesn't need abstract methods but is abstract cause we only want to create its subclasses
+ * Doesn't need abstract methods on its own but is abstract cause we only want to create its subclasses
+ * and it inherits abstract methods from Entity
  */
 public abstract class CollisionEntity extends Entity {
 
