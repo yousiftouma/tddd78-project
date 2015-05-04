@@ -37,14 +37,6 @@ public abstract class AbstractCoin extends MovableEntity
 	return value;
     }
 
-    public void moveLeft(final float dt) {
-        setPositionX(getPosition().x - velocity.x * dt);
-    }
-
-    public void moveRight(final float dt) {
-	setPositionX(getPosition().x + velocity.x * dt);
-    }
-
     @Override public void doAction(GameObject type, CollisionEntity object) {
         if (type == GameObject.WALL) {
             Side side = getCollisionSide(object);
