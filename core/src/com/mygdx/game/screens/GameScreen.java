@@ -23,25 +23,33 @@ import javax.swing.*;
  */
 public class GameScreen implements Screen
 {
-    //libgdx class SpriteBatch that buffers several sprites to be sent to the graphicscard for rendering
-    //simultaneously instead of one by one
+    /**
+     * libgdx class SpriteBatch that buffers several sprites to be sent to the graphicscard for rendering
+     * simultaneously instead of one by one
+     */
     private SpriteBatch batch;
     private Game gameToDraw;
     private String scoreDisplay;
     private String hpDisplay;
-    //libgdx class to display text as bitmaps
+    /**
+     * libgdx class to display text as bitmaps
+     */
     private BitmapFont scoreBmf;
     private BitmapFont hpBmf;
     private BitmapFont quitBmf;
-    // We think this is the only way to have the sound accessible to whoever needs it (the concrete entities
-    // that needs to play sounds on certain actions)
-    // The problem is that Gdx.audio is non final static
-    // but this is a libgdx class so we don't think we can handle this in any other way
-    // Also, Sound is a libgdx class that handles sound with simple play, pause and similar methods
+    /**
+     *  We think this is the only way to have the sound accessible to whoever needs it (the concrete entities
+     *  that needs to play sounds on certain actions)
+     *  The problem is that Gdx.audio is non final static
+     *  but this is a libgdx class so we don't think we can handle this in any other way
+     *  Also, Sound is a libgdx class that handles sound with simple play, pause and similar methods
+     */
     private static Sound dealDamageSound = Gdx.audio.newSound(Gdx.files.internal("give_damage_sound.wav"));
     private static Sound takeDamageSound = Gdx.audio.newSound(Gdx.files.internal("take_damage_sound.wav"));
     private static Sound pickUpSound = Gdx.audio.newSound(Gdx.files.internal("pickup_sound.wav"));
-    //Music is a libgdx class to handle longer sounds, in our case backgroundmusic
+    /**
+     * Music is a libgdx class to handle longer sounds, in our case backgroundmusic
+     */
     private Music gameLoopMusic;
     private GameWindow window;
 

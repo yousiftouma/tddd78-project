@@ -15,7 +15,7 @@ public class MenuScreen implements Screen
     private int mapNumber;
 
     /**
-     * constructor
+     * constructor, used to keep hold of window we occupy
      * @param window window to display screen in
      */
     public MenuScreen(GameWindow window) {
@@ -23,6 +23,7 @@ public class MenuScreen implements Screen
     }
 
     /**
+     * interfacemethod
      * called when screen is set with SetScreen
      */
     @Override public void show() {

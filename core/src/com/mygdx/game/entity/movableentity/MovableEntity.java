@@ -17,6 +17,9 @@ import com.mygdx.game.entity.Side;
  */
 public abstract class MovableEntity extends CollisionEntity
 {
+    /**
+     * Libgdx class Vector2
+     */
     protected Vector2 velocity;
     protected Vector2 acceleration;
     protected int hitPointsLeft;
@@ -126,6 +129,7 @@ public abstract class MovableEntity extends CollisionEntity
     }
 
     public void takeDamage(int dmg){
+	assert (dmg >= 0): "trying to deal negative damage";
 	hitPointsLeft -= dmg;
     }
 

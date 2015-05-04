@@ -12,11 +12,17 @@ public final class DesktopLauncher
 {
 
     public static void main(String[] arg) {
+	/**
+	 * Libgdx class
+	 */
 	LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 	config.title = Game.TITLE;
 	config.width = Game.FRAME_WIDTH;
 	config.height = Game.FRAME_HEIGHT;
 	// result ignored since frame is created upon object creation
+	/**
+	 * Libgdx class
+	 */
 	new LwjglApplication(new GameWindow(), config);
     }
 

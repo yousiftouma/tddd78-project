@@ -13,8 +13,12 @@ import com.badlogic.gdx.math.Vector2;
  */
 public abstract class Entity  {
 
+    /**
+     * libgdx class Sprite, drawable class with spritebatch (see GameScreen)
+     */
     private Sprite sprite;
     /**
+     * Libgdx class Vector2
      * In libgdx, Vector2 can be used as both points (position) and size
      */
     private Vector2 position;
@@ -27,6 +31,7 @@ public abstract class Entity  {
     public abstract GameObject getGameObjectType();
 
     /**
+     * Init entity and set its sprites position and size accordingly
      * @param sprite holds texture
      * @param position Vector2(x,y) which points to bottomleft of entity
      * @param size Vector2(x,y) where x = width, y = height
@@ -80,6 +85,10 @@ public abstract class Entity  {
 	sprite.setSize(size.x, size.y);
     }
 
+    /**
+     * draws a sprite using a batch
+     * @param batch libgdx class batch
+     */
     public void draw(Batch batch){
 	sprite.draw(batch);
     }

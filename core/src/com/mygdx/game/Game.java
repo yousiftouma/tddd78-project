@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +58,11 @@ public class Game
 
     private boolean gameOver;
 
+    /**
+     * logger to write in console when certain events occur
+     */
+    private final static Logger LOGGER = Logger.getLogger(Game.class.getName());
+
     private static final int MAX_PLAYER_HP = 20;
     private static final int PLAYER_DMG = 10;
     private static final int PLAYER_WIDTH = 64;
@@ -73,8 +80,6 @@ public class Game
      * which can happen after a game over
      */
     private static final float MAX_DELTA_TIME = 0.1f;
-
-    private float timePassed = 0;
 
     /**
      * Title of the game, should be accessible where needed
@@ -114,6 +119,7 @@ public class Game
 	this.gameOver = false;
 	fetchMapObstacles();
 	createPlayer();
+	LOGGER.log(Level.INFO, "Game On!");
     }
 
 
@@ -121,12 +127,15 @@ public class Game
      * Is called by GameScreen as often as possible, progresses game
      * @param delta time since last update, passed from GameScreen, used for calculations
      *              when moving objects and figuring out if its time to spawn something
+     *              Should never be 0, if it is something went very wrong
      */
     public void updateGame(float delta) {
+	assert (delta > 0): "no delta time was passed to updateGame";
 	if (delta >= MAX_DELTA_TIME) {
 	    delta = MAX_DELTA_TIME;
+	    LOGGER.log(Level.INFO, "Delta time was too big, setting it to manageable size");
 	}
-	timePassed += delta; //debug tool
+
 	spawnEnemy(delta);
 	spawnCoin();
 	spawnPowerUp(delta);
@@ -202,6 +211,7 @@ public class Game
      * @param object the specific object
      */
     private void onObjectDeath(GameObject type, MovableEntity object) {
+	LOGGER.log(Level.INFO, "object " + object + " has died");
 	switch (type) {
 	    case WALL:
 		//this will never occur as wall cannot die
@@ -209,10 +219,11 @@ public class Game
 	    case ENEMY:
 		objectsToRemove.add(object);
 		if (ENEMIES_GIVE_POINTS) {
-		    addScore(1);
+		    addToScore(1);
 		}
 		break;
 	    case PLAYER:
+		LOGGER.log(Level.INFO, "Game Over!");
 		//handle game over
 		String name;
 		try {
@@ -226,12 +237,12 @@ public class Game
 		break;
 	    case SMALL_STATIC_COIN:
 		final SmallStaticCoin smallStaticCoin = (SmallStaticCoin) object;
-		addScore(smallStaticCoin.getValue());
+		addToScore(smallStaticCoin.getValue());
 		objectsToRemove.add(object);
 		break;
 	    case SMALL_MOVING_COIN:
 		final SmallMovingCoin smallMovingCoin = (SmallMovingCoin) object;
-		addScore(smallMovingCoin.getValue());
+		addToScore(smallMovingCoin.getValue());
 		objectsToRemove.add(object);
 		break;
 	    case NORMAL_STATIC_POWER_UP:
@@ -278,7 +289,7 @@ public class Game
 	    }
     }
 
-    private void addScore(final int points) {
+    private void addToScore(final int points) {
 	player.setScore(player.getScore() + points);
     }
 
@@ -300,7 +311,6 @@ public class Game
 	    AbstractEnemy enemy = factory.createEnemy();
 	    gameObjects.add(enemy);
 	    enemySpawnTimer = ENEMY_RESPAWN_TIME;
-	    System.out.println(timePassed);
 	} else enemySpawnTimer -= delta;
     }
 
