@@ -1,1 +1,1 @@
-Kör spelet genom att öppna filen som skriker efter att öppnas.
+There is currently no executable .jar file, the project needs to be built using gradle.
